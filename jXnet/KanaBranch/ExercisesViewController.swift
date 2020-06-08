@@ -16,8 +16,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var ask = [Int]()//Вопросы уникальные
     private var step: Float!//Шаг
     private var countQuestion: Int! //Количество вопросов
-    private var countAnswer: Int!//Количество вариантов ответа
-    private var YesNo: Bool!//ДаНет
     private var count = 0//Счетчик прохождения
     private var checkedAnswers = [String]()//Нужен для вывода table описание правильных ответов
     
@@ -39,8 +37,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     var repeatButton: UIButton!
     //Прогесс прохождения (Линия)
     var progress: UIProgressView!
-    //Переменная для обращение к методам рисования элементов в данном view
+    //Переменные для обращение к методам рисования элементов в данном view
     private var chooserCorrectAnswer: ChooseCorrectAnswer!
+    private var showKana: ShowKana!
     
     //Таблица результатов
     let resultTable: UITableView = {
@@ -78,23 +77,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             print ("fetch task failed", error)
         }
         
-        switch typeTask {
-        case 4:
-            self.YesNo = false
-            self.countAnswer = 4
-        case 5:
-            self.YesNo = true
-        case 7:
-            self.YesNo = false
-            self.countAnswer = 6
-        case 8:
-            self.YesNo = false
-            self.countAnswer = 9
-        default:
-            print("Development..")
-            _ = navigationController?.popViewController(animated: true)
-            return
-        }
+        self.title = "1/\(kanaDB.count)"
+        
         if (self.lessonNumber == 4 || self.lessonNumber == 5) {
             countQuestion = 8
         } else {
@@ -105,12 +89,12 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = true
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.tabBarController?.tabBar.isHidden = true
         initDB()
         //firstAlert()
     }
@@ -123,6 +107,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         checkedAnswers.removeAll()
         //Инициализация после прогрузки данного ViewController
         chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+        showKana = ShowKana.init(self)
         
         progress = UIProgressView()
         progress.frame = CGRect(x: 0, y: 50, width: UIScreen.main.bounds.width, height: 1)
@@ -130,29 +115,47 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         step = 1.0 / Float(countQuestion)
         self.view.addSubview(progress)
         
-        if (YesNo == true) {
+        switch typeTask {
+        case 1:
+            self.view = showKana.showKana()
+            countQuestion = kanaDB.count
+        case 4:
+            self.view = chooserCorrectAnswer.drawFourAnswer()
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+        case 5:
             self.view = chooserCorrectAnswer.drawYesNo()
-        }
-        else {
-            switch countAnswer {
-            case 9:
-                self.view = chooserCorrectAnswer.drawNineAnswer()
-            case 6:
-                self.view = chooserCorrectAnswer.drawSixAnswer()
-            case 4:
-                self.view = chooserCorrectAnswer.drawFourAnswer()
-            default:
-                print("Что-то пошло не так")
-            }
-            
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+        case 7:
+            self.view = chooserCorrectAnswer.drawSixAnswer()
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+        case 8:
+            self.view = chooserCorrectAnswer.drawNineAnswer()
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+        default:
+            print("Development..")
+            _ = navigationController?.popViewController(animated: true)
+            return
         }
         initButtonTags()
-        ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         RandomizeQuize()
     }
     
     func RandomizeQuize(){
-        if YesNo == true {
+        switch typeTask {
+        case 1:
+            showAsk1.text = kanaDB[count].kana
+            showAsk2?.text = kanaDB[count].transcription
+            if count == 0 {
+                showAnswer1.isHidden = true
+            } else {
+                showAnswer1.isHidden = false
+            }
+            if count == kanaDB.count - 1 {
+                showAnswer2.isHidden = true
+            } else {
+                showAnswer2.isHidden = false
+            }
+        case 5://ДаНет
             if Bool.random() {
                 showAsk1.text = kanaDB[ask[count]].kana
                 if Bool.random() {
@@ -175,30 +178,28 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     showAsk2?.text = kanaDB[uniqueRandoms(numberOfRandoms: 1, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])[0]].kana
                 }
             }
-        }
-        else {
+        default: //Упражнения с выбором правильного ответа из 2, 4, 6 и 9
             var whereWillBeCorrectAnswer: Int!
             var inCorrectAnswerButtons = [Int]()
             var inCorrectAnswers = [Int]()
-            switch countAnswer {
+            switch typeTask {
             case 4:
                 whereWillBeCorrectAnswer = Int.random(in: 0..<4)
                 inCorrectAnswerButtons = [1,2,3,4]
                 inCorrectAnswerButtons.remove(at: whereWillBeCorrectAnswer)
                 inCorrectAnswers = uniqueRandoms(numberOfRandoms: 3, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])
-            case 6:
+            case 7:
                 whereWillBeCorrectAnswer = Int.random(in: 0..<6)
                 inCorrectAnswerButtons = [1,2,3,4,5,6]
                 inCorrectAnswerButtons.remove(at: whereWillBeCorrectAnswer)
                 inCorrectAnswers = uniqueRandoms(numberOfRandoms: 5, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])
-            case 9:
+            case 8:
                 whereWillBeCorrectAnswer = Int.random(in: 0..<9)
                 inCorrectAnswerButtons = [1,2,3,4,5,6,7,8,9]
                 inCorrectAnswerButtons.remove(at: whereWillBeCorrectAnswer)
                 inCorrectAnswers = uniqueRandoms(numberOfRandoms: 8, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])
-                
             default:
-                break
+                return
             }
             self.correctAnswer = whereWillBeCorrectAnswer + 1
             var k = 0
@@ -244,19 +245,28 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func clickAnswer(_ sender: UIButton) {
-        progress.progress += step
-        if correctAnswer == sender.tag {
-            incorrectAnswers.append(false)
+        switch typeTask {
+        case 1://показать кана
+            if sender.tag == 2 {
+                count += 1
+            } else {
+                count -= 1
+            }
+        default: //тут все упражнения кроме курсов, показать кана, написать кана и сопоставление
+            if correctAnswer == sender.tag {
+                incorrectAnswers.append(false)
+            }
+            else {
+                incorrectAnswers.append(true)
+            }
+            if count == countQuestion - 1  {
+                drawResult()
+                return
+            }
+            progress.progress += step
+            count += 1
         }
-        else {
-            incorrectAnswers.append(true)
-        }
-        if count == countQuestion - 1  {
-            drawResult()
-            return
-        }
-        
-        count += 1
+        self.title = "\(count + 1)/\(kanaDB.count)"
         RandomizeQuize()
     }
     
