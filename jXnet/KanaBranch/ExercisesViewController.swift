@@ -152,7 +152,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             //Инициализация после прогрузки данного ViewController
             chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
             self.view = chooserCorrectAnswer.drawSixAnswer()
-            ask = uniqueRandoms(numberOfRandoms: 5, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 8:
             //Инициализация после прогрузки данного ViewController
             chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
