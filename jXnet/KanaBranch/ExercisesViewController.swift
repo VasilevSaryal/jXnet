@@ -59,6 +59,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     var lessonNumber: Int!
     //Тип упражнения
     var typeTask: Int!
+    //Это курсы?
+    var isCourse = false
     //База данных
     private var startRange: Int! //начальное значение диапозона по ид
     private var endRange: UInt32! //конечное значение диапозона по ид
@@ -169,6 +171,18 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
             self.view = chooserCorrectAnswer.drawNineAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+        case 9:
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+            handwritingView = HandwritingView.init(self)
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            isCourse = true
+            if Bool.random() {
+                typeTask = 2
+                self.view = handwritingView.drawStandartSheet()
+            } else {
+                typeTask = 8
+                self.view = chooserCorrectAnswer.drawNineAnswer()
+            }
         default:
             print("Development..")
             _ = navigationController?.popViewController(animated: true)
@@ -329,7 +343,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 count -= 1
             }
             self.title = "\(count + 1)/\(countQuestion ?? 0)"
-            RandomizeQuize()
+            if !isCourse {RandomizeQuize()}
         case 2://написать кана
             switch sender.tag {
             case 1:
@@ -341,7 +355,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 count += 1
                 self.title = "\(count + 1)/\(countQuestion ?? 0)"
                 drawableView.clear()
-                RandomizeQuize()
+                if !isCourse {RandomizeQuize()}
             case 2:
                 drawableView.clear()
             default:
@@ -394,6 +408,22 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             progress.progress += step
             count += 1
             self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            if !isCourse {RandomizeQuize()}
+            
+        }
+        if isCourse {
+            if ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3)) {
+                return
+            }
+            self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
+            if Bool.random() {
+                typeTask = 2
+                self.view = handwritingView.drawStandartSheet()
+            } else {
+                typeTask = 8
+                self.view = chooserCorrectAnswer.drawNineAnswer()
+            }
+            initButtonTags()
             RandomizeQuize()
         }
     }

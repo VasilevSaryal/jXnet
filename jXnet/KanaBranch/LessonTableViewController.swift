@@ -29,7 +29,7 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
         jXnetButton.titleLabel?.font = .systemFont(ofSize: (23 * UIScreen.main.bounds.height) / 896)
         jXnetButton.setTitleColor(UIColor.init(hexFromString: "#FF3300"), for: .normal)
         jXnetButton.titleLabel?.textAlignment = .center
-        jXnetButton.addTarget(nil, action: #selector(clickCourse(_:)), for: .touchUpInside)
+        
         
         let externButton = BigShadowButton(frame: CGRect(x: 60 + diametrCircleButtons, y: 20, width: diametrCircleButtons, height: diametrCircleButtons))
         externButton.layer.cornerRadius = diametrCircleButtons / 2
@@ -39,13 +39,14 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
         externButton.setTitleColor(.white, for: .normal)
         externButton.titleLabel?.textAlignment = .center
         externButton.backgroundColor = UIColor.init(hexFromString: "#FF3300")
+        externButton.addTarget(nil, action: #selector(clickCourse(_:)), for: .touchUpInside)
         
         self.tableView(self.tableView, cellForRowAt: IndexPath(row: 0, section: 0)).contentView.addSubview(jXnetButton)
         self.tableView(self.tableView, cellForRowAt: IndexPath(row: 0, section: 0)).contentView.addSubview(externButton)
     }
 
     @objc func clickCourse(_ sender: UIButton) {
-        print("SS")
+        self.performSegue(withIdentifier: "Exercises", sender: 9)
     }
     // MARK: - Table view data source
 
