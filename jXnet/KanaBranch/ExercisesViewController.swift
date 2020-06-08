@@ -77,8 +77,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             print ("fetch task failed", error)
         }
         
-        self.title = "1/\(kanaDB.count)"
-        
         if (self.lessonNumber == 4 || self.lessonNumber == 5) {
             countQuestion = 8
         } else {
@@ -119,6 +117,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         case 1:
             self.view = showKana.showKana()
             countQuestion = kanaDB.count
+        case 3:
+            self.view = chooserCorrectAnswer.drawTwoAnswer()
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 4:
             self.view = chooserCorrectAnswer.drawFourAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
@@ -136,6 +137,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             _ = navigationController?.popViewController(animated: true)
             return
         }
+        self.title = "1/\(countQuestion ?? 0)"
         initButtonTags()
         RandomizeQuize()
     }
@@ -183,6 +185,11 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             var inCorrectAnswerButtons = [Int]()
             var inCorrectAnswers = [Int]()
             switch typeTask {
+            case 3:
+                whereWillBeCorrectAnswer = Int.random(in: 0..<2)
+                inCorrectAnswerButtons = [1,2]
+                inCorrectAnswerButtons.remove(at: whereWillBeCorrectAnswer)
+                inCorrectAnswers = uniqueRandoms(numberOfRandoms: 1, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])
             case 4:
                 whereWillBeCorrectAnswer = Int.random(in: 0..<4)
                 inCorrectAnswerButtons = [1,2,3,4]
@@ -266,7 +273,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             progress.progress += step
             count += 1
         }
-        self.title = "\(count + 1)/\(kanaDB.count)"
+        self.title = "\(count + 1)/\(countQuestion ?? 0)"
         RandomizeQuize()
     }
     

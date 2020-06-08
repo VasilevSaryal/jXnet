@@ -38,6 +38,20 @@ class ChooseCorrectAnswer {
         return controller.view
     }
     
+    func drawTwoAnswer() -> UIView {
+        controller.showAsk1 = BigLabel(frame: CGRect(x: (UIScreen.main.bounds.width - (UIScreen.main.bounds.width - 60.0) / 2) / 2, y: UIScreen.main.bounds.height / 2 - (UIScreen.main.bounds.width - 60.0) / 2 - 20.0, width: (UIScreen.main.bounds.width - 60.0) / 2, height: (UIScreen.main.bounds.width - 60.0) / 2))
+        controller.view.addSubview(controller.showAsk1)
+        
+        controller.showAnswer1 = BigShadowButton(frame: CGRect(x: 20.0, y: UIScreen.main.bounds.height / 2 + UIScreen.main.bounds.height / 4 - 20.0, width: (UIScreen.main.bounds.width - 80) / 2, height: (UIScreen.main.bounds.height / 2 - 80) / 2))
+        controller.view.addSubview(controller.showAnswer1)
+        
+        controller.showAnswer2 = BigShadowButton(frame: CGRect(x: (UIScreen.main.bounds.width - 80) / 2 + 60.0, y: UIScreen.main.bounds.height / 2 + UIScreen.main.bounds.height / 4 - 20, width: (UIScreen.main.bounds.width - 80) / 2, height: (UIScreen.main.bounds.height / 2 - 80) / 2))
+        controller.view.addSubview(controller.showAnswer2)
+        
+        
+        return controller.view
+    }
+    
     func drawFourAnswer() -> UIView {
         controller.showAsk1 = BigLabel(frame: CGRect(x: (UIScreen.main.bounds.width - (UIScreen.main.bounds.width - 60.0) / 2) / 2, y: UIScreen.main.bounds.height / 2 - (UIScreen.main.bounds.width - 60.0) / 2 - 20.0, width: (UIScreen.main.bounds.width - 60.0) / 2, height: (UIScreen.main.bounds.width - 60.0) / 2))
         controller.view.addSubview(controller.showAsk1)
