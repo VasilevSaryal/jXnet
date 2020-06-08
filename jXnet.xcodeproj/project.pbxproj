@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */; };
+		1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */; };
 		15BBCB91248C9969005AF0DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCB90248C9969005AF0DA /* AppDelegate.swift */; };
 		15BBCB98248C9969005AF0DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15BBCB96248C9969005AF0DA /* Main.storyboard */; };
 		15BBCB9B248C9969005AF0DA /* jXnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCB99248C9969005AF0DA /* jXnet.xcdatamodeld */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBarHeight.swift; sourceTree = "<group>"; };
+		1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СomparisonTask.swift"; sourceTree = "<group>"; };
 		15BBCB8D248C9969005AF0DA /* jXnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jXnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15BBCB90248C9969005AF0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15BBCB97248C9969005AF0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				15BBCBCE248DC8B7005AF0DA /* ChooseCorrectAnswer.swift */,
 				15BBCBDF248E0DEB005AF0DA /* ShowKana.swift */,
+				1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */,
 			);
 			path = "View with elements";
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				15BBCB9B248C9969005AF0DA /* jXnet.xcdatamodeld in Sources */,
 				15BBCBA9248C9E34005AF0DA /* SelectLessonTableViewController.swift in Sources */,
 				15BBCBAE248C9E96005AF0DA /* MainViewController.swift in Sources */,
+				1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */,
 				15BBCBC3248D184C005AF0DA /* RootTabBarController.swift in Sources */,
 				15BBCBE0248E0DEB005AF0DA /* ShowKana.swift in Sources */,
 			);

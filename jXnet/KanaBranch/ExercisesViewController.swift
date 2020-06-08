@@ -14,6 +14,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var correctAnswer: Int?//Правильный ответ
     private var incorrectAnswers = [Bool]()//Счетчик ответов пользователя
     private var ask = [Int]()//Вопросы уникальные
+    private var firstAnswer = 0//Тег первой кнопки только для сопоставления
+    private var pairInt = [TwoInteger]()//Пара правильного ответа только для сопоставления и прохождение курса от jXnet
     private var step: Float!//Шаг
     private var countQuestion: Int! //Количество вопросов
     private var count = 0//Счетчик прохождения
@@ -33,6 +35,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     var showAnswer8: UIButton?
     var showAnswer9: UIButton?
     var showAnswer10: UIButton?
+    var showAnswer11: UIButton?
+    var showAnswer12: UIButton?
     //Начать заново
     var repeatButton: UIButton!
     //Прогесс прохождения (Линия)
@@ -40,6 +44,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     //Переменные для обращение к методам рисования элементов в данном view
     private var chooserCorrectAnswer: ChooseCorrectAnswer!
     private var showKana: ShowKana!
+    private var comparsionTask: ComparsionTask!
     
     //Таблица результатов
     let resultTable: UITableView = {
@@ -76,12 +81,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         catch {
             print ("fetch task failed", error)
         }
-        
-        if (self.lessonNumber == 4 || self.lessonNumber == 5) {
-            countQuestion = 8
-        } else {
-            countQuestion = 10
-        }
         self.initialParameters()
     }
     
@@ -99,13 +98,16 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
    
     func initialParameters() -> Void {
         self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
+        pairInt = []
+        if (self.lessonNumber == 4 || self.lessonNumber == 5) {
+            countQuestion = 8
+        } else {
+            countQuestion = 10
+        }
         count = 0
         incorrectAnswers.removeAll()
         ask.removeAll()
         checkedAnswers.removeAll()
-        //Инициализация после прогрузки данного ViewController
-        chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
-        showKana = ShowKana.init(self)
         
         progress = UIProgressView()
         progress.frame = CGRect(x: 0, y: 50, width: UIScreen.main.bounds.width, height: 1)
@@ -115,21 +117,45 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         switch typeTask {
         case 1:
+            //Инициализация после прогрузки данного ViewController
+            showKana = ShowKana.init(self)
             self.view = showKana.showKana()
             countQuestion = kanaDB.count
         case 3:
+            //Инициализация после прогрузки данного ViewController
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
             self.view = chooserCorrectAnswer.drawTwoAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 4:
+            //Инициализация после прогрузки данного ViewController
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
             self.view = chooserCorrectAnswer.drawFourAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 5:
+            //Инициализация после прогрузки данного ViewController
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
             self.view = chooserCorrectAnswer.drawYesNo()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+        case 6:
+            //Инициализация после прогрузки данного ViewController
+            comparsionTask = ComparsionTask.init(self)
+            if lessonNumber == 4 || lessonNumber == 5 {
+                self.view = comparsionTask.drawComparsionFive()
+                countQuestion = 5
+                ask = uniqueRandoms(numberOfRandoms: 5, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            } else {
+                self.view = comparsionTask.drawComparsionSix()
+                countQuestion = 6
+                ask = uniqueRandoms(numberOfRandoms: 6, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            }
         case 7:
+            //Инициализация после прогрузки данного ViewController
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
             self.view = chooserCorrectAnswer.drawSixAnswer()
-            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            ask = uniqueRandoms(numberOfRandoms: 5, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 8:
+            //Инициализация после прогрузки данного ViewController
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
             self.view = chooserCorrectAnswer.drawNineAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         default:
@@ -179,6 +205,34 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     correctAnswer = 1
                     showAsk2?.text = kanaDB[uniqueRandoms(numberOfRandoms: 1, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])[0]].kana
                 }
+            }
+        case 6: //Упражение на правильное сопоставление
+            let isLittleQuestion = (lessonNumber == 4 || lessonNumber == 5)
+            let allAnswers = isLittleQuestion ? uniqueRandoms(numberOfRandoms: 10, minNum: 0, maxNum: 9, blackList: nil) : uniqueRandoms(numberOfRandoms: 12, minNum: 0, maxNum: 11, blackList: nil)
+            let transcriptionAnswers = isLittleQuestion ? allAnswers[0...4] : allAnswers[0...5]
+            let kanaAnswers = isLittleQuestion ? allAnswers[5...9] : allAnswers[6...11]
+            if isLittleQuestion {
+                for i in 0...4 {
+                    let correctPair = TwoInteger(firts: transcriptionAnswers[i] + 1, second: kanaAnswers[5 + i] + 1)
+                    pairInt.append(correctPair)
+                }
+            } else {
+                for i in 0...5 {
+                    let correctPair = TwoInteger(firts: transcriptionAnswers[i] + 1, second: kanaAnswers[6 + i] + 1)
+                    pairInt.append(correctPair)
+                }
+            }
+            var k = 0
+            for i in transcriptionAnswers {
+                let answerButton = self.view.viewWithTag(i + 1) as? BigShadowButton
+                answerButton?.setTitle(kanaDB[ask[k]].transcription, for: .normal)
+                k += 1
+            }
+            k = 0
+            for i in kanaAnswers {
+                let answerButton = self.view.viewWithTag(i + 1) as? BigShadowButton
+                answerButton?.setTitle(kanaDB[ask[k]].kana, for: .normal)
+                k += 1
             }
         default: //Упражнения с выбором правильного ответа из 2, 4, 6 и 9
             var whereWillBeCorrectAnswer: Int!
@@ -245,7 +299,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         showAnswer8?.tag = 8
         showAnswer9?.tag = 9
         showAnswer10?.tag = 10
-        for i in 1...10 {
+        showAnswer11?.tag = 11
+        showAnswer12?.tag = 12
+        for i in 1...12 {
             let buttonWithTag = self.view.viewWithTag(i) as? UIButton
             buttonWithTag?.addTarget(nil, action: #selector(clickAnswer), for: .touchUpInside)
         }
@@ -258,6 +314,40 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 count += 1
             } else {
                 count -= 1
+            }
+            self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            RandomizeQuize()
+        case 6://сопоставление
+            if firstAnswer == 0 {
+                sender.backgroundColor = UIColor(white: 0.95, alpha: 1)
+                firstAnswer = sender.tag
+            } else {
+                if firstAnswer == sender.tag {
+                    firstAnswer = 0
+                    sender.backgroundColor = .white
+                    return
+                }
+                let firstAnswerButton = self.view.viewWithTag(firstAnswer) as? BigShadowButton
+                for pair in pairInt {
+                    if (sender.tag == pair.firts || sender.tag == pair.second) {
+                        if (firstAnswer == pair.firts || firstAnswer == pair.second) {
+                            count += 1
+                            incorrectAnswers.append(false)
+                            if count == countQuestion  {
+                                firstAnswer = 0
+                                drawResult()
+                                return
+                            }
+                            self.title = "\(count + 1)/\(countQuestion!)"
+                            sender.isHidden = true
+                            firstAnswerButton?.isHidden = true
+                        } else {
+                            firstAnswerButton?.backgroundColor = .white
+                        }
+                        firstAnswer = 0
+                        break
+                    }
+                }
             }
         default: //тут все упражнения кроме курсов, показать кана, написать кана и сопоставление
             if correctAnswer == sender.tag {
@@ -272,9 +362,10 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             progress.progress += step
             count += 1
+            self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            RandomizeQuize()
         }
-        self.title = "\(count + 1)/\(countQuestion ?? 0)"
-        RandomizeQuize()
+        
     }
     
     //Может перенести отдельно ?
@@ -406,7 +497,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func repeatAction() -> Void {
-        initDB()
+        initialParameters()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

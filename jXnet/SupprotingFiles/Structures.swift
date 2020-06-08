@@ -18,3 +18,8 @@ struct RangeForGradation {
     let start: Int!
     let end: UInt32!
 }
+
+struct TwoInteger { //для прохождения курса от jXnet и упражнение на сопоставление
+    let firts: Int!
+    var second = 0
+}
