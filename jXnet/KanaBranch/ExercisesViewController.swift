@@ -11,6 +11,7 @@ import CoreData
 
 class ExercisesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    
     private var correctAnswer: Int?//Правильный ответ
     private var incorrectAnswers = [Bool]()//Счетчик ответов пользователя
     private var ask = [Int]()//Вопросы уникальные
@@ -45,6 +46,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var chooserCorrectAnswer: ChooseCorrectAnswer!
     private var showKana: ShowKana!
     private var comparsionTask: ComparsionTask!
+    private var handwritingView: HandwritingView!
     
     //Таблица результатов
     let resultTable: UITableView = {
@@ -61,6 +63,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var startRange: Int! //начальное значение диапозона по ид
     private var endRange: UInt32! //конечное значение диапозона по ид
     private var kanaDB = [KanaData]() //БД значений кана для данного упражнения
+    
+    //Переменные только для рукописного ввода
+    var drawableView: DrawableView!
     
     private func initDB() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -98,6 +103,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
    
     func initialParameters() -> Void {
         self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
+        
         pairInt = []
         if (self.lessonNumber == 4 || self.lessonNumber == 5) {
             countQuestion = 8
@@ -121,6 +127,11 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             showKana = ShowKana.init(self)
             self.view = showKana.showKana()
             countQuestion = kanaDB.count
+        case 2:
+            //Инициализация после прогрузки данного ViewController
+            handwritingView = HandwritingView.init(self)
+            self.view = handwritingView.drawStandartSheet()
+            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 3:
             //Инициализация после прогрузки данного ViewController
             chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
@@ -183,6 +194,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             } else {
                 showAnswer2.isHidden = false
             }
+        case 2:
+            showAsk1.text = kanaDB[ask[count]].transcription
         case 5://ДаНет
             if Bool.random() {
                 showAsk1.text = kanaDB[ask[count]].kana
@@ -317,6 +330,24 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             self.title = "\(count + 1)/\(countQuestion ?? 0)"
             RandomizeQuize()
+        case 2://написать кана
+            switch sender.tag {
+            case 1:
+                incorrectAnswers.append(false)
+                if count == countQuestion - 1{
+                    drawResult()
+                    return
+                }
+                count += 1
+                self.title = "\(count + 1)/\(countQuestion ?? 0)"
+                drawableView.clear()
+                RandomizeQuize()
+            case 2:
+                drawableView.clear()
+            default:
+                drawableView.undo()
+            }
+           
         case 6://сопоставление
             if firstAnswer == 0 {
                 sender.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -365,7 +396,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             self.title = "\(count + 1)/\(countQuestion ?? 0)"
             RandomizeQuize()
         }
-        
     }
     
     //Может перенести отдельно ?

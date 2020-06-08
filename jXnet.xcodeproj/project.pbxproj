@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */; };
 		1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */; };
+		1572DCF1248ED6BE00C9218A /* HandwritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCF0248ED6BE00C9218A /* HandwritingView.swift */; };
+		1572DCF5248ED7A200C9218A /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCF4248ED7A200C9218A /* DrawableView.swift */; };
 		15BBCB91248C9969005AF0DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCB90248C9969005AF0DA /* AppDelegate.swift */; };
 		15BBCB98248C9969005AF0DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15BBCB96248C9969005AF0DA /* Main.storyboard */; };
 		15BBCB9B248C9969005AF0DA /* jXnet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCB99248C9969005AF0DA /* jXnet.xcdatamodeld */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBarHeight.swift; sourceTree = "<group>"; };
 		1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СomparisonTask.swift"; sourceTree = "<group>"; };
+		1572DCF0248ED6BE00C9218A /* HandwritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandwritingView.swift; sourceTree = "<group>"; };
+		1572DCF4248ED7A200C9218A /* DrawableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableView.swift; sourceTree = "<group>"; };
 		15BBCB8D248C9969005AF0DA /* jXnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jXnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15BBCB90248C9969005AF0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15BBCB97248C9969005AF0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -71,6 +75,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1572DCF3248ED79300C9218A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1572DCF4248ED7A200C9218A /* DrawableView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		15BBCB84248C9969005AF0DA = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +139,7 @@
 		15BBCBAF248C9EA0005AF0DA /* UIElementsCustom */ = {
 			isa = PBXGroup;
 			children = (
+				1572DCF3248ED79300C9218A /* View */,
 				15BBCBCD248DC890005AF0DA /* View with elements */,
 				15BBCBB1248C9EBF005AF0DA /* Label */,
 				15BBCBB0248C9EB3005AF0DA /* Button */,
@@ -178,6 +191,7 @@
 				15BBCBCE248DC8B7005AF0DA /* ChooseCorrectAnswer.swift */,
 				15BBCBDF248E0DEB005AF0DA /* ShowKana.swift */,
 				1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */,
+				1572DCF0248ED6BE00C9218A /* HandwritingView.swift */,
 			);
 			path = "View with elements";
 			sourceTree = "<group>";
@@ -254,12 +268,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1572DCF5248ED7A200C9218A /* DrawableView.swift in Sources */,
 				15BBCBBD248CBD07005AF0DA /* SelectLessonTableViewCell.swift in Sources */,
 				15BBCBC1248D158B005AF0DA /* LessonTableViewController.swift in Sources */,
 				1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */,
 				15BBCBCA248DA8AF005AF0DA /* ExercisesViewController.swift in Sources */,
 				15BBCBD3248DD645005AF0DA /* Gradation.swift in Sources */,
 				15BBCBBA248C9F5A005AF0DA /* RoundButton.swift in Sources */,
+				1572DCF1248ED6BE00C9218A /* HandwritingView.swift in Sources */,
 				15BBCBB8248C9F40005AF0DA /* HexColor.swift in Sources */,
 				15BBCBB5248C9F12005AF0DA /* BigShadowButton.swift in Sources */,
 				15BBCB91248C9969005AF0DA /* AppDelegate.swift in Sources */,
