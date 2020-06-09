@@ -20,6 +20,6 @@ struct RangeForGradation {
 }
 
 struct TwoInteger { //для прохождения курса от jXnet и упражнение на сопоставление
-    let firts: Int!
+    let first: Int!
     var second = 0
 }

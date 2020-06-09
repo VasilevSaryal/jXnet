@@ -59,8 +59,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     var lessonNumber: Int!
     //Тип упражнения
     var typeTask: Int!
-    //Это курсы?
-    var isCourse = false
+    //Номер курса. 0 если это не курс
+    var courseNumber = 0
     //База данных
     private var startRange: Int! //начальное значение диапозона по ид
     private var endRange: UInt32! //конечное значение диапозона по ид
@@ -123,35 +123,49 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         step = 1.0 / Float(countQuestion)
         self.view.addSubview(progress)
         
+        if courseNumber == 1 {
+            //Инициализация после прогрузки данного ViewController
+            showKana = ShowKana.init(self)
+            handwritingView = HandwritingView.init(self)
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+            comparsionTask = ComparsionTask.init(self)
+        }
+        
+        if courseNumber == 2 {
+            //Инициализация после прогрузки данного ViewController
+            handwritingView = HandwritingView.init(self)
+            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+        }
+
         switch typeTask {
         case 1:
             //Инициализация после прогрузки данного ViewController
-            showKana = ShowKana.init(self)
+            if courseNumber == 0 {showKana = ShowKana.init(self)}
             self.view = showKana.showKana()
             countQuestion = kanaDB.count
         case 2:
             //Инициализация после прогрузки данного ViewController
-            handwritingView = HandwritingView.init(self)
+            if courseNumber == 0 {handwritingView = HandwritingView.init(self)}
             self.view = handwritingView.drawStandartSheet()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 3:
             //Инициализация после прогрузки данного ViewController
-            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+            if courseNumber == 0 {chooserCorrectAnswer = ChooseCorrectAnswer.init(self)}
             self.view = chooserCorrectAnswer.drawTwoAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 4:
             //Инициализация после прогрузки данного ViewController
-            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+            if courseNumber == 0 {chooserCorrectAnswer = ChooseCorrectAnswer.init(self)}
             self.view = chooserCorrectAnswer.drawFourAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 5:
             //Инициализация после прогрузки данного ViewController
-            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+            if courseNumber == 0 {chooserCorrectAnswer = ChooseCorrectAnswer.init(self)}
             self.view = chooserCorrectAnswer.drawYesNo()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 6:
             //Инициализация после прогрузки данного ViewController
-            comparsionTask = ComparsionTask.init(self)
+            if courseNumber == 0 {comparsionTask = ComparsionTask.init(self)}
             if lessonNumber == 4 || lessonNumber == 5 {
                 self.view = comparsionTask.drawComparsionFive()
                 countQuestion = 5
@@ -163,32 +177,31 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         case 7:
             //Инициализация после прогрузки данного ViewController
-            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+            if courseNumber == 0 {chooserCorrectAnswer = ChooseCorrectAnswer.init(self)}
             self.view = chooserCorrectAnswer.drawSixAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
         case 8:
             //Инициализация после прогрузки данного ViewController
-            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
+            if courseNumber == 0 {chooserCorrectAnswer = ChooseCorrectAnswer.init(self)}
             self.view = chooserCorrectAnswer.drawNineAnswer()
             ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
-        case 9:
-            chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
-            handwritingView = HandwritingView.init(self)
-            ask = uniqueRandoms(numberOfRandoms: countQuestion, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
-            isCourse = true
-            if Bool.random() {
-                typeTask = 2
-                self.view = handwritingView.drawStandartSheet()
-            } else {
-                typeTask = 8
-                self.view = chooserCorrectAnswer.drawNineAnswer()
-            }
+            
         default:
             print("Development..")
             _ = navigationController?.popViewController(animated: true)
             return
         }
-        self.title = "1/\(countQuestion ?? 0)"
+        if courseNumber == 0 {
+            self.title = "1/\(countQuestion ?? 0)"
+        } else {
+            self.title = "1/5"
+            ask = uniqueRandoms(numberOfRandoms: countQuestion / 2, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            if courseNumber == 1 {
+                for i in ask {
+                    pairInt.append(TwoInteger(first: i))
+                }
+            }
+        }
         initButtonTags()
         RandomizeQuize()
     }
@@ -196,17 +209,23 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     func RandomizeQuize(){
         switch typeTask {
         case 1:
-            showAsk1.text = kanaDB[count].kana
-            showAsk2?.text = kanaDB[count].transcription
-            if count == 0 {
+            if courseNumber == 0 {
+                showAsk1.text = kanaDB[count].kana
+                showAsk2?.text = kanaDB[count].transcription
+                if count == 0 {
+                    showAnswer1.isHidden = true
+                } else {
+                    showAnswer1.isHidden = false
+                }
+                if count == kanaDB.count - 1 {
+                    showAnswer2.isHidden = true
+                } else {
+                    showAnswer2.isHidden = false
+                }
+            } else {
+                showAsk1.text = kanaDB[ask[count]].kana
+                showAsk2?.text = kanaDB[ask[count]].transcription
                 showAnswer1.isHidden = true
-            } else {
-                showAnswer1.isHidden = false
-            }
-            if count == kanaDB.count - 1 {
-                showAnswer2.isHidden = true
-            } else {
-                showAnswer2.isHidden = false
             }
         case 2:
             showAsk1.text = kanaDB[ask[count]].transcription
@@ -240,12 +259,12 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             let kanaAnswers = isLittleQuestion ? allAnswers[5...9] : allAnswers[6...11]
             if isLittleQuestion {
                 for i in 0...4 {
-                    let correctPair = TwoInteger(firts: transcriptionAnswers[i] + 1, second: kanaAnswers[5 + i] + 1)
+                    let correctPair = TwoInteger(first: transcriptionAnswers[i] + 1, second: kanaAnswers[5 + i] + 1)
                     pairInt.append(correctPair)
                 }
             } else {
                 for i in 0...5 {
-                    let correctPair = TwoInteger(firts: transcriptionAnswers[i] + 1, second: kanaAnswers[6 + i] + 1)
+                    let correctPair = TwoInteger(first: transcriptionAnswers[i] + 1, second: kanaAnswers[6 + i] + 1)
                     pairInt.append(correctPair)
                 }
             }
@@ -343,7 +362,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 count -= 1
             }
             self.title = "\(count + 1)/\(countQuestion ?? 0)"
-            if !isCourse {RandomizeQuize()}
+            if courseNumber == 0 {RandomizeQuize()}
         case 2://написать кана
             switch sender.tag {
             case 1:
@@ -355,7 +374,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 count += 1
                 self.title = "\(count + 1)/\(countQuestion ?? 0)"
                 drawableView.clear()
-                if !isCourse {RandomizeQuize()}
+                if courseNumber == 0 {RandomizeQuize()}
             case 2:
                 drawableView.clear()
             default:
@@ -374,8 +393,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 let firstAnswerButton = self.view.viewWithTag(firstAnswer) as? BigShadowButton
                 for pair in pairInt {
-                    if (sender.tag == pair.firts || sender.tag == pair.second) {
-                        if (firstAnswer == pair.firts || firstAnswer == pair.second) {
+                    if (sender.tag == pair.first || sender.tag == pair.second) {
+                        if (firstAnswer == pair.first || firstAnswer == pair.second) {
                             count += 1
                             incorrectAnswers.append(false)
                             if count == countQuestion  {
@@ -408,10 +427,83 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             progress.progress += step
             count += 1
             self.title = "\(count + 1)/\(countQuestion ?? 0)"
-            if !isCourse {RandomizeQuize()}
+            if courseNumber == 0 {RandomizeQuize()}
             
         }
-        if isCourse {
+        if courseNumber == 1 {
+            //Для кнопок стирания в рукописном вводе
+            if ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3)) {
+                return
+            }
+            self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
+            //TODO временный костыль для быстрогое решения
+            count -= 1
+            for i in 0...(pairInt.count - 1) {
+                if ask[count] == pairInt[i].first {
+                    var isNext: Bool!
+                    if incorrectAnswers.isEmpty {isNext = true}
+                    else {isNext = !incorrectAnswers.last!}
+                    if !isNext {
+                        pairInt[i].second = 0
+                    } else {
+                        pairInt[i].second += 1
+                        if pairInt[i].second == 5 {
+                            pairInt.remove(at: i)
+                        }
+                    }
+                    break
+                }
+            }
+            ask.removeAll()
+            let  testRnadom = Int.random(in: 0...0)
+            print("TestR", testRnadom)
+            print("Count ",pairInt.count)
+            if pairInt.count == 0 {
+                print("SSS")
+                let alert = UIAlertController(title: "Поздравляю!", message: "Вы выучили \(countQuestion / 2) символов", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                    _ = self.navigationController?.popViewController(animated: true)
+                }))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            let nextAsk = Int.random(in: 0...(pairInt.count - 1))
+            ask.append(pairInt[nextAsk].first)
+            switch pairInt[nextAsk].second {
+            case 0:
+                typeTask = 1
+                self.view = showKana.showKana()
+                self.title = "1/5"
+            case 1:
+                typeTask = 2
+                self.view = handwritingView.drawStandartSheet()
+                self.title = "2/5"
+            case 2:
+                typeTask = 3
+                self.view = chooserCorrectAnswer.drawTwoAnswer()
+                self.title = "3/5"
+            case 3:
+                if Bool.random() {
+                    typeTask = 4
+                    self.view = chooserCorrectAnswer.drawFourAnswer()
+                } else {
+                    typeTask = 5
+                    self.view = chooserCorrectAnswer.drawYesNo()
+                }
+                self.title = "4/5"
+            case 4:
+                typeTask = 7
+                self.view = chooserCorrectAnswer.drawSixAnswer()
+                self.title = "5/5"
+            default:
+                print("Error in nextAsk ")
+                return
+            }
+            initButtonTags()
+            RandomizeQuize()
+        }
+        if courseNumber == 2 {
+            //Для кнопок стирания в рукописном вводе
             if ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3)) {
                 return
             }
