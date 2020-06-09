@@ -229,6 +229,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         case 2:
             showAsk1.text = kanaDB[ask[count]].transcription
+            if courseNumber == 1 {
+                showAsk2?.text = kanaDB[ask[count]].kana
+            }
         case 5://ДаНет
             if Bool.random() {
                 showAsk1.text = kanaDB[ask[count]].kana
@@ -455,11 +458,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
             ask.removeAll()
-            let  testRnadom = Int.random(in: 0...0)
-            print("TestR", testRnadom)
-            print("Count ",pairInt.count)
             if pairInt.count == 0 {
-                print("SSS")
                 let alert = UIAlertController(title: "Поздравляю!", message: "Вы выучили \(countQuestion / 2) символов", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                     _ = self.navigationController?.popViewController(animated: true)
@@ -476,7 +475,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.title = "1/5"
             case 1:
                 typeTask = 2
-                self.view = handwritingView.drawStandartSheet()
+                self.view = handwritingView.drawStandartSheetWithStencil()
                 self.title = "2/5"
             case 2:
                 typeTask = 3
