@@ -17,6 +17,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var ask = [Int]()//Вопросы уникальные
     private var firstAnswer = 0//Тег первой кнопки только для сопоставления
     private var pairInt = [TwoInteger]()//Пара правильного ответа только для сопоставления и прохождение курса от jXnet
+    private var lastAsk = [Int]()//Костыль временный нужен для заключительного вопроса в курсе от jXnet
     private var step: Float!//Шаг
     private var countQuestion: Int! //Количество вопросов
     private var count = 0//Счетчик прохождения
@@ -191,11 +192,13 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             _ = navigationController?.popViewController(animated: true)
             return
         }
-        if courseNumber == 0 {
+        if courseNumber == 0 || courseNumber == 2 {
             self.title = "1/\(countQuestion ?? 0)"
-        } else {
+        } else if courseNumber == 1{
             self.title = "1/5"
             ask = uniqueRandoms(numberOfRandoms: countQuestion / 2, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            //TODO костыль для скорости разработки
+            lastAsk = ask
             if courseNumber == 1 {
                 for i in ask {
                     pairInt.append(TwoInteger(first: i))
@@ -256,6 +259,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
         case 6: //Упражение на правильное сопоставление
+            pairInt.removeAll()
             let isLittleQuestion = (lessonNumber == 4 || lessonNumber == 5)
             let allAnswers = isLittleQuestion ? uniqueRandoms(numberOfRandoms: 10, minNum: 0, maxNum: 9, blackList: nil) : uniqueRandoms(numberOfRandoms: 12, minNum: 0, maxNum: 11, blackList: nil)
             let transcriptionAnswers = isLittleQuestion ? allAnswers[0...4] : allAnswers[0...5]
@@ -402,7 +406,11 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                             incorrectAnswers.append(false)
                             if count == countQuestion  {
                                 firstAnswer = 0
-                                drawResult()
+                                if courseNumber == 1 {
+                                    jXnetCourseComplete()
+                                } else {
+                                    drawResult()
+                                }
                                 return
                             }
                             self.title = "\(count + 1)/\(countQuestion!)"
@@ -410,6 +418,26 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                             firstAnswerButton?.isHidden = true
                         } else {
                             firstAnswerButton?.backgroundColor = .white
+                            if courseNumber == 1 {
+                                //удаление всех элементов
+                                self.view.subviews.forEach { $0.removeFromSuperview() }
+                                incorrectAnswers.removeAll()
+                                checkedAnswers.removeAll()
+                                ask.removeAll()
+                                pairInt.removeAll()
+                                ask = lastAsk
+                                for i in lastAsk {
+                                    pairInt.append(TwoInteger(first: i))
+                                }
+                                typeTask = 1
+                                
+                                self.view = showKana.showKana()
+                                self.title = "1/5"
+                                initButtonTags()
+                                RandomizeQuize()
+                                firstAnswer = 0
+                                return
+                            }
                         }
                         firstAnswer = 0
                         break
@@ -434,6 +462,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             
         }
         if courseNumber == 1 {
+            //Чтобы не реагировать при нажатии в сопоставлении
+            if (typeTask == 6) {return}
             //Для кнопок стирания в рукописном вводе
             if ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3)) {
                 return
@@ -459,11 +489,41 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             ask.removeAll()
             if pairInt.count == 0 {
-                let alert = UIAlertController(title: "Поздравляю!", message: "Вы выучили \(countQuestion / 2) символов", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                    _ = self.navigationController?.popViewController(animated: true)
-                }))
-                self.present(alert, animated: true, completion: nil)
+                count = 0
+                typeTask = 6
+                if lessonNumber == 4 || lessonNumber == 5 {
+                    self.view = comparsionTask.drawComparsionFive()
+                    self.title = "1/5"
+                    self.countQuestion = 5
+                    
+                } else {
+                    self.view = comparsionTask.drawComparsionSix()
+                    self.title = "1/6"
+                    self.countQuestion = 6
+                }
+                ask = lastAsk
+                
+                //TODO Супер костыль нужно что-то придумать
+                var sss = ask
+                sss = sss.sorted()
+                var saryalFix = [Int]()
+                var k = 0
+                for i in 0...(kanaDB.count - 1) {
+                    if k == sss.count {
+                        break
+                    } else {
+                        if sss[k] != i {
+                            saryalFix.append(i)
+                        }
+                        k += 1
+                    }
+                }
+            
+                let index = Int.random(in: 0...(saryalFix.count - 1))
+                ask.append(saryalFix[index])
+                
+                initButtonTags()
+                RandomizeQuize()
                 return
             }
             let nextAsk = Int.random(in: 0...(pairInt.count - 1))
@@ -501,7 +561,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             initButtonTags()
             RandomizeQuize()
         }
-        if courseNumber == 2 {
+        if courseNumber == 2 && typeTask != 6 {
             //Для кнопок стирания в рукописном вводе
             if ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3)) {
                 return
@@ -511,12 +571,27 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 typeTask = 2
                 self.view = handwritingView.drawStandartSheet()
             } else {
-                typeTask = 8
-                self.view = chooserCorrectAnswer.drawNineAnswer()
+                
+                if countQuestion == 10 {
+                    typeTask = 8
+                    self.view = chooserCorrectAnswer.drawNineAnswer()
+                } else {
+                    typeTask = 7
+                    self.view = chooserCorrectAnswer.drawSixAnswer()
+                }
             }
             initButtonTags()
             RandomizeQuize()
         }
+    }
+    
+    private func jXnetCourseComplete() {
+        let alert = UIAlertController(title: "Поздравляю!", message: "Вы выучили \(countQuestion - 1) символов", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            _ = self.navigationController?.popViewController(animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+        return
     }
     
     //Может перенести отдельно ?

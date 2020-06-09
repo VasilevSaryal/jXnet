@@ -113,7 +113,11 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
                 if Bool.random() {
                     theDestination.typeTask = 2
                 } else {
-                    theDestination.typeTask = 8
+                    if (lessonNumber == 4 || lessonNumber == 5) {
+                        theDestination.typeTask = 7
+                    } else {
+                        theDestination.typeTask = 8
+                    }
                 }
             default:
                 theDestination.typeTask = typeTask
