@@ -225,7 +225,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 } else {
                     showAnswer2.isHidden = false
                 }
-            } else {
+            }
+            if courseNumber == 1 {
                 showAsk1.text = kanaDB[ask[count]].kana
                 showAsk2?.text = kanaDB[ask[count]].transcription
                 showAnswer1.isHidden = true
@@ -430,7 +431,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                                     pairInt.append(TwoInteger(first: i))
                                 }
                                 typeTask = 1
-                                
+                                count = 0
                                 self.view = showKana.showKana()
                                 self.title = "1/5"
                                 initButtonTags()
@@ -474,7 +475,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             for i in 0...(pairInt.count - 1) {
                 if ask[count] == pairInt[i].first {
                     var isNext: Bool!
-                    if incorrectAnswers.isEmpty {isNext = true}
+                    if pairInt[i].second == 0 {isNext = true}
                     else {isNext = !incorrectAnswers.last!}
                     if !isNext {
                         pairInt[i].second = 0
@@ -503,24 +504,13 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 ask = lastAsk
                 
-                //TODO Супер костыль нужно что-то придумать
-                var sss = ask
-                sss = sss.sorted()
                 var saryalFix = [Int]()
-                var k = 0
                 for i in 0...(kanaDB.count - 1) {
-                    if k == sss.count {
-                        break
-                    } else {
-                        if sss[k] != i {
-                            saryalFix.append(i)
-                        }
-                        k += 1
-                    }
+                    saryalFix.append(i)
                 }
-            
-                let index = Int.random(in: 0...(saryalFix.count - 1))
-                ask.append(saryalFix[index])
+                saryalFix = Array(Set(saryalFix).symmetricDifference(Set(ask)))
+                let randomIndex = Int.random(in: 0...(saryalFix.count - 1))
+                ask.append(saryalFix[randomIndex])
                 
                 initButtonTags()
                 RandomizeQuize()
