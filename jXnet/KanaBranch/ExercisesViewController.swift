@@ -18,6 +18,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var firstAnswer = 0//Тег первой кнопки только для сопоставления
     private var pairInt = [TwoInteger]()//Пара правильного ответа только для сопоставления и прохождение курса от jXnet
     private var lastAsk = [Int]()//Костыль временный нужен для заключительного вопроса в курсе от jXnet
+    private var correctAnswerForComparsion = 0// Костыль запись правильного ответа для сопоставления
     private var step: Float!//Шаг
     private var countQuestion: Int! //Количество вопросов
     private var count = 0//Счетчик прохождения
@@ -43,6 +44,12 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     var repeatButton: UIButton!
     //Прогесс прохождения (Линия)
     var progress: UIProgressView!
+    //Перекрывания экрана используются для неправильного нажатия
+    let fullScreenView : UIView = {
+        let view = UIView()
+        view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        return view
+    }()
     //Переменные для обращение к методам рисования элементов в данном view
     private var chooserCorrectAnswer: ChooseCorrectAnswer!
     private var showKana: ShowKana!
@@ -103,7 +110,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         initDB()
         //firstAlert()
     }
-   
+    
     func initialParameters() -> Void {
         self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
         
@@ -137,7 +144,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             handwritingView = HandwritingView.init(self)
             chooserCorrectAnswer = ChooseCorrectAnswer.init(self)
         }
-
+        
         switch typeTask {
         case 1:
             //Инициализация после прогрузки данного ViewController
@@ -388,11 +395,17 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             default:
                 drawableView.undo()
             }
-           
+            
         case 6://сопоставление
             if firstAnswer == 0 {
                 sender.backgroundColor = UIColor(white: 0.95, alpha: 1)
                 firstAnswer = sender.tag
+                //костыль запись правильного варианта сапостовления
+                for pair in pairInt {
+                    if (sender.tag == pair.first || sender.tag == pair.second) {
+                        correctAnswerForComparsion = sender.tag == pair.first ? pair.second : pair.first
+                    }
+                }
             } else {
                 if firstAnswer == sender.tag {
                     firstAnswer = 0
@@ -418,10 +431,20 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                             sender.isHidden = true
                             firstAnswerButton?.isHidden = true
                         } else {
-                            firstAnswerButton?.backgroundColor = .white
+                            //Неверный выбор
+                            if courseNumber == 0 {
+                                //Костыль для быстрой разработки
+                                firstAnswer = 0
+                                view.addSubview(fullScreenView)
+                                fullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+                                let correctAnswer = self.view.viewWithTag(correctAnswerForComparsion) as? UIButton
+                                correctAnswer?.backgroundColor = UIColor(hexFromString: "#1FD945")
+                                sender.backgroundColor = UIColor(hexFromString: "#F2333B")
+                                count = 0
+                                self.title = "1/\(countQuestion!)"
+                                return
+                            }
                             if courseNumber == 1 {
-                                //удаление всех элементов
-                                self.view.subviews.forEach { $0.removeFromSuperview() }
                                 incorrectAnswers.removeAll()
                                 checkedAnswers.removeAll()
                                 ask.removeAll()
@@ -432,11 +455,14 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                                 }
                                 typeTask = 1
                                 count = 0
-                                self.view = showKana.showKana()
                                 self.title = "1/5"
                                 initButtonTags()
-                                RandomizeQuize()
                                 firstAnswer = 0
+                                view.addSubview(fullScreenView)
+                                fullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+                                let correctAnswer = self.view.viewWithTag(correctAnswerForComparsion) as? UIButton
+                                correctAnswer?.backgroundColor = UIColor(hexFromString: "#1FD945")
+                                sender.backgroundColor = UIColor(hexFromString: "#F2333B")
                                 return
                             }
                         }
@@ -451,6 +477,17 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             else {
                 incorrectAnswers.append(true)
+                view.addSubview(fullScreenView)
+                fullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+                let correctAnswerButton = self.view.viewWithTag(correctAnswer!) as? UIButton
+                correctAnswerButton?.backgroundColor = UIColor(hexFromString: "#1FD945")
+                sender.backgroundColor = UIColor(hexFromString: "#F2333B")
+                if typeTask == 5 {
+                    correctAnswerButton?.setTitleColor(.black, for: .normal)
+                    sender.setTitleColor(.black, for: .normal)
+                }
+                return
+                
             }
             if count == countQuestion - 1  {
                 drawResult()
@@ -462,13 +499,18 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             if courseNumber == 0 {RandomizeQuize()}
             
         }
+        
+        //КУРСЫ
+        let isClickInClearOrReset = ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3))
+        extraTaskCourses(isClickInClearOrReset)
+    }
+    
+    private func extraTaskCourses(_ isClickInClearOrReset: Bool) {
         if courseNumber == 1 {
             //Чтобы не реагировать при нажатии в сопоставлении
             if (typeTask == 6) {return}
             //Для кнопок стирания в рукописном вводе
-            if ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3)) {
-                return
-            }
+            if  isClickInClearOrReset {return}
             self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
             //TODO временный костыль для быстрогое решения
             count -= 1
@@ -553,9 +595,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         if courseNumber == 2 && typeTask != 6 {
             //Для кнопок стирания в рукописном вводе
-            if ((typeTask == 2 && sender.tag == 2) || (typeTask == 2 && sender.tag == 3)) {
-                return
-            }
+            if isClickInClearOrReset {return}
             self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
             if Bool.random() {
                 typeTask = 2
@@ -719,6 +759,45 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc private func handleTap() {
+        fullScreenView.removeFromSuperview()
+        setColorWhiteAllButton()
+        if typeTask == 6 {
+            if courseNumber == 1 {
+                //удаление всех элементов
+                self.view.subviews.forEach { $0.removeFromSuperview() }
+                self.view = showKana.showKana()
+            }
+            RandomizeQuize()
+        } else {
+            if count == countQuestion - 1  {
+                drawResult()
+                return
+            }
+            progress.progress += step
+            count += 1
+            self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            if courseNumber == 0 {RandomizeQuize()}
+        }
+        
+        if courseNumber != 0 && typeTask != 6 {
+            extraTaskCourses(false)
+        }
+    }
+    
+    //Перекраска обратно в белый цвет (немного костылб)
+    private func setColorWhiteAllButton() {
+        for i in 1...12 {
+            let buttonWithTag = self.view.viewWithTag(i) as? UIButton
+            buttonWithTag?.backgroundColor = .white
+            buttonWithTag?.isHidden = false
+        }
+        if typeTask == 5 {
+            (self.view.viewWithTag(1) as? UIButton)?.setTitleColor(.red, for: .normal)
+            (self.view.viewWithTag(2) as? UIButton)?.setTitleColor(UIColor(hexFromString: "#33CC66"), for: .normal)
+        }
     }
     
     func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32, blackList: Int?) -> [Int] {

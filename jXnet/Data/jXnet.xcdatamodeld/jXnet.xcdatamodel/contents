@@ -4,12 +4,14 @@
         <attribute name="hiragana" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="katakana" optional="YES" attributeType="String"/>
+        <attribute name="lastDateH" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastDateK" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="learnedH" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="learnedK" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="mnemonics" optional="YES" attributeType="String"/>
         <attribute name="transcription" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Kana" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="Kana" positionX="-63" positionY="-18" width="128" height="178"/>
     </elements>
 </model>
