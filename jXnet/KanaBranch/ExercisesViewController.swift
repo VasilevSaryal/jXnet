@@ -18,8 +18,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var firstAnswer = 0//Тег первой кнопки только для сопоставления
     private var pairInt = [TwoInteger]()//Пара правильного ответа только для сопоставления и прохождение курса от jXnet
     private var lastAsk = [Int]()//Костыль временный нужен для заключительного вопроса в курсе от jXnet
+    private var isRepeateJXNETCourse = false //Вообще костыль для опрделения повтор или начал
     private var correctAnswerForComparsion = 0// Костыль запись правильного ответа для сопоставления
-    private var step: Float!//Шаг
     private var countQuestion: Int! //Количество вопросов
     private var count = 0//Счетчик прохождения
     private var checkedAnswers = [String]()//Нужен для вывода table описание правильных ответов
@@ -41,11 +41,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     var showAnswer11: UIButton?
     var showAnswer12: UIButton?
     //Начать заново
-    var repeatButton: UIButton!
-    //Прогесс прохождения (Линия)
-    var progress: UIProgressView!
+    private var repeatButton: UIButton!
     //Перекрывания экрана используются для неправильного нажатия
-    let fullScreenView : UIView = {
+    private let fullScreenView : UIView = {
         let view = UIView()
         view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         return view
@@ -57,7 +55,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var handwritingView: HandwritingView!
     
     //Таблица результатов
-    let resultTable: UITableView = {
+    private let resultTable: UITableView = {
         let tv = UITableView()
         tv.allowsSelection = false
         return tv
@@ -76,6 +74,22 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     //Переменные только для рукописного ввода
     var drawableView: DrawableView!
+    
+    //Таймер для вопросов 30 секунд
+    private var timerProgress = UIProgressView(progressViewStyle: .default)
+    //Для таймера все
+    private var timer = Timer()
+    private var poseDuration = 30
+    
+    //Счетчик вопросов label (точки)
+    private var countLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 50)
+        label.textColor = .lightGray
+        label.textAlignment = .center
+        return label
+    }()
+    
     
     private func initDB() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -113,8 +127,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func initialParameters() -> Void {
         self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
-        
-        pairInt = []
+        self.view.addSubview(timerProgress)
+        pairInt.removeAll()
         if (self.lessonNumber == 4 || self.lessonNumber == 5) {
             countQuestion = 8
         } else {
@@ -125,11 +139,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         ask.removeAll()
         checkedAnswers.removeAll()
         
-        progress = UIProgressView()
-        progress.frame = CGRect(x: 0, y: 50, width: UIScreen.main.bounds.width, height: 1)
-        progress.progress = 0.0
-        step = 1.0 / Float(countQuestion)
-        self.view.addSubview(progress)
         
         if courseNumber == 1 {
             //Инициализация после прогрузки данного ViewController
@@ -200,10 +209,16 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             return
         }
         if courseNumber == 0 || courseNumber == 2 {
-            self.title = "1/\(countQuestion ?? 0)"
+            //self.title = "1/\(countQuestion ?? 0)"
+            //setLabelCount(currentQuestion: 1, countQuestion: (countQuestion ?? 0))
         } else if courseNumber == 1{
-            self.title = "1/5"
-            ask = uniqueRandoms(numberOfRandoms: countQuestion / 2, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            //self.title = "1/5"
+            //setLabelCount(currentQuestion: 1, countQuestion: 5)
+            if countQuestion >= 10 {
+                ask = uniqueRandoms(numberOfRandoms: 5, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            } else {
+                ask = uniqueRandoms(numberOfRandoms: 4, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
+            }
             //TODO костыль для скорости разработки
             lastAsk = ask
             if courseNumber == 1 {
@@ -217,8 +232,26 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func RandomizeQuize(){
+        //Почти костыльный способ для определиние % прохождение в курсе jXnet
+        if courseNumber == 1 {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "0%", style: .plain, target: self, action: nil)
+            if pairInt.count == 0 {
+                self.navigationItem.rightBarButtonItem?.title = "99%"
+            } else {
+                var passed = 0
+                for i in 0...(pairInt.count - 1) {
+                    passed += pairInt[i].second
+                    print("QQQ ", pairInt[i].second)
+                }
+                print("SSS ",pairInt.count)
+                passed += (5 - pairInt.count) * 5
+                let caclulatePecent = (passed * 100)/(5 * 5)
+                self.navigationItem.rightBarButtonItem?.title = "\(caclulatePecent)%"
+            }
+        }
         switch typeTask {
         case 1:
+            self.title = "Просмотр"
             if courseNumber == 0 {
                 showAsk1.text = kanaDB[count].kana
                 showAsk2?.text = kanaDB[count].transcription
@@ -234,16 +267,31 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
             if courseNumber == 1 {
+                setLabelCount(currentQuestion: 1, countQuestion: 5)
                 showAsk1.text = kanaDB[ask[count]].kana
                 showAsk2?.text = kanaDB[ask[count]].transcription
                 showAnswer1.isHidden = true
             }
         case 2:
+            self.title = "Напиши кана"
             showAsk1.text = kanaDB[ask[count]].transcription
+            if courseNumber != 1 {
+                setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
+                addTimerProgress()
+            } else {
+                setLabelCount(currentQuestion: 2, countQuestion: 5)
+            }
             if courseNumber == 1 {
                 showAsk2?.text = kanaDB[ask[count]].kana
             }
         case 5://ДаНет
+            self.title = "Это верно?"
+            addTimerProgress()
+            if courseNumber != 1 {
+                setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
+            } else {
+                setLabelCount(currentQuestion: 4, countQuestion: 5)
+            }
             if Bool.random() {
                 showAsk1.text = kanaDB[ask[count]].kana
                 if Bool.random() {
@@ -267,6 +315,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
         case 6: //Упражение на правильное сопоставление
+            self.title = "Сопоставь"
+            addTimerProgress()
             pairInt.removeAll()
             let isLittleQuestion = (lessonNumber == 4 || lessonNumber == 5)
             let allAnswers = isLittleQuestion ? uniqueRandoms(numberOfRandoms: 10, minNum: 0, maxNum: 9, blackList: nil) : uniqueRandoms(numberOfRandoms: 12, minNum: 0, maxNum: 11, blackList: nil)
@@ -296,6 +346,11 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 k += 1
             }
         default: //Упражнения с выбором правильного ответа из 2, 4, 6 и 9
+            self.title = "Выбери правильный ответ"
+            addTimerProgress()
+            if courseNumber != 1 {
+                setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
+            }
             var whereWillBeCorrectAnswer: Int!
             var inCorrectAnswerButtons = [Int]()
             var inCorrectAnswers = [Int]()
@@ -305,16 +360,25 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 inCorrectAnswerButtons = [1,2]
                 inCorrectAnswerButtons.remove(at: whereWillBeCorrectAnswer)
                 inCorrectAnswers = uniqueRandoms(numberOfRandoms: 1, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])
+                if courseNumber == 1 {
+                    setLabelCount(currentQuestion: 3, countQuestion: 5)
+                }
             case 4:
                 whereWillBeCorrectAnswer = Int.random(in: 0..<4)
                 inCorrectAnswerButtons = [1,2,3,4]
                 inCorrectAnswerButtons.remove(at: whereWillBeCorrectAnswer)
                 inCorrectAnswers = uniqueRandoms(numberOfRandoms: 3, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])
+                if courseNumber == 1 {
+                    setLabelCount(currentQuestion: 4, countQuestion: 5)
+                }
             case 7:
                 whereWillBeCorrectAnswer = Int.random(in: 0..<6)
                 inCorrectAnswerButtons = [1,2,3,4,5,6]
                 inCorrectAnswerButtons.remove(at: whereWillBeCorrectAnswer)
                 inCorrectAnswers = uniqueRandoms(numberOfRandoms: 5, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])
+                if courseNumber == 1 {
+                    setLabelCount(currentQuestion: 5, countQuestion: 5)
+                }
             case 8:
                 whereWillBeCorrectAnswer = Int.random(in: 0..<9)
                 inCorrectAnswerButtons = [1,2,3,4,5,6,7,8,9]
@@ -376,9 +440,12 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             } else {
                 count -= 1
             }
-            self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            //self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
             if courseNumber == 0 {RandomizeQuize()}
         case 2://написать кана
+            self.timerProgress.removeFromSuperview()
+            self.timer.invalidate()
             switch sender.tag {
             case 1:
                 incorrectAnswers.append(false)
@@ -387,7 +454,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     return
                 }
                 count += 1
-                self.title = "\(count + 1)/\(countQuestion ?? 0)"
+                //self.title = "\(count + 1)/\(countQuestion ?? 0)"
                 drawableView.clear()
                 if courseNumber == 0 {RandomizeQuize()}
             case 2:
@@ -417,6 +484,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     if (sender.tag == pair.first || sender.tag == pair.second) {
                         if (firstAnswer == pair.first || firstAnswer == pair.second) {
                             count += 1
+                            self.timerProgress.removeFromSuperview()
+                            self.timer.invalidate()
                             incorrectAnswers.append(false)
                             if count == countQuestion  {
                                 firstAnswer = 0
@@ -427,7 +496,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                                 }
                                 return
                             }
-                            self.title = "\(count + 1)/\(countQuestion!)"
+                            //self.title = "\(count + 1)/\(countQuestion!)"
+                            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
                             sender.isHidden = true
                             firstAnswerButton?.isHidden = true
                         } else {
@@ -435,13 +505,15 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                             if courseNumber == 0 {
                                 //Костыль для быстрой разработки
                                 firstAnswer = 0
+                                self.timer.invalidate()
                                 view.addSubview(fullScreenView)
                                 fullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
                                 let correctAnswer = self.view.viewWithTag(correctAnswerForComparsion) as? UIButton
                                 correctAnswer?.backgroundColor = UIColor(hexFromString: "#1FD945")
                                 sender.backgroundColor = UIColor(hexFromString: "#F2333B")
                                 count = 0
-                                self.title = "1/\(countQuestion!)"
+                                //self.title = "1/\(countQuestion!)"
+                                //setLabelCount(currentQuestion: 1, countQuestion: (countQuestion ?? 0))
                                 return
                             }
                             if courseNumber == 1 {
@@ -455,9 +527,11 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                                 }
                                 typeTask = 1
                                 count = 0
-                                self.title = "1/5"
-                                initButtonTags()
+                                //self.title = "1/5"
+                                //setLabelCount(currentQuestion: 1, countQuestion: 5)
                                 firstAnswer = 0
+                                isRepeateJXNETCourse = true
+                                self.timer.invalidate()
                                 view.addSubview(fullScreenView)
                                 fullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
                                 let correctAnswer = self.view.viewWithTag(correctAnswerForComparsion) as? UIButton
@@ -472,6 +546,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
         default: //тут все упражнения кроме курсов, показать кана, написать кана и сопоставление
+            self.timer.invalidate()
             if correctAnswer == sender.tag {
                 incorrectAnswers.append(false)
             }
@@ -493,9 +568,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 drawResult()
                 return
             }
-            progress.progress += step
             count += 1
-            self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            //self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
             if courseNumber == 0 {RandomizeQuize()}
             
         }
@@ -522,7 +597,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     if !isNext {
                         pairInt[i].second = 0
                     } else {
-                        pairInt[i].second += 1
+                        pairInt[i].second += isRepeateJXNETCourse ? 0 : 1
+                        isRepeateJXNETCourse = false
                         if pairInt[i].second == 5 {
                             pairInt.remove(at: i)
                         }
@@ -536,12 +612,14 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 typeTask = 6
                 if lessonNumber == 4 || lessonNumber == 5 {
                     self.view = comparsionTask.drawComparsionFive()
-                    self.title = "1/5"
+                    //self.title = "1/5"
+                    //setLabelCount(currentQuestion: 1, countQuestion: 5)
                     self.countQuestion = 5
                     
                 } else {
                     self.view = comparsionTask.drawComparsionSix()
-                    self.title = "1/6"
+                    //self.title = "1/6"
+                    //setLabelCount(currentQuestion: 1, countQuestion: 6)
                     self.countQuestion = 6
                 }
                 ask = lastAsk
@@ -564,15 +642,18 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             case 0:
                 typeTask = 1
                 self.view = showKana.showKana()
-                self.title = "1/5"
+                //self.title = "1/5"
+                //setLabelCount(currentQuestion: 1, countQuestion: 5)
             case 1:
                 typeTask = 2
                 self.view = handwritingView.drawStandartSheetWithStencil()
-                self.title = "2/5"
+                //self.title = "2/5"
+                //setLabelCount(currentQuestion: 2, countQuestion: 5)
             case 2:
                 typeTask = 3
                 self.view = chooserCorrectAnswer.drawTwoAnswer()
-                self.title = "3/5"
+                //self.title = "3/5"
+                //setLabelCount(currentQuestion: 3, countQuestion: 5)
             case 3:
                 if Bool.random() {
                     typeTask = 4
@@ -581,11 +662,13 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     typeTask = 5
                     self.view = chooserCorrectAnswer.drawYesNo()
                 }
-                self.title = "4/5"
+                //self.title = "4/5"
+                //setLabelCount(currentQuestion: 4, countQuestion: 5)
             case 4:
                 typeTask = 7
                 self.view = chooserCorrectAnswer.drawSixAnswer()
-                self.title = "5/5"
+                //self.title = "5/5"
+                //setLabelCount(currentQuestion: 5, countQuestion: 5)
             default:
                 print("Error in nextAsk ")
                 return
@@ -630,6 +713,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         //RightBar.image = UIImage.init(systemName: "gear")
         //self.tabBarController?.tabBar.isHidden = false
         view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
+        self.timerProgress.removeFromSuperview()
+        self.timer.invalidate()
         let label = UILabel()
         var correctSum = 0
         for answer in incorrectAnswers {
@@ -763,12 +848,14 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @objc private func handleTap() {
         fullScreenView.removeFromSuperview()
+        self.timerProgress.removeFromSuperview()
         setColorWhiteAllButton()
         if typeTask == 6 {
             if courseNumber == 1 {
                 //удаление всех элементов
                 self.view.subviews.forEach { $0.removeFromSuperview() }
                 self.view = showKana.showKana()
+                initButtonTags()
             }
             RandomizeQuize()
         } else {
@@ -776,15 +863,70 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 drawResult()
                 return
             }
-            progress.progress += step
             count += 1
-            self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            //self.title = "\(count + 1)/\(countQuestion ?? 0)"
+            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
             if courseNumber == 0 {RandomizeQuize()}
         }
         
-        if courseNumber != 0 && typeTask != 6 {
+        if courseNumber == 1 && typeTask != 6 {
             extraTaskCourses(false)
         }
+    }
+    
+    private func addTimerProgress() {
+        self.view.addSubview(timerProgress)
+        
+        self.timerProgress.frame = CGRect(x: 0, y: topbarHeight, width: UIScreen.main.bounds.width, height: 0)
+        self.timerProgress.tintColor = .darkGray
+        self.timerProgress.progress = 0
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+    }
+    @objc private func update() {
+        // Something cool
+        self.timerProgress.progress += 1.0 / Float(poseDuration)
+        if self.timerProgress.progress >= 1.0 {
+            self.timer.invalidate()
+        }
+    }
+    
+    //Функция для счетчика Label (Точки)
+    private func setLabelCount(currentQuestion: Int, countQuestion: Int) {
+        countLabel.removeFromSuperview()
+        
+        var textCount = ""
+        
+        for _ in 0...(countQuestion - 1) {
+            textCount.append(".")
+        }
+        
+        let multipleColorText = NSMutableAttributedString(string: textCount)
+        
+        if courseNumber == 1 {
+            if currentQuestion == 1 {
+                multipleColorText.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: 0, length: 1))
+            } else {
+                multipleColorText.addAttribute(.foregroundColor, value: UIColor(hexFromString: "#33CC66"), range: NSRange(location: 0, length: currentQuestion - 1))
+                multipleColorText.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: currentQuestion - 1, length: 1))
+            }
+        } else {
+            for i in 0...(countQuestion - 1) {
+                if i > (incorrectAnswers.count - 1) {
+                    multipleColorText.addAttribute(.foregroundColor, value: UIColor.darkGray, range: NSRange(location: i, length: 1))
+                    break
+                }
+                if incorrectAnswers[i] {
+                    multipleColorText.addAttribute(.foregroundColor, value: UIColor(hexFromString: "#FF3300"), range: NSRange(location: i, length: 1))
+                } else {
+                    multipleColorText.addAttribute(.foregroundColor, value: UIColor(hexFromString: "#33CC66"), range: NSRange(location: i, length: 1))
+                }
+            }
+        }
+        
+        countLabel.attributedText = multipleColorText
+        countLabel.frame = CGRect(x: 0, y: topbarHeight - 22, width: UIScreen.main.bounds.width, height: 36)
+        self.view.addSubview(countLabel)
     }
     
     //Перекраска обратно в белый цвет (немного костылб)
