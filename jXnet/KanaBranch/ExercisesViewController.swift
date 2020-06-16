@@ -122,7 +122,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         initDB()
-        //firstAlert()
     }
     
     func initialParameters() -> Void {
@@ -241,9 +240,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 var passed = 0
                 for i in 0...(pairInt.count - 1) {
                     passed += pairInt[i].second
-                    print("QQQ ", pairInt[i].second)
                 }
-                print("SSS ",pairInt.count)
                 passed += (5 - pairInt.count) * 5
                 let caclulatePecent = (passed * 100)/(5 * 5)
                 self.navigationItem.rightBarButtonItem?.title = "\(caclulatePecent)%"
@@ -440,8 +437,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             } else {
                 count -= 1
             }
-            //self.title = "\(count + 1)/\(countQuestion ?? 0)"
-            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
             if courseNumber == 0 {RandomizeQuize()}
         case 2://написать кана
             self.timerProgress.removeFromSuperview()
@@ -454,7 +449,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     return
                 }
                 count += 1
-                //self.title = "\(count + 1)/\(countQuestion ?? 0)"
                 drawableView.clear()
                 if courseNumber == 0 {RandomizeQuize()}
             case 2:
@@ -496,8 +490,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                                 }
                                 return
                             }
-                            //self.title = "\(count + 1)/\(countQuestion!)"
-                            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
                             sender.isHidden = true
                             firstAnswerButton?.isHidden = true
                         } else {
@@ -512,8 +504,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                                 correctAnswer?.backgroundColor = UIColor(hexFromString: "#1FD945")
                                 sender.backgroundColor = UIColor(hexFromString: "#F2333B")
                                 count = 0
-                                //self.title = "1/\(countQuestion!)"
-                                //setLabelCount(currentQuestion: 1, countQuestion: (countQuestion ?? 0))
                                 return
                             }
                             if courseNumber == 1 {
@@ -527,8 +517,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                                 }
                                 typeTask = 1
                                 count = 0
-                                //self.title = "1/5"
-                                //setLabelCount(currentQuestion: 1, countQuestion: 5)
                                 firstAnswer = 0
                                 isRepeateJXNETCourse = true
                                 self.timer.invalidate()
@@ -569,8 +557,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 return
             }
             count += 1
-            //self.title = "\(count + 1)/\(countQuestion ?? 0)"
-            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
             if courseNumber == 0 {RandomizeQuize()}
             
         }
@@ -612,14 +598,10 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 typeTask = 6
                 if lessonNumber == 4 || lessonNumber == 5 {
                     self.view = comparsionTask.drawComparsionFive()
-                    //self.title = "1/5"
-                    //setLabelCount(currentQuestion: 1, countQuestion: 5)
                     self.countQuestion = 5
                     
                 } else {
                     self.view = comparsionTask.drawComparsionSix()
-                    //self.title = "1/6"
-                    //setLabelCount(currentQuestion: 1, countQuestion: 6)
                     self.countQuestion = 6
                 }
                 ask = lastAsk
@@ -642,18 +624,12 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             case 0:
                 typeTask = 1
                 self.view = showKana.showKana()
-                //self.title = "1/5"
-                //setLabelCount(currentQuestion: 1, countQuestion: 5)
             case 1:
                 typeTask = 2
                 self.view = handwritingView.drawStandartSheetWithStencil()
-                //self.title = "2/5"
-                //setLabelCount(currentQuestion: 2, countQuestion: 5)
             case 2:
                 typeTask = 3
                 self.view = chooserCorrectAnswer.drawTwoAnswer()
-                //self.title = "3/5"
-                //setLabelCount(currentQuestion: 3, countQuestion: 5)
             case 3:
                 if Bool.random() {
                     typeTask = 4
@@ -662,13 +638,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     typeTask = 5
                     self.view = chooserCorrectAnswer.drawYesNo()
                 }
-                //self.title = "4/5"
-                //setLabelCount(currentQuestion: 4, countQuestion: 5)
             case 4:
                 typeTask = 7
                 self.view = chooserCorrectAnswer.drawSixAnswer()
-                //self.title = "5/5"
-                //setLabelCount(currentQuestion: 5, countQuestion: 5)
             default:
                 print("Error in nextAsk ")
                 return
@@ -710,8 +682,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     //Может перенести отдельно ?
     func drawResult(){
         checkAnswers()
-        //RightBar.image = UIImage.init(systemName: "gear")
-        //self.tabBarController?.tabBar.isHidden = false
         view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
         self.timerProgress.removeFromSuperview()
         self.timer.invalidate()
@@ -864,12 +834,10 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 return
             }
             count += 1
-            //self.title = "\(count + 1)/\(countQuestion ?? 0)"
-            //setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
             if courseNumber == 0 {RandomizeQuize()}
         }
         
-        if courseNumber == 1 && typeTask != 6 {
+        if courseNumber != 0 && typeTask != 6 {
             extraTaskCourses(false)
         }
     }
