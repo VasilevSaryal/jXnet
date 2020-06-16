@@ -116,12 +116,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
         initDB()
+        // Do any additional setup after loading the view.
     }
     
     func initialParameters() -> Void {
@@ -811,8 +807,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         initialParameters()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
     
