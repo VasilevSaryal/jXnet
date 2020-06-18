@@ -22,7 +22,7 @@ class StatisticsTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func setConfig(kana: String, transcription: String, shortLearner: Int, deepLearned: Int) {
+    func setConfig(kana: String, transcription: String, shortLearner: Int, deepLearned: Int, mnemonics: String) {
         
         kanaLabel.text = kana
         kanaLabel.frame = CGRect(x: 20, y: 5, width: 35, height: 35)

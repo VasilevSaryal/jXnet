@@ -15,11 +15,12 @@ class StatisticsTableViewController: UITableViewController {
     private var endRange: UInt32! //конечное значение диапозона по ид
     private var kanaDB = [KanaData]() //БД значений кана для данного упражнения
     var lessonNumber: Int! //номер урока
-
+    let alertService = AlertService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
-        self.tableView.rowHeight = 60
+        //self.tableView.rowHeight = 200
         self.initDB()
     }
     
@@ -38,7 +39,7 @@ class StatisticsTableViewController: UITableViewController {
                 let currentKana = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.hiragana : kana.katakana
                 let currentDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.shortLearnedH : kana.shortLearnedK
                 let currentDeepDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.deepLearnedH : kana.deepLearnedK
-                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription, shortLearning: Int(currentDataScore), deepLearning: Int(currentDeepDataScore)))
+                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription, shortLearning: Int(currentDataScore), deepLearning: Int(currentDeepDataScore), mnemonics: kana.mnemonics ?? ""))
             }
         }
         catch {
@@ -59,34 +60,45 @@ class StatisticsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! StatisticsTableViewCell
-        cell.setConfig(kana: kanaDB[indexPath.row].kana, transcription: kanaDB[indexPath.row].transcription, shortLearner: kanaDB[indexPath.row].shortLearning, deepLearned: kanaDB[indexPath.row].deepLearning)
+        cell.setConfig(kana: kanaDB[indexPath.row].kana, transcription: kanaDB[indexPath.row].transcription, shortLearner: kanaDB[indexPath.row].shortLearning, deepLearned: kanaDB[indexPath.row].deepLearning, mnemonics: kanaDB[indexPath.row].mnemonics)
         cell.selectionStyle = .none
         // Configure the cell...
+        let mnemonicsLabel = UILabel()
+        if kanaDB[indexPath.row].mnemonics != "" {
+            cell.contentView.addSubview(mnemonicsLabel)
+            mnemonicsLabel.text = kanaDB[indexPath.row].mnemonics
+            mnemonicsLabel.numberOfLines = 0
+            mnemonicsLabel.lineBreakMode = .byWordWrapping
+            mnemonicsLabel.textAlignment = .justified
+            mnemonicsLabel.frame.size.width = UIScreen.main.bounds.width - 40
+            mnemonicsLabel.frame.origin = CGPoint(x: 20, y: 65)
+            mnemonicsLabel.sizeToFit()
+            self.tableView.rowHeight = mnemonicsLabel.frame.size.height + 70
+        } else {
+            self.tableView.rowHeight = 60
+        }
 
         return cell
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let editAction = UITableViewRowAction(style: .default, title: "Мнемоника", handler: { (action, indexPath) in
+            let actionTitle = self.kanaDB[indexPath.row].mnemonics == "" ? "Добавить" : "Изменить"
+            let alertVC = self.alertService.alert(title: "\(self.kanaDB[indexPath.row].kana!) (\(self.kanaDB[indexPath.row].transcription!))", textView: self.kanaDB[indexPath.row].mnemonics, actionTitle: actionTitle, id: self.kanaDB[indexPath.row].id, completion: {
+                [weak self] in
+                self?.kanaDB.removeAll()
+                self?.initDB()
+                self?.tableView.reloadData()
+            })
+            self.present(alertVC, animated: true)
+            
+        })
+        editAction.backgroundColor = UIColor.init(hexFromString: "#DE6FA1")
+        
+        return [editAction]
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
+    
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {

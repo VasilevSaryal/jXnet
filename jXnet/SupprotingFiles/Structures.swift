@@ -14,6 +14,8 @@ struct KanaData {
     let transcription: String!
     var shortLearning = 0
     var deepLearning = 0
+    var mnemonics = ""
+    
 }
 
 struct RangeForGradation {

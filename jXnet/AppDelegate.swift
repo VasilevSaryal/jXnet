@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 kanaObject.deepLearnedK = 0
                                 kanaObject.shortLearnedH = 0
                                 kanaObject.shortLearnedK = 0
+                                kanaObject.mnemonics = ""
                             }
                             try backgroundContext.save()
                             userDefaults.set(true, forKey: preloadedDataKey)

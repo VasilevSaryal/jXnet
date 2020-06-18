@@ -13,6 +13,9 @@
 		1502F4FD249BB84400DCFCFF /* StatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4FC249BB84400DCFCFF /* StatisticsTableViewController.swift */; };
 		1502F4FF249BB89E00DCFCFF /* StatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4FE249BB89E00DCFCFF /* StatisticsTableViewCell.swift */; };
 		1502F502249BD57C00DCFCFF /* CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F501249BD57C00DCFCFF /* CornerRadius.swift */; };
+		1502F505249BF66900DCFCFF /* AlertStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1502F504249BF66900DCFCFF /* AlertStoryboard.storyboard */; };
+		1502F508249BF6A900DCFCFF /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F507249BF6A900DCFCFF /* AlertViewController.swift */; };
+		1502F50A249BFC9D00DCFCFF /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F509249BFC9D00DCFCFF /* AlertService.swift */; };
 		15191AC92498AE3D0007B547 /* ExercisesCountGradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */; };
 		1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */; };
 		1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */; };
@@ -48,6 +51,9 @@
 		1502F4FC249BB84400DCFCFF /* StatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewController.swift; sourceTree = "<group>"; };
 		1502F4FE249BB89E00DCFCFF /* StatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		1502F501249BD57C00DCFCFF /* CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadius.swift; sourceTree = "<group>"; };
+		1502F504249BF66900DCFCFF /* AlertStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlertStoryboard.storyboard; sourceTree = "<group>"; };
+		1502F507249BF6A900DCFCFF /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		1502F509249BFC9D00DCFCFF /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesCountGradation.swift; sourceTree = "<group>"; };
 		1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBarHeight.swift; sourceTree = "<group>"; };
 		1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СomparisonTask.swift"; sourceTree = "<group>"; };
@@ -89,6 +95,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1502F506249BF68B00DCFCFF /* CustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				1502F504249BF66900DCFCFF /* AlertStoryboard.storyboard */,
+				1502F507249BF6A900DCFCFF /* AlertViewController.swift */,
+				1502F509249BFC9D00DCFCFF /* AlertService.swift */,
+			);
+			path = CustomAlert;
+			sourceTree = "<group>";
+		};
 		1572DCF3248ED79300C9218A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +132,7 @@
 		15BBCB8F248C9969005AF0DA /* jXnet */ = {
 			isa = PBXGroup;
 			children = (
+				1502F506249BF68B00DCFCFF /* CustomAlert */,
 				15BBCBC4248DA5D7005AF0DA /* Data */,
 				15BBCBB6248C9F2A005AF0DA /* SupprotingFiles */,
 				15BBCBAF248C9EA0005AF0DA /* UIElementsCustom */,
@@ -279,6 +296,7 @@
 				15BBCBBF248CCEBE005AF0DA /* Media.xcassets in Resources */,
 				15BBCB98248C9969005AF0DA /* Main.storyboard in Resources */,
 				15BBCBC6248DA5FC005AF0DA /* PreloadedData.plist in Resources */,
+				1502F505249BF66900DCFCFF /* AlertStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +311,7 @@
 				1502F4FD249BB84400DCFCFF /* StatisticsTableViewController.swift in Sources */,
 				1572DCF5248ED7A200C9218A /* DrawableView.swift in Sources */,
 				15BBCBBD248CBD07005AF0DA /* SelectLessonTableViewCell.swift in Sources */,
+				1502F50A249BFC9D00DCFCFF /* AlertService.swift in Sources */,
 				1502F4D52499ABF600DCFCFF /* ResultView.swift in Sources */,
 				15BBCBC1248D158B005AF0DA /* LessonTableViewController.swift in Sources */,
 				1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */,
@@ -305,6 +324,7 @@
 				15BBCBB8248C9F40005AF0DA /* HexColor.swift in Sources */,
 				1502F4FB249B8E1000DCFCFF /* SearchTableViewController.swift in Sources */,
 				15BBCBB5248C9F12005AF0DA /* BigShadowButton.swift in Sources */,
+				1502F508249BF6A900DCFCFF /* AlertViewController.swift in Sources */,
 				15BBCB91248C9969005AF0DA /* AppDelegate.swift in Sources */,
 				15BBCBCF248DC8B7005AF0DA /* ChooseCorrectAnswer.swift in Sources */,
 				15BBCBB3248C9EDD005AF0DA /* BigLabel.swift in Sources */,
