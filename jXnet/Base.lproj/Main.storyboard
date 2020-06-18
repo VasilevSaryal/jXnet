@@ -31,7 +31,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="IzX-9O-e0L">
                         <nil key="title"/>
-                        <barButtonItem key="backBarButtonItem" title="Назад" id="mLe-wg-xwH"/>
                         <barButtonItem key="leftBarButtonItem" title="0" id="GD8-DS-r2r">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         </barButtonItem>
@@ -56,6 +55,8 @@
                     <connections>
                         <outlet property="backgoundImage" destination="wDR-KV-vZg" id="Mfy-WE-fSu"/>
                         <outlet property="currentDate" destination="6t3-70-UrT" id="ovA-yF-Doq"/>
+                        <outlet property="levelProgress" destination="nCz-18-0Pj" id="Imj-NX-ElA"/>
+                        <outlet property="showLevel" destination="GD8-DS-r2r" id="pFx-v9-LSl"/>
                         <segue destination="shf-JT-Vcf" kind="show" identifier="SelectKana" id="82W-mS-Itt"/>
                     </connections>
                 </viewController>
@@ -224,6 +225,9 @@
                                             <integer key="value" value="5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="clickStatistics:" destination="6IV-fi-Sjj" eventType="touchUpInside" id="iZP-5j-Y80"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -420,12 +424,43 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="icons8-информация-100-5" id="dbi-jG-qJa"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="progress" destination="ZSB-BC-Ihb" id="VF0-7L-90e"/>
                         <segue destination="I4L-Mu-WEx" kind="show" identifier="Exercises" id="A45-5y-oO4"/>
+                        <segue destination="Nh0-YL-CwC" kind="show" identifier="StatisticsTableViewController" id="UXF-Sw-qiJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9i-2l-BPd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-497.10144927536237" y="1960.7142857142856"/>
+        </scene>
+        <!--Статистика-->
+        <scene sceneID="90u-pI-rUc">
+            <objects>
+                <tableViewController id="Nh0-YL-CwC" customClass="StatisticsTableViewController" customModule="jXnet" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rPT-sw-sRX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="fha-uS-8jQ" customClass="StatisticsTableViewCell" customModule="jXnet" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fha-uS-8jQ" id="xVI-Sb-EDX">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Nh0-YL-CwC" id="MtW-Cs-Cbh"/>
+                            <outlet property="delegate" destination="Nh0-YL-CwC" id="ezT-ui-9h2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Статистика" id="ibo-UY-xQg"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zlH-8S-JVA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="297" y="1961"/>
         </scene>
         <!--Test Table View Controller-->
         <scene sceneID="2Tp-RH-czA">
@@ -454,12 +489,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KN4-bE-aNa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="549" y="1813"/>
+            <point key="canvasLocation" x="1004" y="1641"/>
         </scene>
         <!--Словарь-->
         <scene sceneID="rve-Tq-9QN">
             <objects>
-                <tableViewController id="Cp5-Py-bBF" sceneMemberID="viewController">
+                <tableViewController id="Cp5-Py-bBF" customClass="SearchTableViewController" customModule="jXnet" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r3K-4N-9q9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -470,7 +505,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="CmJ-Py-dPU">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="CmJ-Py-dPU" customClass="StatisticsTableViewCell" customModule="jXnet" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="414" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CmJ-Py-dPU" id="MCy-0m-r54">
@@ -485,6 +520,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Словарь" id="j3O-Jm-Dag"/>
+                    <connections>
+                        <outlet property="search" destination="lFb-2b-22G" id="u3B-w3-epI"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Tf-XM-WuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

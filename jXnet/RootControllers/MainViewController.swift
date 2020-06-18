@@ -10,9 +10,10 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var levelProgress: UIProgressView!
     @IBOutlet weak var currentDate: UIBarButtonItem!
     @IBOutlet weak var backgoundImage: UIImageView!
-    
+    @IBOutlet weak var showLevel: UIBarButtonItem!
     private var hiraganaButton: UIButton!
     private var katakanaButton: UIButton!
     private var kanjiButton: UIButton!
@@ -24,6 +25,7 @@ class MainViewController: UIViewController {
         self.initButtons()
         self.initTags()
         self.initDate()
+        self.initProgress()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -35,6 +37,11 @@ class MainViewController: UIViewController {
         let mounth = Calendar.current.component(.month, from: Date())
         let day = Calendar.current.component(.day, from: Date())
         currentDate.title = "\(year)年\(mounth)月\(day)日"
+    }
+    
+    private func initProgress() {
+        self.showLevel.title = "\(UserDefaults.standard.integer(forKey: "userLevel"))"
+        self.levelProgress.progress = Float(UserDefaults.standard.integer(forKey: "userExperience")) / Float(UserDefaults.standard.integer(forKey: "nextLevel"))
     }
     
     private func setNavigationBar() {
@@ -147,8 +154,14 @@ class MainViewController: UIViewController {
             UserDefaults.standard.set(true, forKey: "isHiraganaTheme")
             self.performSegue(withIdentifier: "SelectKana", sender: nil)
         case 2:
-            UserDefaults.standard.set(false, forKey: "isHiraganaTheme")
-            self.performSegue(withIdentifier: "SelectKana", sender: nil)
+            if UserDefaults.standard.bool(forKey: "isHiraganaComplete") {
+                UserDefaults.standard.set(false, forKey: "isHiraganaTheme")
+                self.performSegue(withIdentifier: "SelectKana", sender: nil)
+            } else {
+                let alert = UIAlertController(title: "Внимание", message: "Необходимо пройти хирагану для открытия катаканы", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         default:
             print("Working..")
         }

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1502F4D52499ABF600DCFCFF /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4D42499ABF600DCFCFF /* ResultView.swift */; };
+		1502F4D72499C27300DCFCFF /* ResultsComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4D62499C27300DCFCFF /* ResultsComments.swift */; };
+		1502F4FB249B8E1000DCFCFF /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4FA249B8E1000DCFCFF /* SearchTableViewController.swift */; };
+		1502F4FD249BB84400DCFCFF /* StatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4FC249BB84400DCFCFF /* StatisticsTableViewController.swift */; };
+		1502F4FF249BB89E00DCFCFF /* StatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4FE249BB89E00DCFCFF /* StatisticsTableViewCell.swift */; };
+		1502F502249BD57C00DCFCFF /* CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F501249BD57C00DCFCFF /* CornerRadius.swift */; };
+		15191AC92498AE3D0007B547 /* ExercisesCountGradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */; };
 		1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */; };
 		1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */; };
 		1572DCF1248ED6BE00C9218A /* HandwritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCF0248ED6BE00C9218A /* HandwritingView.swift */; };
@@ -35,6 +42,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1502F4D42499ABF600DCFCFF /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		1502F4D62499C27300DCFCFF /* ResultsComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsComments.swift; sourceTree = "<group>"; };
+		1502F4FA249B8E1000DCFCFF /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		1502F4FC249BB84400DCFCFF /* StatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewController.swift; sourceTree = "<group>"; };
+		1502F4FE249BB89E00DCFCFF /* StatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCell.swift; sourceTree = "<group>"; };
+		1502F501249BD57C00DCFCFF /* CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadius.swift; sourceTree = "<group>"; };
+		15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesCountGradation.swift; sourceTree = "<group>"; };
 		1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBarHeight.swift; sourceTree = "<group>"; };
 		1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СomparisonTask.swift"; sourceTree = "<group>"; };
 		1572DCF0248ED6BE00C9218A /* HandwritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandwritingView.swift; sourceTree = "<group>"; };
@@ -123,6 +137,8 @@
 				15BBCBC0248D158B005AF0DA /* LessonTableViewController.swift */,
 				15BBCBC9248DA8AF005AF0DA /* ExercisesViewController.swift */,
 				15BBCBCB248DA8E4005AF0DA /* TestTableViewController.swift */,
+				1502F4FC249BB84400DCFCFF /* StatisticsTableViewController.swift */,
+				1502F4FE249BB89E00DCFCFF /* StatisticsTableViewCell.swift */,
 			);
 			path = KanaBranch;
 			sourceTree = "<group>";
@@ -132,6 +148,7 @@
 			children = (
 				15BBCBAD248C9E96005AF0DA /* MainViewController.swift */,
 				15BBCBC2248D184C005AF0DA /* RootTabBarController.swift */,
+				1502F4FA249B8E1000DCFCFF /* SearchTableViewController.swift */,
 			);
 			path = RootControllers;
 			sourceTree = "<group>";
@@ -171,6 +188,9 @@
 				15BBCBD0248DCF01005AF0DA /* Structures.swift */,
 				15BBCBD2248DD645005AF0DA /* Gradation.swift */,
 				1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */,
+				15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */,
+				1502F4D62499C27300DCFCFF /* ResultsComments.swift */,
+				1502F501249BD57C00DCFCFF /* CornerRadius.swift */,
 			);
 			path = SupprotingFiles;
 			sourceTree = "<group>";
@@ -192,6 +212,7 @@
 				15BBCBDF248E0DEB005AF0DA /* ShowKana.swift */,
 				1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */,
 				1572DCF0248ED6BE00C9218A /* HandwritingView.swift */,
+				1502F4D42499ABF600DCFCFF /* ResultView.swift */,
 			);
 			path = "View with elements";
 			sourceTree = "<group>";
@@ -268,15 +289,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1502F4FF249BB89E00DCFCFF /* StatisticsTableViewCell.swift in Sources */,
+				1502F4FD249BB84400DCFCFF /* StatisticsTableViewController.swift in Sources */,
 				1572DCF5248ED7A200C9218A /* DrawableView.swift in Sources */,
 				15BBCBBD248CBD07005AF0DA /* SelectLessonTableViewCell.swift in Sources */,
+				1502F4D52499ABF600DCFCFF /* ResultView.swift in Sources */,
 				15BBCBC1248D158B005AF0DA /* LessonTableViewController.swift in Sources */,
 				1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */,
 				15BBCBCA248DA8AF005AF0DA /* ExercisesViewController.swift in Sources */,
+				15191AC92498AE3D0007B547 /* ExercisesCountGradation.swift in Sources */,
 				15BBCBD3248DD645005AF0DA /* Gradation.swift in Sources */,
+				1502F4D72499C27300DCFCFF /* ResultsComments.swift in Sources */,
 				15BBCBBA248C9F5A005AF0DA /* RoundButton.swift in Sources */,
 				1572DCF1248ED6BE00C9218A /* HandwritingView.swift in Sources */,
 				15BBCBB8248C9F40005AF0DA /* HexColor.swift in Sources */,
+				1502F4FB249B8E1000DCFCFF /* SearchTableViewController.swift in Sources */,
 				15BBCBB5248C9F12005AF0DA /* BigShadowButton.swift in Sources */,
 				15BBCB91248C9969005AF0DA /* AppDelegate.swift in Sources */,
 				15BBCBCF248DC8B7005AF0DA /* ChooseCorrectAnswer.swift in Sources */,
@@ -284,6 +311,7 @@
 				15BBCBCC248DA8E4005AF0DA /* TestTableViewController.swift in Sources */,
 				15BBCBD1248DCF01005AF0DA /* Structures.swift in Sources */,
 				15BBCB9B248C9969005AF0DA /* jXnet.xcdatamodeld in Sources */,
+				1502F502249BD57C00DCFCFF /* CornerRadius.swift in Sources */,
 				15BBCBA9248C9E34005AF0DA /* SelectLessonTableViewController.swift in Sources */,
 				15BBCBAE248C9E96005AF0DA /* MainViewController.swift in Sources */,
 				1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */,

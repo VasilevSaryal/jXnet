@@ -12,6 +12,8 @@ struct KanaData {
     let id: Int!
     let kana: String!
     let transcription: String!
+    var shortLearning = 0
+    var deepLearning = 0
 }
 
 struct RangeForGradation {

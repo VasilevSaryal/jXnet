@@ -105,7 +105,7 @@ class TestTableViewController: UITableViewController {
             let fetchedResults = try context.fetch(fetchRequest)
             
             for kana in fetchedResults {
-                print("sss ", kana.hiragana, kana.id, kana.learnedH)
+                print("sss ", kana.hiragana, kana.id, kana.shortLearnedH)
             }
             
         }
@@ -124,11 +124,11 @@ class TestTableViewController: UITableViewController {
             fetchRequest.predicate = NSPredicate(format: "id == %i", 2)
             let fetchedResults = try context.fetch(fetchRequest)
             
-            fetchedResults.first?.learnedH = 1.0
+            fetchedResults.first?.shortLearnedH = 1
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
             
             for kana in fetchedResults {
-                print("sss ", kana.hiragana, kana.id, kana.learnedH)
+                print("sss ", kana.hiragana, kana.id, kana.shortLearnedH)
             }
             
         }

@@ -66,7 +66,7 @@ class SelectLessonTableViewController: UITableViewController {
         cell.subSubject.text = GradationKana().getSubSubjectName(indexPath.row)
         cell.selectionStyle = .none
         cell.info.tintColor = .systemRed
-        if indexPath.row > 5 {
+        if indexPath.row > UserDefaults.standard.integer(forKey: "hiraganaCompletedLesson") {
             cell.proccess.text = "休業"
             cell.view.backgroundColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
             cell.info.isEnabled = false
@@ -85,22 +85,9 @@ class SelectLessonTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        if indexPath.row > 5 {
-            
-            let alert = UIAlertController(title: "Внимание", message: "Это урок вам недоступен", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                      switch action.style{
-                      case .default:
-                            print("default")
-
-                      case .cancel:
-                            print("cancel")
-
-                      case .destructive:
-                            print("destructive")
-                      @unknown default:
-                        fatalError()
-                    }}))
+        if indexPath.row > UserDefaults.standard.integer(forKey: "hiraganaCompletedLesson") {
+            let alert = UIAlertController(title: "Необходимо пройти предыдущий урок", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
         }
         else {

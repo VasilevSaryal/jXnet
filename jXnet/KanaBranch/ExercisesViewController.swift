@@ -14,6 +14,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private var correctAnswer: Int?//Правильный ответ
     private var incorrectAnswers = [Bool]()//Счетчик ответов пользователя
+    private var scoreKana = [Int]()//Счетчик для
     private var ask = [Int]()//Вопросы уникальные
     private var firstAnswer = 0//Тег первой кнопки только для сопоставления
     private var pairInt = [TwoInteger]()//Пара правильного ответа только для сопоставления и прохождение курса от jXnet
@@ -53,6 +54,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     private var showKana: ShowKana!
     private var comparsionTask: ComparsionTask!
     private var handwritingView: HandwritingView!
+    private var resultView: ResultView!
     
     //Таблица результатов
     private let resultTable: UITableView = {
@@ -121,6 +123,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func initialParameters() -> Void {
+        self.view.layer.sublayers?.forEach {$0.removeAllAnimations()}
+        self.view.layer.sublayers?.forEach {$0.removeFromSuperlayer()}
         self.view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
         self.view.addSubview(timerProgress)
         pairInt.removeAll()
@@ -130,11 +134,12 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             countQuestion = 10
         }
         count = 0
+        scoreKana.removeAll()
         incorrectAnswers.removeAll()
         ask.removeAll()
         checkedAnswers.removeAll()
         
-        
+        resultView = ResultView.init(self)
         if courseNumber == 1 {
             //Инициализация после прогрузки данного ViewController
             showKana = ShowKana.init(self)
@@ -203,23 +208,16 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             _ = navigationController?.popViewController(animated: true)
             return
         }
-        if courseNumber == 0 || courseNumber == 2 {
-            //self.title = "1/\(countQuestion ?? 0)"
-            //setLabelCount(currentQuestion: 1, countQuestion: (countQuestion ?? 0))
-        } else if courseNumber == 1{
-            //self.title = "1/5"
-            //setLabelCount(currentQuestion: 1, countQuestion: 5)
+        if courseNumber == 1{
             if countQuestion >= 10 {
                 ask = uniqueRandoms(numberOfRandoms: 5, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
             } else {
                 ask = uniqueRandoms(numberOfRandoms: 4, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: nil)
             }
-            //TODO костыль для скорости разработки
+            //TODO костыль для скорости разработки запоминания для повторения
             lastAsk = ask
-            if courseNumber == 1 {
-                for i in ask {
-                    pairInt.append(TwoInteger(first: i))
-                }
+            for i in ask {
+                pairInt.append(TwoInteger(first: i))
             }
         }
         initButtonTags()
@@ -440,6 +438,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             switch sender.tag {
             case 1:
                 incorrectAnswers.append(false)
+                scoreKana.append(ExercisesCountGradation().nineAnswerWriteKana(seconds: timerProgress.progress * Float(poseDuration)))
                 if count == countQuestion - 1{
                     drawResult()
                     return
@@ -477,6 +476,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                             self.timerProgress.removeFromSuperview()
                             self.timer.invalidate()
                             incorrectAnswers.append(false)
+                            scoreKana.append(ExercisesCountGradation().fourAnswerYesNoComparsion(seconds: timerProgress.progress * Float(poseDuration)))
                             if count == countQuestion  {
                                 firstAnswer = 0
                                 if courseNumber == 1 {
@@ -504,6 +504,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                             }
                             if courseNumber == 1 {
                                 incorrectAnswers.removeAll()
+                                scoreKana.removeAll()
                                 checkedAnswers.removeAll()
                                 ask.removeAll()
                                 pairInt.removeAll()
@@ -533,9 +534,24 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             self.timer.invalidate()
             if correctAnswer == sender.tag {
                 incorrectAnswers.append(false)
+                switch typeTask {
+                case 3:
+                    scoreKana.append(ExercisesCountGradation().twoAnswer(seconds: timerProgress.progress * Float(poseDuration)))
+                case 4:
+                    scoreKana.append(ExercisesCountGradation().fourAnswerYesNoComparsion(seconds: timerProgress.progress * Float(poseDuration)))
+                case 5:
+                    scoreKana.append(ExercisesCountGradation().fourAnswerYesNoComparsion(seconds: timerProgress.progress * Float(poseDuration)))
+                case 7:
+                    scoreKana.append(ExercisesCountGradation().sixAnswer(seconds: timerProgress.progress * Float(poseDuration)))
+                case 8:
+                    scoreKana.append(ExercisesCountGradation().nineAnswerWriteKana(seconds: timerProgress.progress * Float(poseDuration)))
+                default:
+                    print("Error in score")
+                }
             }
             else {
                 incorrectAnswers.append(true)
+                scoreKana.append(ExercisesCountGradation().incorrectForAll())
                 view.addSubview(fullScreenView)
                 fullScreenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
                 let correctAnswerButton = self.view.viewWithTag(correctAnswer!) as? UIButton
@@ -679,96 +695,102 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     func drawResult(){
         checkAnswers()
         view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
-        self.timerProgress.removeFromSuperview()
-        self.timer.invalidate()
-        let label = UILabel()
         var correctSum = 0
         for answer in incorrectAnswers {
             if answer == false {correctSum += 1}
         }
-        label.text = "Результат: \(correctSum)/\(countQuestion!):"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 27)
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .center
-        label.minimumScaleFactor = 0.4
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: self.navigationController?.navigationBar.bottomAnchor ?? view.topAnchor, constant: 5),
-            label.heightAnchor.constraint(equalToConstant: 50),
-            label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20),
-            label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20)
-        ])
-        let label2 = UILabel()
-        label2.text = "Уровень: 0"
-        label2.textColor = .black
-        label2.font = UIFont.systemFont(ofSize: 21)
-        label2.adjustsFontSizeToFitWidth = true
-        label2.textAlignment = .left
-        label2.minimumScaleFactor = 0.4
-        view.addSubview(label2)
-        label2.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label2.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
-            label2.heightAnchor.constraint(equalToConstant: 30),
-            label2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            label2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -(UIScreen.main.bounds.width / 2))
-        ])
-        let label3 = UILabel()
-        label3.frame = CGRect(x: (UIScreen.main.bounds.width / 2) + 10, y: 80, width: (UIScreen.main.bounds.width / 2) - 15, height: 30)
-        label3.text = "+253"
-        label3.textColor = .blue
-        label3.font = UIFont.systemFont(ofSize: 17)
-        label3.adjustsFontSizeToFitWidth = true
-        label3.textAlignment = .right
-        label3.minimumScaleFactor = 0.4
-        view.addSubview(label3)
-        label3.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label3.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
-            label3.heightAnchor.constraint(equalToConstant: 30),
-            label3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: (UIScreen.main.bounds.width / 2)),
-            label3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5)
-        ])
-        let progressLevel = UIProgressView()
-        progressLevel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.width, height: 1)
-        progressLevel.transform = progressLevel.transform.scaledBy(x: 1, y: 20)
-        progressLevel.progress = 0.75
-        view.addSubview(progressLevel)
-        progressLevel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            progressLevel.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10),
-            progressLevel.heightAnchor.constraint(equalToConstant: 1),
-            progressLevel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            progressLevel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        ])
-        resultTable.delegate = self
-        resultTable.dataSource = self
-        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        resultTable.tableFooterView = UIView()
-        view.addSubview(resultTable)
-        resultTable.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            resultTable.topAnchor.constraint(equalTo: progressLevel.bottomAnchor, constant: 10),
-            resultTable.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -54),
-            resultTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            resultTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        ])
-        resultTable.reloadData()
-        repeatButton = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
-        repeatButton.setTitle("Попробовать еще раз", for: .normal)
-        repeatButton.setTitleColor(.white, for: .normal)
-        repeatButton.backgroundColor = UIColor.init(hexFromString: "#3333CC")
-        repeatButton.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
-        view.addSubview(repeatButton)
-        repeatButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            repeatButton.topAnchor.constraint(equalTo: resultTable.bottomAnchor, constant: 0),
-            repeatButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            repeatButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            repeatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        ])
+        self.view = resultView.drawResult(correctAnswer: correctSum, countQuestion: countQuestion, totalScore: 111)
+//        self.timerProgress.removeFromSuperview()
+//        self.timer.invalidate()
+//        let label = UILabel()
+//        var correctSum = 0
+//        print("Super Score",scoreKana)
+//        for answer in incorrectAnswers {
+//            if answer == false {correctSum += 1}
+//        }
+//        label.text = "Результат: \(correctSum)/\(countQuestion!):"
+//        label.textColor = .black
+//        label.font = UIFont.systemFont(ofSize: 27)
+//        label.adjustsFontSizeToFitWidth = true
+//        label.textAlignment = .center
+//        label.minimumScaleFactor = 0.4
+//        view.addSubview(label)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            label.topAnchor.constraint(equalTo: self.navigationController?.navigationBar.bottomAnchor ?? view.topAnchor, constant: 5),
+//            label.heightAnchor.constraint(equalToConstant: 50),
+//            label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20),
+//            label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20)
+//        ])
+//        let label2 = UILabel()
+//        label2.text = "Уровень: 0"
+//        label2.textColor = .black
+//        label2.font = UIFont.systemFont(ofSize: 21)
+//        label2.adjustsFontSizeToFitWidth = true
+//        label2.textAlignment = .left
+//        label2.minimumScaleFactor = 0.4
+//        view.addSubview(label2)
+//        label2.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            label2.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
+//            label2.heightAnchor.constraint(equalToConstant: 30),
+//            label2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+//            label2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -(UIScreen.main.bounds.width / 2))
+//        ])
+//        let label3 = UILabel()
+//        label3.frame = CGRect(x: (UIScreen.main.bounds.width / 2) + 10, y: 80, width: (UIScreen.main.bounds.width / 2) - 15, height: 30)
+//        label3.text = "+253"
+//        label3.textColor = .blue
+//        label3.font = UIFont.systemFont(ofSize: 17)
+//        label3.adjustsFontSizeToFitWidth = true
+//        label3.textAlignment = .right
+//        label3.minimumScaleFactor = 0.4
+//        view.addSubview(label3)
+//        label3.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            label3.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
+//            label3.heightAnchor.constraint(equalToConstant: 30),
+//            label3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: (UIScreen.main.bounds.width / 2)),
+//            label3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5)
+//        ])
+//        let progressLevel = UIProgressView()
+//        progressLevel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.width, height: 1)
+//        progressLevel.transform = progressLevel.transform.scaledBy(x: 1, y: 20)
+//        progressLevel.progress = 0.75
+//        view.addSubview(progressLevel)
+//        progressLevel.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            progressLevel.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10),
+//            progressLevel.heightAnchor.constraint(equalToConstant: 1),
+//            progressLevel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+//            progressLevel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+//        ])
+//        resultTable.delegate = self
+//        resultTable.dataSource = self
+//        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+//        resultTable.tableFooterView = UIView()
+//        view.addSubview(resultTable)
+//        resultTable.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            resultTable.topAnchor.constraint(equalTo: progressLevel.bottomAnchor, constant: 10),
+//            resultTable.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -54),
+//            resultTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+//            resultTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+//        ])
+//        resultTable.reloadData()
+//        repeatButton = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
+//        repeatButton.setTitle("Попробовать еще раз", for: .normal)
+//        repeatButton.setTitleColor(.white, for: .normal)
+//        repeatButton.backgroundColor = UIColor.init(hexFromString: "#3333CC")
+//        repeatButton.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
+//        view.addSubview(repeatButton)
+//        repeatButton.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            repeatButton.topAnchor.constraint(equalTo: resultTable.bottomAnchor, constant: 0),
+//            repeatButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+//            repeatButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+//            repeatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+//        ])
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -807,10 +829,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         initialParameters()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false
-    }
     
     @objc private func handleTap() {
         fullScreenView.removeFromSuperview()

@@ -7,17 +7,59 @@
 //
 
 import UIKit
+import CoreData
 
 class LessonTableViewController: UITableViewController, UITabBarControllerDelegate {
     
+    @IBOutlet weak var progress: UIProgressView!
+    
     var lessonNumber: Int!
+    private var startRange: Int! //начальное значение диапозона по ид
+    private var endRange: UInt32! //конечное значение диапозона по ид
+    private var kanaDB = [KanaData]() //БД значений кана для данного упражнения
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Урок \(String(lessonNumber ?? 0))"
-        self.tabBarController?.delegate = self
         self.initCourseButtons()
         self.tableView.sectionHeaderHeight = 50
+        self.initDB()
+        self.setProgress()
+    }
+    
+    private func initDB() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        do {
+            let fetchRequest : NSFetchRequest<Kana> = Kana.fetchRequest()
+            let range = GradationKana().getKanaRangeForTask(lessonNumber)
+            startRange = range.start
+            endRange = range.end
+            fetchRequest.predicate = NSPredicate(format: "id >= %i && id <= %i", startRange, endRange)
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+            let fetchedResults = try context.fetch(fetchRequest)
+            for kana in fetchedResults {
+                let currentKana = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.hiragana : kana.katakana
+                let currentDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.shortLearnedH : kana.shortLearnedK
+                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription, shortLearning: Int(currentDataScore)))
+            }
+        }
+        catch {
+            print ("fetch task failed", error)
+        }
+    }
+    
+    private func setProgress() {
+        var sum = 0
+        for kana in kanaDB {
+            sum += kana.shortLearning
+        }
+        self.progress.progress = Float(sum) / Float(kanaDB.count)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func initCourseButtons() {
@@ -98,6 +140,9 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
             self.performSegue(withIdentifier: "Exercises", sender: indexPath.row + 1)
         }
     }
+    @IBAction func clickStatistics(_ sender: Any) {
+        self.performSegue(withIdentifier: "StatisticsTableViewController", sender: nil)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Exercises" {
@@ -122,7 +167,10 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
             default:
                 theDestination.typeTask = typeTask
             }
-            
+        }
+        if segue.identifier == "StatisticsTableViewController" {
+            let theDestination = (segue.destination as! StatisticsTableViewController)
+            theDestination.lessonNumber = self.lessonNumber
         }
     }
 

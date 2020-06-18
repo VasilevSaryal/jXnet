@@ -43,9 +43,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 kanaObject.hiragana = (kana as! NSDictionary).value(forKey: "hiragana") as? String
                                 kanaObject.katakana = (kana as! NSDictionary).value(forKey: "katakana") as? String
                                 kanaObject.transcription = (kana as! NSDictionary).value(forKey: "transcription") as? String
+                                kanaObject.deepLearnedH = 0
+                                kanaObject.deepLearnedK = 0
+                                kanaObject.shortLearnedH = 0
+                                kanaObject.shortLearnedK = 0
                             }
                             try backgroundContext.save()
                             userDefaults.set(true, forKey: preloadedDataKey)
+                            userDefaults.set(false, forKey: "isHiraganaCompleted")
+                            userDefaults.set(0, forKey: "hiraganaCompletedLesson")
+                            userDefaults.set(false, forKey: "isKatakanaCompleted")
+                            userDefaults.set(0, forKey: "katakanaCompletedLesson")
+                            userDefaults.set(false, forKey: "isKanjiCompleted")
+                            userDefaults.set(0, forKey: "kanjiCompletedLesson")
+                            userDefaults.set(false, forKey: "isWordCompleted")
+                            userDefaults.set(0, forKey: "wordCompletedLesson")
+                            userDefaults.set(false, forKey: "isPhraseCompleted")
+                            userDefaults.set(0, forKey: "phraseCompletedLesson")
+                            userDefaults.set(1, forKey: "userLevel")
+                            userDefaults.set(0, forKey: "userExperience")
+                            userDefaults.set(2500, forKey: "stepLevel")
+                            userDefaults.set(5000, forKey: "nextLevel")
+                            
                         } catch {
                             print(error.localizedDescription)
                         }
