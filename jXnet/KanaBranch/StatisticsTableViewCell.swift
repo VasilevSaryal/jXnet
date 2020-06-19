@@ -40,14 +40,11 @@ class StatisticsTableViewCell: UITableViewCell {
         soundButton.frame = CGRect(x: kanaLabel.frame.maxX + 8, y: 20, width: 20, height: 20)
         contentView.addSubview(soundButton)
         
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 0
-        formatter.minimumFractionDigits = 0
-        formatter.numberStyle = .percent
+     
         let value = (((Float(shortLearner) + Float(deepLearned)) / 350.0) * 100)
-        if let formattedString = formatter.string(for: value) {
-            percentLabel.text = formattedString
-        }
+        
+            percentLabel.text = "\((shortLearner + deepLearned) * 100 / 350)%"
+        
         percentLabel.frame = CGRect(x: UIScreen.main.bounds.width - 50, y: 20, width: 20, height: 20)
         percentLabel.sizeToFit()
         contentView.addSubview(percentLabel)

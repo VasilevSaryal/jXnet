@@ -122,6 +122,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
+        if courseNumber == 0 && typeTask != 1{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(clickHelp(_:)))
+        }
         initDB()
         // Do any additional setup after loading the view.
     }
@@ -700,6 +703,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     //Может перенести отдельно ?
     func drawResult(){
         checkAnswers()
+        writeDBCountKana()
+        checkCompleteLesson()
         view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
         var correctSum = 0
         for answer in incorrectAnswers {
@@ -1129,6 +1134,34 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         })
     }
     
+    private func checkCompleteLesson() {
+        if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
+            if !UserDefaults.standard.bool(forKey: "isHiraganaCompleted") {
+                for i in 0...countQuestion - 1{
+                    if (kanaDB[ask[i]].shortLearning + scoreKana[i]) < 350 {
+                        return
+                    }
+                }
+                if lessonNumber == 8 {
+                    UserDefaults.standard.set(true, forKey: "isHiraganaCompleted")
+                }
+                UserDefaults.standard.set(lessonNumber, forKey: "hiraganaCompletedLesson")
+            }
+        } else {
+            if !UserDefaults.standard.bool(forKey: "isKatakanaCompleted") {
+                for i in 0...countQuestion - 1{
+                    if (kanaDB[ask[i]].shortLearning + scoreKana[i]) < 350 {
+                        return
+                    }
+                }
+                if lessonNumber == 8 {
+                    UserDefaults.standard.set(true, forKey: "isKatakanaCompleted")
+                }
+                UserDefaults.standard.set(lessonNumber, forKey: "katakanaCompletedLesson")
+            }
+        }
+    }
+    
     private func writeDBCountKana() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         for i in 0...countQuestion - 1{
@@ -1146,7 +1179,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     
                     do {
                         let fetchRequest : NSFetchRequest<Kana> = Kana.fetchRequest()
-                        fetchRequest.predicate = NSPredicate(format: "id == %i", i)
+                        fetchRequest.predicate = NSPredicate(format: "id == %i", (ask[i] + 1))
                         let fetchedResults = try context.fetch(fetchRequest)
                         if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
                             fetchedResults.first?.deepLearnedH = Int32(score)
@@ -1170,7 +1203,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 do {
                     let fetchRequest : NSFetchRequest<Kana> = Kana.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "id == %i", i)
+                    fetchRequest.predicate = NSPredicate(format: "id == %i", (ask[i] + 1))
                     let fetchedResults = try context.fetch(fetchRequest)
                     if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
                         fetchedResults.first?.shortLearnedH = Int32(score)
@@ -1197,6 +1230,11 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 checkedAnswers.append(" \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
             }
         }
+    }
+    @objc private func clickHelp(_ sender: Any) {
+        let alert = UIAlertController(title: "Помощь мнемоники", message: kanaDB[ask[count]].mnemonics, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

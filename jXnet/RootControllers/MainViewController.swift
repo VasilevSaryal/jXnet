@@ -25,11 +25,15 @@ class MainViewController: UIViewController {
         self.initButtons()
         self.initTags()
         self.initDate()
-        self.initProgress()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.setNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.initProgress()
     }
    
     private func initDate() {

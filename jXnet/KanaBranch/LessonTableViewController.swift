@@ -24,7 +24,6 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
         self.initCourseButtons()
         self.tableView.sectionHeaderHeight = 50
         self.initDB()
-        self.setProgress()
     }
     
     private func initDB() {
@@ -54,12 +53,17 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
         for kana in kanaDB {
             sum += kana.shortLearning
         }
-        self.progress.progress = Float(sum) / Float(kanaDB.count)
+        self.progress.progress = Float(sum) / (Float(kanaDB.count) * 350)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setProgress()
     }
     
     private func initCourseButtons() {
