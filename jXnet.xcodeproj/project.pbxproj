@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1502F4D52499ABF600DCFCFF /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4D42499ABF600DCFCFF /* ResultView.swift */; };
 		1502F4D72499C27300DCFCFF /* ResultsComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4D62499C27300DCFCFF /* ResultsComments.swift */; };
 		1502F4FB249B8E1000DCFCFF /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4FA249B8E1000DCFCFF /* SearchTableViewController.swift */; };
 		1502F4FD249BB84400DCFCFF /* StatisticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F4FC249BB84400DCFCFF /* StatisticsTableViewController.swift */; };
@@ -46,7 +45,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1502F4D42499ABF600DCFCFF /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		1502F4D62499C27300DCFCFF /* ResultsComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsComments.swift; sourceTree = "<group>"; };
 		1502F4FA249B8E1000DCFCFF /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		1502F4FC249BB84400DCFCFF /* StatisticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewController.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				15BBCBDF248E0DEB005AF0DA /* ShowKana.swift */,
 				1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */,
 				1572DCF0248ED6BE00C9218A /* HandwritingView.swift */,
-				1502F4D42499ABF600DCFCFF /* ResultView.swift */,
 			);
 			path = "View with elements";
 			sourceTree = "<group>";
@@ -316,7 +313,6 @@
 				15BBCBBD248CBD07005AF0DA /* SelectLessonTableViewCell.swift in Sources */,
 				1502F50A249BFC9D00DCFCFF /* AlertService.swift in Sources */,
 				1502F50C249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift in Sources */,
-				1502F4D52499ABF600DCFCFF /* ResultView.swift in Sources */,
 				15BBCBC1248D158B005AF0DA /* LessonTableViewController.swift in Sources */,
 				1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */,
 				15BBCBCA248DA8AF005AF0DA /* ExercisesViewController.swift in Sources */,
