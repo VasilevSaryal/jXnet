@@ -41,6 +41,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     var showAnswer10: UIButton?
     var showAnswer11: UIButton?
     var showAnswer12: UIButton?
+    //Экстренный костыль
+    var becomeLevel: UILabel!
     //Начать заново
     private var repeatButton: UIButton!
     //Перекрывания экрана используются для неправильного нажатия
@@ -699,98 +701,25 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         for answer in incorrectAnswers {
             if answer == false {correctSum += 1}
         }
-        self.view = resultView.drawResult(correctAnswer: correctSum, countQuestion: countQuestion, totalScore: 111)
-//        self.timerProgress.removeFromSuperview()
-//        self.timer.invalidate()
-//        let label = UILabel()
-//        var correctSum = 0
-//        print("Super Score",scoreKana)
-//        for answer in incorrectAnswers {
-//            if answer == false {correctSum += 1}
-//        }
-//        label.text = "Результат: \(correctSum)/\(countQuestion!):"
-//        label.textColor = .black
-//        label.font = UIFont.systemFont(ofSize: 27)
-//        label.adjustsFontSizeToFitWidth = true
-//        label.textAlignment = .center
-//        label.minimumScaleFactor = 0.4
-//        view.addSubview(label)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            label.topAnchor.constraint(equalTo: self.navigationController?.navigationBar.bottomAnchor ?? view.topAnchor, constant: 5),
-//            label.heightAnchor.constraint(equalToConstant: 50),
-//            label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20),
-//            label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20)
-//        ])
-//        let label2 = UILabel()
-//        label2.text = "Уровень: 0"
-//        label2.textColor = .black
-//        label2.font = UIFont.systemFont(ofSize: 21)
-//        label2.adjustsFontSizeToFitWidth = true
-//        label2.textAlignment = .left
-//        label2.minimumScaleFactor = 0.4
-//        view.addSubview(label2)
-//        label2.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            label2.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
-//            label2.heightAnchor.constraint(equalToConstant: 30),
-//            label2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-//            label2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -(UIScreen.main.bounds.width / 2))
-//        ])
-//        let label3 = UILabel()
-//        label3.frame = CGRect(x: (UIScreen.main.bounds.width / 2) + 10, y: 80, width: (UIScreen.main.bounds.width / 2) - 15, height: 30)
-//        label3.text = "+253"
-//        label3.textColor = .blue
-//        label3.font = UIFont.systemFont(ofSize: 17)
-//        label3.adjustsFontSizeToFitWidth = true
-//        label3.textAlignment = .right
-//        label3.minimumScaleFactor = 0.4
-//        view.addSubview(label3)
-//        label3.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            label3.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
-//            label3.heightAnchor.constraint(equalToConstant: 30),
-//            label3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: (UIScreen.main.bounds.width / 2)),
-//            label3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5)
-//        ])
-//        let progressLevel = UIProgressView()
-//        progressLevel.frame = CGRect(x: 0, y: 130, width: UIScreen.main.bounds.width, height: 1)
-//        progressLevel.transform = progressLevel.transform.scaledBy(x: 1, y: 20)
-//        progressLevel.progress = 0.75
-//        view.addSubview(progressLevel)
-//        progressLevel.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            progressLevel.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10),
-//            progressLevel.heightAnchor.constraint(equalToConstant: 1),
-//            progressLevel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-//            progressLevel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-//        ])
-//        resultTable.delegate = self
-//        resultTable.dataSource = self
-//        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-//        resultTable.tableFooterView = UIView()
-//        view.addSubview(resultTable)
-//        resultTable.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            resultTable.topAnchor.constraint(equalTo: progressLevel.bottomAnchor, constant: 10),
-//            resultTable.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -54),
-//            resultTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-//            resultTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-//        ])
-//        resultTable.reloadData()
-//        repeatButton = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
-//        repeatButton.setTitle("Попробовать еще раз", for: .normal)
-//        repeatButton.setTitleColor(.white, for: .normal)
-//        repeatButton.backgroundColor = UIColor.init(hexFromString: "#3333CC")
-//        repeatButton.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
-//        view.addSubview(repeatButton)
-//        repeatButton.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            repeatButton.topAnchor.constraint(equalTo: resultTable.bottomAnchor, constant: 0),
-//            repeatButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-//            repeatButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-//            repeatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-//        ])
+        self.view = resultView.drawResult(correctAnswer: correctSum, countQuestion: countQuestion, totalScore: 7500)
+        //self.resultTableDraw()
+
+    }
+    
+    private func resultTableDraw() {
+        resultTable.delegate = self
+        resultTable.dataSource = self
+        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        resultTable.tableFooterView = UIView()
+        view.addSubview(resultTable)
+        resultTable.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            resultTable.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: 0),
+            resultTable.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -54),
+            resultTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            resultTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+        ])
+        resultTable.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -799,16 +728,16 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = checkedAnswers[indexPath.row]
+        cell.textLabel?.text = "\(checkedAnswers[indexPath.row]) + \(scoreKana[indexPath.row])"
         if incorrectAnswers[indexPath.row] {
             cell.imageView?.image = UIImage.init(named: "xmark")
             cell.imageView?.tintColor = .red
-            cell.backgroundColor = UIColor.init(red: 255, green: 0, blue: 0, alpha: 0.3)
+            //cell.backgroundColor = UIColor.init(red: 255, green: 0, blue: 0, alpha: 0.3)
         }
         else {
             cell.imageView?.image = UIImage.init(named: "chevron")
             cell.imageView?.tintColor = .green
-            cell.backgroundColor = UIColor.init(red: 0, green: 255, blue: 0, alpha: 0.3)
+            //cell.backgroundColor = UIColor.init(red: 0, green: 255, blue: 0, alpha: 0.3)
         }
         return cell
     }

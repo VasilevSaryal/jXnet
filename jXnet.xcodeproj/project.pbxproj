@@ -16,6 +16,7 @@
 		1502F505249BF66900DCFCFF /* AlertStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1502F504249BF66900DCFCFF /* AlertStoryboard.storyboard */; };
 		1502F508249BF6A900DCFCFF /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F507249BF6A900DCFCFF /* AlertViewController.swift */; };
 		1502F50A249BFC9D00DCFCFF /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F509249BFC9D00DCFCFF /* AlertService.swift */; };
+		1502F50C249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F50B249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift */; };
 		15191AC92498AE3D0007B547 /* ExercisesCountGradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */; };
 		1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */; };
 		1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */; };
@@ -54,6 +55,7 @@
 		1502F504249BF66900DCFCFF /* AlertStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlertStoryboard.storyboard; sourceTree = "<group>"; };
 		1502F507249BF6A900DCFCFF /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		1502F509249BFC9D00DCFCFF /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		1502F50B249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardWhenTappedAround.swift; sourceTree = "<group>"; };
 		15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesCountGradation.swift; sourceTree = "<group>"; };
 		1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBarHeight.swift; sourceTree = "<group>"; };
 		1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СomparisonTask.swift"; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */,
 				1502F4D62499C27300DCFCFF /* ResultsComments.swift */,
 				1502F501249BD57C00DCFCFF /* CornerRadius.swift */,
+				1502F50B249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift */,
 			);
 			path = SupprotingFiles;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				1572DCF5248ED7A200C9218A /* DrawableView.swift in Sources */,
 				15BBCBBD248CBD07005AF0DA /* SelectLessonTableViewCell.swift in Sources */,
 				1502F50A249BFC9D00DCFCFF /* AlertService.swift in Sources */,
+				1502F50C249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift in Sources */,
 				1502F4D52499ABF600DCFCFF /* ResultView.swift in Sources */,
 				15BBCBC1248D158B005AF0DA /* LessonTableViewController.swift in Sources */,
 				1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */,

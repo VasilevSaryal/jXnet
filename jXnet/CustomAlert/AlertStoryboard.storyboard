@@ -134,14 +134,18 @@
                         <color key="backgroundColor" white="0.0" alpha="0.34999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="CmC-EE-fy1" firstAttribute="centerX" secondItem="xZL-U0-9BZ" secondAttribute="centerX" id="Pqo-qb-eQL"/>
-                            <constraint firstItem="CmC-EE-fy1" firstAttribute="centerY" secondItem="xZL-U0-9BZ" secondAttribute="centerY" id="aQ1-Va-Cxp"/>
+                            <constraint firstItem="CmC-EE-fy1" firstAttribute="top" secondItem="14M-Ei-KfI" secondAttribute="top" constant="266" id="mgN-a6-okY"/>
+                            <constraint firstItem="14M-Ei-KfI" firstAttribute="bottom" secondItem="CmC-EE-fy1" secondAttribute="bottom" constant="276" id="uP4-Mw-jvS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="14M-Ei-KfI"/>
                     </view>
                     <connections>
                         <outlet property="action" destination="Dlg-rH-UTG" id="xbb-M0-Y4j"/>
+                        <outlet property="bottomConstraint" destination="uP4-Mw-jvS" id="Sxu-cm-rBK"/>
+                        <outlet property="mainView" destination="CmC-EE-fy1" id="1b9-J7-gkC"/>
                         <outlet property="textView" destination="ZGh-Xi-bxB" id="e8h-GA-F1H"/>
                         <outlet property="titleLabel" destination="02W-cS-alU" id="Bas-8C-rVq"/>
+                        <outlet property="topConstraint" destination="mgN-a6-okY" id="wyg-ZC-UVh"/>
                         <outlet property="viewTitle" destination="x6W-d3-pqd" id="ELb-YU-Qge"/>
                     </connections>
                 </viewController>

@@ -12,7 +12,7 @@ class ResultsComments {
     func getComment(percent: Int, score: Int) -> String {
         if percent == 100 {
             if score < 250 {return Bool.random() ? "Поразительная точность, так держать!" : "Все правильно!"}
-            if 250 <= score && score < 300 {return Bool.random() ? "Поразительный результат!" : "У вас определенный талант к этому!"}
+            if 250 <= score && score < 300 {return Bool.random() ? "Поразительный результат!" : "У вас есть определенный талант к этому!"}
             if score >= 300 {return Bool.random() ? "Наилучший результат!" : Bool.random() ? "Вы случаем не гений?" : "В Японии вас примут за своего!"}
         } else {
             if 80 <= percent && percent < 100 {return Bool.random() ? "Молодец!" : "Хороший результат!"}

@@ -34,6 +34,7 @@ class ResultView {
     let shapeLayer2 = CAShapeLayer()
     
     let levelProgressView = UIProgressView(progressViewStyle: .default)
+    var newWidth: CGFloat!
     
     func drawResult(correctAnswer: Int, countQuestion: Int, totalScore: Int) -> UIView {
         controller.title = "Результат"
@@ -135,8 +136,7 @@ class ResultView {
         shapeLayer2.add(basicAnimation2, forKey: "urSoBasic")
         
         //Level label
-        let levelLabel = UILabel(frame: CGRect(x: 20, y: resultComment.frame.maxY + 60 + (UIScreen.main.bounds.width - 60) / 2, width: UIScreen.main.bounds.width - 40, height: 50))
-        levelLabel.text = "Уровень: 0"
+        let levelLabel = UILabel(frame: CGRect(x: 20, y: resultComment.frame.maxY + 60 + (UIScreen.main.bounds.width - 60) / 2, width: UIScreen.main.bounds.width - 40, height: 40))
         levelLabel.textColor = .black
         levelLabel.font = UIFont.systemFont(ofSize: 21)
         levelLabel.adjustsFontSizeToFitWidth = true
@@ -145,33 +145,92 @@ class ResultView {
         controller.view.addSubview(levelLabel)
         
         //Current level Progress View
-        let yourView = UIView(frame: CGRect(x: 20, y: levelLabel.frame.maxY + 10, width: 100, height: 20))
-        yourView.backgroundColor = .green
-        controller.view.addSubview(yourView)
-        UIView.animate(withDuration: 2, animations: {
-            yourView.frame.size.width += 400
-            if (yourView.frame.size.width == 300) {yourView.frame.size.width = 0}
-        }, completion: {
-            (value: Bool) in
-            if (yourView.superview != nil) {
-                yourView.removeFromSuperview()
-            }
-        })
+        let growLevel = UILabel(frame: CGRect(x: 20, y: levelLabel.frame.maxY + 3, width: 1, height: 20))
+        growLevel.backgroundColor = UIColor.init(hexFromString: "#33CC66")
+        controller.view.addSubview(growLevel)
+        //growLevel.removeFromSuperview()
+        self.controller.becomeLevel = UILabel()
+        self.controller.becomeLevel.frame = CGRect(x: 20, y: levelLabel.frame.maxY + 3, width: 1, height: 20)
+        self.controller.becomeLevel.backgroundColor = UIColor(hexFromString: "#FF3300")
+        self.controller.becomeLevel.isHidden = true
+        controller.view.addSubview(self.controller.becomeLevel)
+        
+        var userLevel = UserDefaults.standard.integer(forKey: "userLevel")
+        levelLabel.text = "Уровень: \(userLevel)"
+        var experienceCount = UserDefaults.standard.integer(forKey: "userExperience")
+        var nextLevel = UserDefaults.standard.integer(forKey: "nextLevel")
+        let stepLevel = UserDefaults.standard.integer(forKey: "stepLevel")
+        
+        //Experience label
+        let experienceLabel = UILabel(frame: CGRect(x: 20, y: resultComment.frame.maxY + 60 + (UIScreen.main.bounds.width - 60) / 2, width: UIScreen.main.bounds.width - 40, height: 40))
+        experienceLabel.textColor = .black
+        experienceLabel.font = UIFont.systemFont(ofSize: 21)
+        experienceLabel.adjustsFontSizeToFitWidth = true
+        experienceLabel.textAlignment = .left
+        experienceLabel.minimumScaleFactor = 0.4
+        controller.view.addSubview(experienceLabel)
+        
+        growLevel.frame.size.width = (UIScreen.main.bounds.width - 40) * (CGFloat(experienceCount) / CGFloat(nextLevel))
+        
+        if (experienceCount + totalScore) >= nextLevel {
+            userLevel += 1
+            experienceCount = (experienceCount + totalScore) - nextLevel
+            nextLevel += stepLevel
+            newWidth = (UIScreen.main.bounds.width - 40) * (CGFloat(experienceCount) / CGFloat(nextLevel))
+            UIView.animate(withDuration: 1, animations: {
+                if (growLevel.superview != nil) {
+                    growLevel.frame.size.width = (UIScreen.main.bounds.width - 40)
+                }
+            }, completion: {
+                (value: Bool) in
+                if (growLevel.superview != nil) {
+                    growLevel.frame.size.width = 1
+                    growLevel.frame.size.height = 20
+                    levelLabel.text = "Уровень: 2"
+                }
+                UIView.animate(withDuration: 1, animations: {
+                    if (growLevel.superview != nil) {
+                        growLevel.frame.size.width = self.newWidth
+                    }
+                }, completion: {
+                    (value: Bool) in
+                    if (growLevel.superview != nil) {
+                        growLevel.removeFromSuperview()
+                    }
+                })
+            })
+            
+        } else {
+            experienceCount += totalScore
+            newWidth = (UIScreen.main.bounds.width - 40) * (CGFloat(experienceCount) / CGFloat(nextLevel))
+            UIView.animate(withDuration: 2, animations: {
+                growLevel.frame.size.width = self.newWidth
+            }, completion: {
+                (value: Bool) in
+                if (growLevel.superview != nil) {
+                    growLevel.removeFromSuperview()
+                }
+            })
+        }
+            
+        
         
         //Repeat button
-        let repeatButton = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
-        repeatButton.setTitle("Попробовать еще раз", for: .normal)
-        repeatButton.setTitleColor(.white, for: .normal)
-        repeatButton.backgroundColor = UIColor.init(hexFromString: "#3333CC")
-        repeatButton.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
-        controller.view.addSubview(repeatButton)
+        let repeatButtonq = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
+        repeatButtonq.setTitle("Попробовать еще раз", for: .normal)
+        repeatButtonq.setTitleColor(.white, for: .normal)
+        repeatButtonq.backgroundColor = UIColor.init(hexFromString: "#3333CC")
+        repeatButtonq.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
+        controller.view.addSubview(repeatButtonq)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8, execute: {
             if (self.scoreLabel.superview != nil) {
                 self.scoreLabel.text = "350"
                 self.scoreLabelCondition.text = "общий счёт"
                 self.percentLabel.text = "100%"
                 self.percentLabelCondition.text = "точность выполнения"
+                self.controller.becomeLevel.frame.size.width = self.newWidth
+                self.controller.becomeLevel.isHidden = false
             }
         })
         
@@ -179,6 +238,6 @@ class ResultView {
     }
     
     @objc func repeatAction() -> Void {
-        controller.initialParameters()
+        //Будет выполняться не тут, а в том контроллере с таким же именем
     }
 }
