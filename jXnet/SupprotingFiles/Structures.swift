@@ -15,6 +15,7 @@ struct KanaData {
     var shortLearning = 0
     var deepLearning = 0
     var mnemonics = ""
+    var lastDate: Date?
     
 }
 

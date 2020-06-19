@@ -76,6 +76,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     //Переменные только для рукописного ввода
     var drawableView: DrawableView!
     
+    private var totalScore = 0 //общий счет
+    
     //Таймер для вопросов 30 секунд
     private var timerProgress = UIProgressView(progressViewStyle: .default)
     //Для таймера все
@@ -105,7 +107,10 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             let fetchedResults = try context.fetch(fetchRequest)
             for kana in fetchedResults {
                 let currentKana = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.hiragana : kana.katakana
-                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription))
+                let currentDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.shortLearnedH : kana.shortLearnedK
+                let currentDeepDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.deepLearnedH : kana.deepLearnedK
+                let lastDate = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.lastDateH : kana.lastDateK
+                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription, shortLearning: Int(currentDataScore), deepLearning: Int(currentDeepDataScore), mnemonics: kana.mnemonics ?? "", lastDate: lastDate))
             }
         }
         catch {
@@ -134,6 +139,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             countQuestion = 10
         }
+        totalScore = 0
         count = 0
         scoreKana.removeAll()
         incorrectAnswers.removeAll()
@@ -699,14 +705,14 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         for answer in incorrectAnswers {
             if answer == false {correctSum += 1}
         }
-        drawSuperResult(correctAnswer: correctSum, countQuestion: countQuestion, totalScore: 7500)
+        drawSuperResult(correctAnswer: correctSum, countQuestion: countQuestion, totalScore: totalScore)
         self.resultTableDraw()
         self.resultTable.isHidden = true
         //Repeat button
         let repeatButtonq = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
         repeatButtonq.setTitle("Попробовать еще раз", for: .normal)
         repeatButtonq.setTitleColor(.white, for: .normal)
-        repeatButtonq.backgroundColor = UIColor.init(hexFromString: "#FF3300")
+        repeatButtonq.backgroundColor = UIColor.init(hexFromString: "#3333CC")
         repeatButtonq.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
         self.view.addSubview(repeatButtonq)
         //switch result
@@ -716,7 +722,6 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         switcher.selectedSegmentIndex = 0
         // Style the Segmented Control
         switcher.layer.cornerRadius = 5.0  // Don't let background bleed
-        switcher.tintColor = UIColor(hexFromString: "#FF3300")
         
         switcher.addTarget(self, action: #selector(changeResult), for: .valueChanged)
         self.view.addSubview(switcher)
@@ -773,6 +778,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 checkedAnswers.append("Правильный ответ: \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
             }
             else {
+                totalScore += scoreKana[i]
                 checkedAnswers.append(" \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
             }
         }
@@ -938,7 +944,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         resultComment.minimumScaleFactor = 0.4
         resultComment.numberOfLines = 2
         resultComment.lineBreakMode = .byWordWrapping
-        resultComment.text = "У вас определенный талант к этому!"
+        resultComment.text = ResultsComments().getComment(percent: (correctAnswer * 100) / countQuestion, score: totalScore / 2)
         self.view.addSubview(resultComment)
         
         //Score Track
@@ -954,12 +960,14 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         scoreLabel.frame = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width - 60) / 2, height: 30)
         scoreLabel.center = CGPoint(x: (UIScreen.main.bounds.width - 60) * 3 / 4 + 40, y: resultComment.frame.maxY + 35 + (UIScreen.main.bounds.width - 60) / 4)
         scoreLabel.textColor = UIColor(hexFromString: "#33CC66")
+        scoreLabel.isHidden = true
         self.view.addSubview(scoreLabel)
         
         scoreLabelCondition.frame = CGRect(x: scoreLabel.frame.minX, y: scoreLabel.frame.maxY + 5, width: (UIScreen.main.bounds.width - 60) / 2, height: 13)
         scoreLabelCondition.textAlignment = .center
         scoreLabelCondition.textColor = .darkGray
         scoreLabelCondition.font = .systemFont(ofSize: 10)
+        scoreLabelCondition.isHidden = true
         self.view.addSubview(scoreLabelCondition)
         
         let shapeLayer = CAShapeLayer()
@@ -972,7 +980,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.layer.addSublayer(shapeLayer)
         
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        basicAnimation.toValue = 1
+        basicAnimation.toValue = 0.7955 * (Float(totalScore) / 700.0)
         basicAnimation.duration = 2
         basicAnimation.fillMode = .forwards
         basicAnimation.isRemovedOnCompletion = false
@@ -992,12 +1000,14 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         percentLabel.frame = CGRect(x: 0, y: 0, width: (UIScreen.main.bounds.width - 60) / 2, height: 30)
         percentLabel.center = CGPoint(x: (UIScreen.main.bounds.width - 60) / 4 + 20, y: resultComment.frame.maxY + 35 + (UIScreen.main.bounds.width - 60) / 4)
         percentLabel.textColor = .blue
+        percentLabel.isHidden = true
         self.view.addSubview(percentLabel)
         
         percentLabelCondition.frame = CGRect(x: percentLabel.frame.minX, y: percentLabel.frame.maxY + 5, width: (UIScreen.main.bounds.width - 60) / 2, height: 13)
         percentLabelCondition.textAlignment = .center
         percentLabelCondition.textColor = .darkGray
         percentLabelCondition.font = .systemFont(ofSize: 10)
+        percentLabelCondition.isHidden = true
         self.view.addSubview(percentLabelCondition)
         
         
@@ -1010,7 +1020,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.layer.addSublayer(shapeLayer2)
         
         let basicAnimation2 = CABasicAnimation(keyPath: "strokeEnd")
-        basicAnimation2.toValue = 1
+        basicAnimation2.toValue = 0.7955 * (Float(correctAnswer) / Float(countQuestion))
         basicAnimation2.duration = 2
         basicAnimation2.fillMode = .forwards
         basicAnimation2.isRemovedOnCompletion = false
@@ -1059,6 +1069,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             userLevel += 1
             experienceCount = (experienceCount + totalScore) - nextLevel
             nextLevel += stepLevel
+            UserDefaults.standard.set(userLevel, forKey: "userLevel")
+            UserDefaults.standard.set(experienceCount, forKey: "userExperience")
+            UserDefaults.standard.set(nextLevel, forKey: "nextLevel")
             newWidth = (UIScreen.main.bounds.width - 40) * (CGFloat(experienceCount) / CGFloat(nextLevel))
             UIView.animate(withDuration: 1, animations: {
                 if (growLevel.superview != nil) {
@@ -1087,12 +1100,14 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             })
         } else {
             experienceCount += totalScore
+            UserDefaults.standard.set(experienceCount, forKey: "userExperience")
             newWidth = (UIScreen.main.bounds.width - 40) * (CGFloat(experienceCount) / CGFloat(nextLevel))
             UIView.animate(withDuration: 2, animations: {
                 growLevel.frame.size.width = self.newWidth
             }, completion: {
                 (value: Bool) in
                 if (growLevel.superview != nil) {
+                    experienceLabel.isHidden = true
                     growLevel.removeFromSuperview()
                 }
             })
@@ -1100,14 +1115,88 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8, execute: {
             if (self.scoreLabel.superview != nil) {
-                self.scoreLabel.text = "350"
+                self.scoreLabel.text = "\(totalScore)"
                 self.scoreLabelCondition.text = "общий счёт"
-                self.percentLabel.text = "100%"
+                self.percentLabel.text = "\((correctAnswer * 100) / countQuestion)%"
                 self.percentLabelCondition.text = "точность выполнения"
                 self.becomeLevel.frame.size.width = self.newWidth
                 self.becomeLevel.isHidden = false
+                self.scoreLabel.isHidden = false
+                self.percentLabel.isHidden = false
+                self.scoreLabelCondition.isHidden = false
+                self.percentLabelCondition.isHidden = false
             }
         })
+    }
+    
+    private func writeDBCountKana() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        for i in 0...countQuestion - 1{
+            //deepLearning
+            if kanaDB[ask[i]].lastDate != nil && kanaDB[ask[i]].shortLearning == 350 {
+                let cal = Calendar.current
+                let d1 = Date()
+                let d2 = kanaDB[ask[i]].lastDate!
+                let components = cal.dateComponents([.hour], from: d2, to: d1)
+                let diff = components.hour!
+                if diff > 4 {
+                    var score = kanaDB[ask[i]].deepLearning + scoreKana[i]
+                    if score >= 350 {score = 350}
+                    if score <= 0 {score = 0}
+                    
+                    do {
+                        let fetchRequest : NSFetchRequest<Kana> = Kana.fetchRequest()
+                        fetchRequest.predicate = NSPredicate(format: "id == %i", i)
+                        let fetchedResults = try context.fetch(fetchRequest)
+                        if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
+                            fetchedResults.first?.deepLearnedH = Int32(score)
+                            fetchedResults.first?.lastDateH = Date()
+                        } else {
+                            fetchedResults.first?.deepLearnedK = Int32(score)
+                            fetchedResults.first?.lastDateK = Date()
+                        }
+                        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                    }
+                    catch {
+                        print ("fetch task failed", error)
+                    }
+                }
+            }
+            //shortLearning
+            else {
+                var score = kanaDB[ask[i]].shortLearning + scoreKana[i]
+                if score >= 350 {score = 350}
+                if score <= 0 {score = 0}
+                
+                do {
+                    let fetchRequest : NSFetchRequest<Kana> = Kana.fetchRequest()
+                    fetchRequest.predicate = NSPredicate(format: "id == %i", i)
+                    let fetchedResults = try context.fetch(fetchRequest)
+                    if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
+                        fetchedResults.first?.shortLearnedH = Int32(score)
+                        fetchedResults.first?.lastDateH = Date()
+                    } else {
+                        fetchedResults.first?.shortLearnedK = Int32(score)
+                        fetchedResults.first?.lastDateK = Date()
+                    }
+                    (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                }
+                catch {
+                    print ("fetch task failed", error)
+                }
+            }
+            
+            
+            
+            
+            if incorrectAnswers[i] {
+                checkedAnswers.append("Правильный ответ: \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
+            }
+            else {
+                totalScore += scoreKana[i]
+                checkedAnswers.append(" \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
+            }
+        }
     }
 }
 
