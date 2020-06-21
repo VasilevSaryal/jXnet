@@ -11,7 +11,8 @@ import Foundation
 struct KanaData {
     let id: Int!
     let kana: String!
-    let transcription: String!
+    let russian: String!
+    let english: String!
     var shortLearning = 0
     var deepLearning = 0
     var mnemonics = ""

@@ -17,7 +17,7 @@ class DrawableView: UIView {
     weak var delegate: DrawableViewDelegate?
     
     private let path = UIBezierPath()
-    private let lineWidth: CGFloat = 5.0
+    private let lineWidth: CGFloat = 12.0
     private let strokeMinPointCount = 3;
     
     private var previousPoint = CGPoint.zero

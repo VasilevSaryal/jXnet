@@ -75,19 +75,15 @@ class HandwritingView {
         controller.drawableView.backgroundColor = .white
         controller.view.addSubview(controller.drawableView)
         
-        controller.showAsk2 = BigLabel(frame: CGRect(x: 0, y: controller.drawableView.frame.minY, width: UIScreen.main.bounds.width, height: controller.drawableView.frame.height))
-        controller.showAsk2?.font = .systemFont(ofSize: 200)
-        controller.showAsk2?.textAlignment = .center
-        controller.showAsk2?.textColor = UIColor(white: 0.95, alpha: 0.5)
-        controller.view.addSubview(controller.showAsk2!)
+//        controller.showAsk2 = BigLabel(frame: CGRect(x: 0, y: controller.drawableView.frame.minY, width: UIScreen.main.bounds.width, height: controller.drawableView.frame.height))
+//        controller.showAsk2?.font = .systemFont(ofSize: 200)
+//        controller.showAsk2?.textAlignment = .center
+//        controller.showAsk2?.textColor = UIColor(white: 0.95, alpha: 0.5)
+//        controller.view.addSubview(controller.showAsk2!)
+        controller.drawImage = UIImageView(frame: CGRect(x: 0, y: controller.drawableView.frame.minY, width: UIScreen.main.bounds.width, height: controller.drawableView.frame.height))
+        controller.drawImage.contentMode = .scaleAspectFit
+        controller.view.addSubview(controller.drawImage)
         
-        lineH = UIView(frame: CGRect(x: 0, y: controller.drawableView.frame.midY - 2.5, width: UIScreen.main.bounds.width, height: 5))
-        lineH.backgroundColor = UIColor(white: 0.95, alpha: 0.4)
-        controller.view.addSubview(lineH)
-        
-        lineV = UIView(frame: CGRect(x: controller.drawableView.frame.midX - 2.5, y: controller.drawableView.frame.minY, width: 5, height: controller.drawableView.frame.size.height))
-        lineV.backgroundColor = UIColor(white: 0.95, alpha: 0.4)
-        controller.view.addSubview(lineV)
         
         lineT = UIView(frame: CGRect(x: 0, y: controller.drawableView.frame.minY, width: UIScreen.main.bounds.width, height: 5))
         lineT.backgroundColor = .lightGray

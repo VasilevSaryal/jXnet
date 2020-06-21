@@ -40,7 +40,7 @@ class LessonTableViewController: UITableViewController, UITabBarControllerDelega
             for kana in fetchedResults {
                 let currentKana = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.hiragana : kana.katakana
                 let currentDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.shortLearnedH : kana.shortLearnedK
-                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription, shortLearning: Int(currentDataScore)))
+                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, russian: kana.russian, english: kana.english, shortLearning: Int(currentDataScore)))
             }
         }
         catch {

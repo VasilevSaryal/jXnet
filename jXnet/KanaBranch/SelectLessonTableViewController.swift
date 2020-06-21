@@ -13,7 +13,6 @@ class SelectLessonTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.clipsToBounds = true
-        setNavigationController()
         if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
             self.title = "Хирагана"
         } else {
@@ -22,13 +21,6 @@ class SelectLessonTableViewController: UITableViewController {
         self.tableView.rowHeight = 86
     }
     
-    private func setNavigationController() {
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for:.default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.view.backgroundColor = .darkGray
-        self.navigationController?.navigationBar.tintColor = UIColor.black
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
-    }
     
     @IBAction func info(_ sender: Any) {
         let alert = UIAlertController(title: "Тут будет информация о теме урока", message: nil, preferredStyle: .alert)

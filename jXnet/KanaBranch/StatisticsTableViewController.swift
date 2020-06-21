@@ -39,7 +39,8 @@ class StatisticsTableViewController: UITableViewController {
                 let currentKana = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.hiragana : kana.katakana
                 let currentDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.shortLearnedH : kana.shortLearnedK
                 let currentDeepDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.deepLearnedH : kana.deepLearnedK
-                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription, shortLearning: Int(currentDataScore), deepLearning: Int(currentDeepDataScore), mnemonics: kana.mnemonics ?? ""))
+                let currentMnemonics = (UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.mnemonicsH : kana.mnemonicsK) ?? ""
+                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, russian: kana.russian, english: kana.english, shortLearning: Int(currentDataScore), deepLearning: Int(currentDeepDataScore), mnemonics: currentMnemonics))
             }
         }
         catch {
@@ -60,7 +61,7 @@ class StatisticsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! StatisticsTableViewCell
-        cell.setConfig(kana: kanaDB[indexPath.row].kana, transcription: kanaDB[indexPath.row].transcription, shortLearner: kanaDB[indexPath.row].shortLearning, deepLearned: kanaDB[indexPath.row].deepLearning, mnemonics: kanaDB[indexPath.row].mnemonics)
+        cell.setConfig(kana: kanaDB[indexPath.row].kana, transcription: kanaDB[indexPath.row].russian, shortLearner: kanaDB[indexPath.row].shortLearning, deepLearned: kanaDB[indexPath.row].deepLearning, mnemonics: kanaDB[indexPath.row].mnemonics)
         cell.selectionStyle = .none
         // Configure the cell...
         let mnemonicsLabel = UILabel()
@@ -84,7 +85,7 @@ class StatisticsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction(style: .default, title: "Мнемоника", handler: { (action, indexPath) in
             let actionTitle = self.kanaDB[indexPath.row].mnemonics == "" ? "Добавить" : "Изменить"
-            let alertVC = self.alertService.alert(title: "\(self.kanaDB[indexPath.row].kana!) (\(self.kanaDB[indexPath.row].transcription!))", textView: self.kanaDB[indexPath.row].mnemonics, actionTitle: actionTitle, id: self.kanaDB[indexPath.row].id, completion: {
+            let alertVC = self.alertService.alert(title: "\(self.kanaDB[indexPath.row].kana!) (\(self.kanaDB[indexPath.row].russian!))", textView: self.kanaDB[indexPath.row].mnemonics, actionTitle: actionTitle, id: self.kanaDB[indexPath.row].id, completion: {
                 [weak self] in
                 self?.kanaDB.removeAll()
                 self?.initDB()

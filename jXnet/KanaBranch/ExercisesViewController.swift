@@ -75,6 +75,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     //Переменные только для рукописного ввода
     var drawableView: DrawableView!
+    var drawImage: UIImageView!
     
     private var totalScore = 0 //общий счет
     
@@ -109,8 +110,9 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 let currentKana = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.hiragana : kana.katakana
                 let currentDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.shortLearnedH : kana.shortLearnedK
                 let currentDeepDataScore = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.deepLearnedH : kana.deepLearnedK
+                let currentMnemonics = (UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.mnemonicsH : kana.mnemonicsK) ?? ""
                 let lastDate = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? kana.lastDateH : kana.lastDateK
-                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, transcription: kana.transcription, shortLearning: Int(currentDataScore), deepLearning: Int(currentDeepDataScore), mnemonics: kana.mnemonics ?? "", lastDate: lastDate))
+                kanaDB.append(KanaData(id: Int(kana.id), kana: currentKana, russian: kana.russian, english: kana.english, shortLearning: Int(currentDataScore), deepLearning: Int(currentDeepDataScore), mnemonics: currentMnemonics, lastDate: lastDate))
             }
         }
         catch {
@@ -254,7 +256,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             self.title = "Просмотр"
             if courseNumber == 0 {
                 showAsk1.text = kanaDB[count].kana
-                showAsk2?.text = kanaDB[count].transcription
+                showAsk2?.text = kanaDB[count].russian
                 if count == 0 {
                     showAnswer1.isHidden = true
                 } else {
@@ -269,12 +271,12 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             if courseNumber == 1 {
                 setLabelCount(currentQuestion: 1, countQuestion: 5)
                 showAsk1.text = kanaDB[ask[count]].kana
-                showAsk2?.text = kanaDB[ask[count]].transcription
+                showAsk2?.text = kanaDB[ask[count]].russian
                 showAnswer1.isHidden = true
             }
         case 2:
             self.title = "Напиши кана"
-            showAsk1.text = kanaDB[ask[count]].transcription
+            showAsk1.text = kanaDB[ask[count]].russian
             if courseNumber != 1 {
                 setLabelCount(currentQuestion: (count + 1), countQuestion: (countQuestion ?? 0))
                 addTimerProgress()
@@ -282,7 +284,8 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 setLabelCount(currentQuestion: 2, countQuestion: 5)
             }
             if courseNumber == 1 {
-                showAsk2?.text = kanaDB[ask[count]].kana
+                let imageName = UserDefaults.standard.bool(forKey: "isHiraganaTheme") ? "\(kanaDB[ask[count]].english!)" : "katakana-\(kanaDB[ask[count]].english!)"
+                drawImage.image = UIImage(named: imageName)?.alpha(0.2)
             }
         case 5://ДаНет
             self.title = "Это верно?"
@@ -296,15 +299,15 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                 showAsk1.text = kanaDB[ask[count]].kana
                 if Bool.random() {
                     correctAnswer = 2
-                    showAsk2?.text = kanaDB[ask[count]].transcription
+                    showAsk2?.text = kanaDB[ask[count]].russian
                 }
                 else {
                     correctAnswer = 1
-                    showAsk2?.text = kanaDB[uniqueRandoms(numberOfRandoms: 1, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])[0]].transcription
+                    showAsk2?.text = kanaDB[uniqueRandoms(numberOfRandoms: 1, minNum: 0, maxNum: UInt32(kanaDB.count - 1), blackList: ask[count])[0]].russian
                 }
             }
             else {
-                showAsk1.text = kanaDB[ask[count]].transcription
+                showAsk1.text = kanaDB[ask[count]].russian
                 if Bool.random() {
                     correctAnswer = 2
                     showAsk2?.text = kanaDB[ask[count]].kana
@@ -336,7 +339,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             var k = 0
             for i in transcriptionAnswers {
                 let answerButton = self.view.viewWithTag(i + 1) as? BigShadowButton
-                answerButton?.setTitle(kanaDB[ask[k]].transcription, for: .normal)
+                answerButton?.setTitle(kanaDB[ask[k]].russian, for: .normal)
                 k += 1
             }
             k = 0
@@ -393,15 +396,15 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             if Bool.random() {
                 showAsk1.text = kanaDB[ask[count]].kana
                 let correctAnswerButton = self.view.viewWithTag(whereWillBeCorrectAnswer + 1) as? BigShadowButton
-                correctAnswerButton?.setTitle(kanaDB[ask[count]].transcription, for: .normal)
+                correctAnswerButton?.setTitle(kanaDB[ask[count]].russian, for: .normal)
                 for i in inCorrectAnswerButtons{
                     let inCorrectAnswerButton = self.view.viewWithTag(i) as? BigShadowButton
-                    inCorrectAnswerButton?.setTitle(kanaDB[inCorrectAnswers[k]].transcription, for: .normal)
+                    inCorrectAnswerButton?.setTitle(kanaDB[inCorrectAnswers[k]].russian, for: .normal)
                     k += 1
                 }
             }
             else {
-                showAsk1.text = kanaDB[ask[count]].transcription
+                showAsk1.text = kanaDB[ask[count]].russian
                 let correctAnswerButton = self.view.viewWithTag(whereWillBeCorrectAnswer + 1) as? BigShadowButton
                 correctAnswerButton?.setTitle(kanaDB[ask[count]].kana, for: .normal)
                 for i in inCorrectAnswerButtons{
@@ -691,108 +694,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    private func jXnetCourseComplete() {
-        let alert = UIAlertController(title: "Поздравляю!", message: "Вы выучили \(countQuestion - 1) символов", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            _ = self.navigationController?.popViewController(animated: true)
-        }))
-        self.present(alert, animated: true, completion: nil)
-        return
-    }
     
-    //Может перенести отдельно ?
-    func drawResult(){
-        checkAnswers()
-        writeDBCountKana()
-        checkCompleteLesson()
-        view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
-        var correctSum = 0
-        for answer in incorrectAnswers {
-            if answer == false {correctSum += 1}
-        }
-        drawSuperResult(correctAnswer: correctSum, countQuestion: countQuestion, totalScore: totalScore)
-        self.resultTableDraw()
-        self.resultTable.isHidden = true
-        //Repeat button
-        let repeatButtonq = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
-        repeatButtonq.setTitle("Попробовать еще раз", for: .normal)
-        repeatButtonq.setTitleColor(.white, for: .normal)
-        repeatButtonq.backgroundColor = UIColor.init(hexFromString: "#3333CC")
-        repeatButtonq.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
-        self.view.addSubview(repeatButtonq)
-        //switch result
-        let items = ["Результат", "Статистика"]
-        let switcher = UISegmentedControl(items: items)
-        switcher.frame = CGRect(x: (UIScreen.main.bounds.width - 160) / 2, y: repeatButtonq.frame.minY - 40, width: 160, height: 30)
-        switcher.selectedSegmentIndex = 0
-        // Style the Segmented Control
-        switcher.layer.cornerRadius = 5.0  // Don't let background bleed
-        
-        switcher.addTarget(self, action: #selector(changeResult), for: .valueChanged)
-        self.view.addSubview(switcher)
-    }
-    
-    @objc func changeResult(sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            self.resultTable.isHidden = true
-        default:
-            self.resultTable.isHidden = false
-        }
-    }
-    
-    private func resultTableDraw() {
-        resultTable.delegate = self
-        resultTable.dataSource = self
-        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        resultTable.tableFooterView = UIView()
-        view.addSubview(resultTable)
-        resultTable.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            resultTable.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: 0),
-            resultTable.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -115),
-            resultTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            resultTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        ])
-        resultTable.reloadData()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countQuestion
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(checkedAnswers[indexPath.row]) + \(scoreKana[indexPath.row])"
-        if incorrectAnswers[indexPath.row] {
-            cell.imageView?.image = UIImage.init(named: "xmark")
-            cell.imageView?.tintColor = .red
-            //cell.backgroundColor = UIColor.init(red: 255, green: 0, blue: 0, alpha: 0.3)
-        }
-        else {
-            cell.imageView?.image = UIImage.init(named: "chevron")
-            cell.imageView?.tintColor = .green
-            //cell.backgroundColor = UIColor.init(red: 0, green: 255, blue: 0, alpha: 0.3)
-        }
-        return cell
-    }
-    
-    func checkAnswers(){
-        for i in 0...countQuestion - 1{
-            if incorrectAnswers[i] {
-                checkedAnswers.append("Правильный ответ: \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
-            }
-            else {
-                totalScore += scoreKana[i]
-                checkedAnswers.append(" \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
-            }
-        }
-        
-    }
-    
-    @objc func repeatAction() -> Void {
-        initialParameters()
-    }
     
     
     @objc private func handleTap() {
@@ -1182,10 +1084,10 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                         fetchRequest.predicate = NSPredicate(format: "id == %i", (ask[i] + 1))
                         let fetchedResults = try context.fetch(fetchRequest)
                         if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
-                            fetchedResults.first?.deepLearnedH = Int32(score)
+                            fetchedResults.first?.deepLearnedH = Int16(score)
                             fetchedResults.first?.lastDateH = Date()
                         } else {
-                            fetchedResults.first?.deepLearnedK = Int32(score)
+                            fetchedResults.first?.deepLearnedK = Int16(score)
                             fetchedResults.first?.lastDateK = Date()
                         }
                         (UIApplication.shared.delegate as! AppDelegate).saveContext()
@@ -1206,10 +1108,10 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
                     fetchRequest.predicate = NSPredicate(format: "id == %i", (ask[i] + 1))
                     let fetchedResults = try context.fetch(fetchRequest)
                     if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
-                        fetchedResults.first?.shortLearnedH = Int32(score)
+                        fetchedResults.first?.shortLearnedH = Int16(score)
                         fetchedResults.first?.lastDateH = Date()
                     } else {
-                        fetchedResults.first?.shortLearnedK = Int32(score)
+                        fetchedResults.first?.shortLearnedK = Int16(score)
                         fetchedResults.first?.lastDateK = Date()
                     }
                     (UIApplication.shared.delegate as! AppDelegate).saveContext()
@@ -1223,18 +1125,124 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
             
             
             if incorrectAnswers[i] {
-                checkedAnswers.append("Правильный ответ: \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
+                checkedAnswers.append("Правильный ответ: \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].russian ?? "")")
             }
             else {
                 totalScore += scoreKana[i]
-                checkedAnswers.append(" \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].transcription ?? "")")
+                checkedAnswers.append(" \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].russian ?? "")")
             }
         }
     }
+    private func jXnetCourseComplete() {
+        let alert = UIAlertController(title: "Поздравляю!", message: "Вы выучили \(countQuestion - 1) символов", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            _ = self.navigationController?.popViewController(animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
+    
+    func drawResult(){
+        checkAnswers()
+        writeDBCountKana()
+        checkCompleteLesson()
+        view.subviews.forEach { $0.removeFromSuperview() }//Удаление всех элементов
+        var correctSum = 0
+        for answer in incorrectAnswers {
+            if answer == false {correctSum += 1}
+        }
+        drawSuperResult(correctAnswer: correctSum, countQuestion: countQuestion, totalScore: totalScore)
+        self.resultTableDraw()
+        self.resultTable.isHidden = true
+        //Repeat button
+        let repeatButtonq = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 54, width: UIScreen.main.bounds.width, height: 54))
+        repeatButtonq.setTitle("Попробовать еще раз", for: .normal)
+        repeatButtonq.setTitleColor(.white, for: .normal)
+        repeatButtonq.backgroundColor = UIColor.init(hexFromString: "#3333CC")
+        repeatButtonq.addTarget(nil, action: #selector(repeatAction), for: .touchUpInside)
+        self.view.addSubview(repeatButtonq)
+        //switch result
+        let items = ["Результат", "Статистика"]
+        let switcher = UISegmentedControl(items: items)
+        switcher.frame = CGRect(x: (UIScreen.main.bounds.width - 160) / 2, y: repeatButtonq.frame.minY - 40, width: 160, height: 30)
+        switcher.selectedSegmentIndex = 0
+        // Style the Segmented Control
+        switcher.layer.cornerRadius = 5.0  // Don't let background bleed
+        
+        switcher.addTarget(self, action: #selector(changeResult), for: .valueChanged)
+        self.view.addSubview(switcher)
+    }
+    
+    @objc func changeResult(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            self.resultTable.isHidden = true
+        default:
+            self.resultTable.isHidden = false
+        }
+    }
+    
+    private func resultTableDraw() {
+        resultTable.delegate = self
+        resultTable.dataSource = self
+        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        resultTable.tableFooterView = UIView()
+        view.addSubview(resultTable)
+        resultTable.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            resultTable.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: 0),
+            resultTable.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -115),
+            resultTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            resultTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+        ])
+        resultTable.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return countQuestion
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = "\(checkedAnswers[indexPath.row]) + \(scoreKana[indexPath.row])"
+        if incorrectAnswers[indexPath.row] {
+            cell.imageView?.image = UIImage.init(named: "xmark")
+            cell.imageView?.tintColor = .red
+            //cell.backgroundColor = UIColor.init(red: 255, green: 0, blue: 0, alpha: 0.3)
+        }
+        else {
+            cell.imageView?.image = UIImage.init(named: "chevron")
+            cell.imageView?.tintColor = .green
+            //cell.backgroundColor = UIColor.init(red: 0, green: 255, blue: 0, alpha: 0.3)
+        }
+        return cell
+    }
+    
+    func checkAnswers(){
+        for i in 0...countQuestion - 1{
+            if incorrectAnswers[i] {
+                checkedAnswers.append("Правильный ответ: \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].russian ?? "")")
+            }
+            else {
+                totalScore += scoreKana[i]
+                checkedAnswers.append(" \(kanaDB[ask[i]].kana ?? "") - \(kanaDB[ask[i]].russian ?? "")")
+            }
+        }
+        
+    }
+    
+    @objc func repeatAction() -> Void {
+        initialParameters()
+    }
+    // MARK: - ExtraClickAction
     @objc private func clickHelp(_ sender: Any) {
         let alert = UIAlertController(title: "Помощь мнемоники", message: kanaDB[ask[count]].mnemonics, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    //Только для shoKana
+    @objc private func clickImage(_ sender: Any) {
+        
     }
 }
 

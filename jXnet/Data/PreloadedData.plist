@@ -11,8 +11,10 @@
                 <string>あ</string>
                 <key>katakana</key>
                 <string>ア</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>а</string>
+                <key>english</key>
+                <string>a</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -21,8 +23,10 @@
                 <string>い</string>
                 <key>katakana</key>
                 <string>イ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>и</string>
+                <key>english</key>
+                <string>i</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -31,8 +35,10 @@
                 <string>う</string>
                 <key>katakana</key>
                 <string>ウ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>у</string>
+                <key>english</key>
+                <string>u</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -41,8 +47,10 @@
                 <string>え</string>
                 <key>katakana</key>
                 <string>エ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>э</string>
+                <key>english</key>
+                <string>e</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -51,8 +59,10 @@
                 <string>お</string>
                 <key>katakana</key>
                 <string>オ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>о</string>
+                <key>english</key>
+                <string>o</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -61,8 +71,10 @@
                 <string>か</string>
                 <key>katakana</key>
                 <string>カ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ка</string>
+                <key>english</key>
+                <string>ka</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -71,8 +83,10 @@
                 <string>き</string>
                 <key>katakana</key>
                 <string>キ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ки</string>
+                <key>english</key>
+                <string>ki</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -81,8 +95,10 @@
                 <string>く</string>
                 <key>katakana</key>
                 <string>ク</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ку</string>
+                <key>english</key>
+                <string>ku</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -91,8 +107,10 @@
                 <string>け</string>
                 <key>katakana</key>
                 <string>ケ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>кэ</string>
+                <key>english</key>
+                <string>ke</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -101,8 +119,10 @@
                 <string>こ</string>
                 <key>katakana</key>
                 <string>コ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ко</string>
+                <key>english</key>
+                <string>ko</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -111,8 +131,10 @@
                 <string>さ</string>
                 <key>katakana</key>
                 <string>サ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>са</string>
+                <key>english</key>
+                <string>sa</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -121,8 +143,10 @@
                 <string>し</string>
                 <key>katakana</key>
                 <string>シ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>си</string>
+                <key>english</key>
+                <string>shi</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -131,8 +155,10 @@
                 <string>す</string>
                 <key>katakana</key>
                 <string>ス</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>су</string>
+                <key>english</key>
+                <string>su</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -141,8 +167,10 @@
                 <string>せ</string>
                 <key>katakana</key>
                 <string>セ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>сэ</string>
+                <key>english</key>
+                <string>se</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -151,8 +179,10 @@
                 <string>そ</string>
                 <key>katakana</key>
                 <string>ソ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>со</string>
+                <key>english</key>
+                <string>so</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -161,8 +191,10 @@
                 <string>た</string>
                 <key>katakana</key>
                 <string>タ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>та</string>
+                <key>english</key>
+                <string>ta</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -171,8 +203,10 @@
                 <string>ち</string>
                 <key>katakana</key>
                 <string>チ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ти</string>
+                <key>english</key>
+                <string>chi</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -181,8 +215,10 @@
                 <string>つ</string>
                 <key>katakana</key>
                 <string>ツ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>цу</string>
+                <key>english</key>
+                <string>tsu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -191,8 +227,10 @@
                 <string>て</string>
                 <key>katakana</key>
                 <string>テ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>тэ</string>
+                <key>english</key>
+                <string>te</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -201,8 +239,10 @@
                 <string>と</string>
                 <key>katakana</key>
                 <string>ト</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>то</string>
+                <key>english</key>
+                <string>to</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -211,8 +251,10 @@
                 <string>な</string>
                 <key>katakana</key>
                 <string>ナ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>на</string>
+                <key>english</key>
+                <string>na</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -221,8 +263,10 @@
                 <string>に</string>
                 <key>katakana</key>
                 <string>ニ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ни</string>
+                <key>english</key>
+                <string>ni</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -231,8 +275,10 @@
                 <string>ぬ</string>
                 <key>katakana</key>
                 <string>ヌ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ну</string>
+                <key>english</key>
+                <string>nu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -241,8 +287,10 @@
                 <string>ね</string>
                 <key>katakana</key>
                 <string>ネ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>нэ</string>
+                <key>english</key>
+                <string>ne</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -251,8 +299,10 @@
                 <string>の</string>
                 <key>katakana</key>
                 <string>ノ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>но</string>
+                <key>english</key>
+                <string>no</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -261,8 +311,10 @@
                 <string>は</string>
                 <key>katakana</key>
                 <string>ハ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ха</string>
+                <key>english</key>
+                <string>ha</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -271,8 +323,10 @@
                 <string>ひ</string>
                 <key>katakana</key>
                 <string>ヒ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>хи</string>
+                <key>english</key>
+                <string>hi</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -281,8 +335,10 @@
                 <string>ふ</string>
                 <key>katakana</key>
                 <string>フ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>фу</string>
+                <key>english</key>
+                <string>fu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -291,8 +347,10 @@
                 <string>へ</string>
                 <key>katakana</key>
                 <string>ヘ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>хэ</string>
+                <key>english</key>
+                <string>he</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -301,8 +359,10 @@
                 <string>ほ</string>
                 <key>katakana</key>
                 <string>ホ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>хо</string>
+                <key>english</key>
+                <string>ho</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -311,8 +371,10 @@
                 <string>ま</string>
                 <key>katakana</key>
                 <string>マ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ма</string>
+                <key>english</key>
+                <string>ma</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -321,8 +383,10 @@
                 <string>み</string>
                 <key>katakana</key>
                 <string>ミ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ми</string>
+                <key>english</key>
+                <string>mi</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -331,8 +395,10 @@
                 <string>む</string>
                 <key>katakana</key>
                 <string>ム</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>му</string>
+                <key>english</key>
+                <string>mu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -341,8 +407,10 @@
                 <string>め</string>
                 <key>katakana</key>
                 <string>メ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>мэ</string>
+                <key>english</key>
+                <string>me</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -351,8 +419,10 @@
                 <string>も</string>
                 <key>katakana</key>
                 <string>モ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>мо</string>
+                <key>english</key>
+                <string>mo</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -361,8 +431,10 @@
                 <string>や</string>
                 <key>katakana</key>
                 <string>ヤ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>я</string>
+                <key>english</key>
+                <string>ya</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -371,8 +443,10 @@
                 <string>ゆ</string>
                 <key>katakana</key>
                 <string>ユ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ю</string>
+                <key>english</key>
+                <string>yu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -381,8 +455,10 @@
                 <string>よ</string>
                 <key>katakana</key>
                 <string>ヨ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ё</string>
+                <key>english</key>
+                <string>yo</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -391,8 +467,10 @@
                 <string>ら</string>
                 <key>katakana</key>
                 <string>ラ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ра</string>
+                <key>english</key>
+                <string>ra</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -401,8 +479,10 @@
                 <string>り</string>
                 <key>katakana</key>
                 <string>リ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ри</string>
+                <key>english</key>
+                <string>ri</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -411,8 +491,10 @@
                 <string>る</string>
                 <key>katakana</key>
                 <string>ル</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ру</string>
+                <key>english</key>
+                <string>ru</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -421,8 +503,10 @@
                 <string>れ</string>
                 <key>katakana</key>
                 <string>レ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>рэ</string>
+                <key>english</key>
+                <string>re</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -431,8 +515,10 @@
                 <string>ろ</string>
                 <key>katakana</key>
                 <string>ロ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ро</string>
+                <key>english</key>
+                <string>ro</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -441,8 +527,10 @@
                 <string>わ</string>
                 <key>katakana</key>
                 <string>ワ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ва</string>
+                <key>english</key>
+                <string>wa</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -451,8 +539,10 @@
                 <string>を</string>
                 <key>katakana</key>
                 <string>ヲ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>во</string>
+                <key>english</key>
+                <string>wo</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -461,8 +551,10 @@
                 <string>ん</string>
                 <key>katakana</key>
                 <string>ン</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>н</string>
+                <key>english</key>
+                <string>n</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -471,8 +563,10 @@
                 <string>が</string>
                 <key>katakana</key>
                 <string>ガ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>га</string>
+                <key>english</key>
+                <string>ga</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -481,8 +575,10 @@
                 <string>ぎ</string>
                 <key>katakana</key>
                 <string>ギ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ги</string>
+                <key>english</key>
+                <string>gi</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -491,8 +587,10 @@
                 <string>ぐ</string>
                 <key>katakana</key>
                 <string>グ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>гу</string>
+                <key>english</key>
+                <string>gu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -501,8 +599,10 @@
                 <string>げ</string>
                 <key>katakana</key>
                 <string>ゲ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>гэ</string>
+                <key>english</key>
+                <string>ge</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -511,8 +611,10 @@
                 <string>ご</string>
                 <key>katakana</key>
                 <string>ゴ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>го</string>
+                <key>english</key>
+                <string>go</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -521,8 +623,10 @@
                 <string>ざ</string>
                 <key>katakana</key>
                 <string>ザ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>дза</string>
+                <key>english</key>
+                <string>za</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -531,8 +635,10 @@
                 <string>じ</string>
                 <key>katakana</key>
                 <string>ジ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>дзи</string>
+                <key>english</key>
+                <string>ji</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -541,8 +647,10 @@
                 <string>ず</string>
                 <key>katakana</key>
                 <string>ズ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>дзу</string>
+                <key>english</key>
+                <string>zu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -551,8 +659,10 @@
                 <string>ぜ</string>
                 <key>katakana</key>
                 <string>ゼ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>дзэ</string>
+                <key>english</key>
+                <string>ze</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -561,8 +671,10 @@
                 <string>ぞ</string>
                 <key>katakana</key>
                 <string>ゾ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>дзо</string>
+                <key>english</key>
+                <string>zo</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -571,8 +683,10 @@
                 <string>だ</string>
                 <key>katakana</key>
                 <string>ダ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>да</string>
+                <key>english</key>
+                <string>da</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -581,8 +695,10 @@
                 <string>ぢ</string>
                 <key>katakana</key>
                 <string>ヂ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>дзи</string>
+                <key>english</key>
+                <string>ji2</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -590,9 +706,11 @@
                 <key>hiragana</key>
                 <string>づ</string>
                 <key>katakana</key>
-                <string>ヅ</string>
-                <key>transcription</key>
+                <string>ヅ </string>
+                <key>russian</key>
                 <string>дзу</string>
+                <key>english</key>
+                <string>zu2</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -601,8 +719,10 @@
                 <string>で</string>
                 <key>katakana</key>
                 <string>デ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>дэ</string>
+                <key>english</key>
+                <string>de</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -611,8 +731,10 @@
                 <string>ど</string>
                 <key>katakana</key>
                 <string>ド</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>до</string>
+                <key>english</key>
+                <string>do</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -621,8 +743,10 @@
                 <string>ば</string>
                 <key>katakana</key>
                 <string>バ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>ба</string>
+                <key>english</key>
+                <string>ba</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -631,8 +755,10 @@
                 <string>び</string>
                 <key>katakana</key>
                 <string>ビ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>би</string>
+                <key>english</key>
+                <string>bi</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -641,8 +767,10 @@
                 <string>ぶ</string>
                 <key>katakana</key>
                 <string>ブ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>бу</string>
+                <key>english</key>
+                <string>bu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -651,8 +779,10 @@
                 <string>べ</string>
                 <key>katakana</key>
                 <string>ベ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>бэ</string>
+                <key>english</key>
+                <string>be</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -661,8 +791,10 @@
                 <string>ぼ</string>
                 <key>katakana</key>
                 <string>ボ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>бо</string>
+                <key>english</key>
+                <string>bo</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -671,8 +803,10 @@
                 <string>ぱ</string>
                 <key>katakana</key>
                 <string>パ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>па</string>
+                <key>english</key>
+                <string>pa</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -681,8 +815,10 @@
                 <string>ぴ</string>
                 <key>katakana</key>
                 <string>ピ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>пи</string>
+                <key>english</key>
+                <string>pi</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -691,8 +827,10 @@
                 <string>ぷ</string>
                 <key>katakana</key>
                 <string>プ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>пу</string>
+                <key>english</key>
+                <string>pu</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -701,8 +839,10 @@
                 <string>ぺ</string>
                 <key>katakana</key>
                 <string>ペ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>пэ</string>
+                <key>english</key>
+                <string>pe</string>
             </dict>
             <dict>
                 <key>id</key>
@@ -711,10 +851,443 @@
                 <string>ぽ</string>
                 <key>katakana</key>
                 <string>ポ</string>
-                <key>transcription</key>
+                <key>russian</key>
                 <string>по</string>
+                <key>english</key>
+                <string>po</string>
             </dict>
-            
+            <dict>
+                <key>id</key>
+                <integer>72</integer>
+                <key>hiragana</key>
+                <string>きゃ</string>
+                <key>katakana</key>
+                <string>キャ</string>
+                <key>russian</key>
+                <string>кя</string>
+                <key>english</key>
+                <string>kya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>73</integer>
+                <key>hiragana</key>
+                <string>きゅ</string>
+                <key>katakana</key>
+                <string>キュ</string>
+                <key>russian</key>
+                <string>кю</string>
+                <key>english</key>
+                <string>kyu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>74</integer>
+                <key>hiragana</key>
+                <string>きょ</string>
+                <key>katakana</key>
+                <string>キョ</string>
+                <key>russian</key>
+                <string>кё</string>
+                <key>english</key>
+                <string>kyo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>75</integer>
+                <key>hiragana</key>
+                <string>しゃ</string>
+                <key>katakana</key>
+                <string>シャ</string>
+                <key>russian</key>
+                <string>ся</string>
+                <key>english</key>
+                <string>sha</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>76</integer>
+                <key>hiragana</key>
+                <string>しゅ</string>
+                <key>katakana</key>
+                <string>シュ</string>
+                <key>russian</key>
+                <string>сю</string>
+                <key>english</key>
+                <string>shu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>77</integer>
+                <key>hiragana</key>
+                <string>しょ</string>
+                <key>katakana</key>
+                <string>ショ</string>
+                <key>russian</key>
+                <string>сё</string>
+                <key>english</key>
+                <string>sho</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>78</integer>
+                <key>hiragana</key>
+                <string>ちゃ</string>
+                <key>katakana</key>
+                <string>チャ</string>
+                <key>russian</key>
+                <string>тя</string>
+                <key>english</key>
+                <string>cha</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>79</integer>
+                <key>hiragana</key>
+                <string>ちゅ</string>
+                <key>katakana</key>
+                <string>チュ</string>
+                <key>russian</key>
+                <string>тю</string>
+                <key>english</key>
+                <string>chu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>80</integer>
+                <key>hiragana</key>
+                <string>ちょ</string>
+                <key>katakana</key>
+                <string>チョ</string>
+                <key>russian</key>
+                <string>тё</string>
+                <key>english</key>
+                <string>cho</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>81</integer>
+                <key>hiragana</key>
+                <string>にゃ</string>
+                <key>katakana</key>
+                <string>ニャ</string>
+                <key>russian</key>
+                <string>ня</string>
+                <key>english</key>
+                <string>nya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>82</integer>
+                <key>hiragana</key>
+                <string>にゅ</string>
+                <key>katakana</key>
+                <string>ニュ</string>
+                <key>russian</key>
+                <string>ню</string>
+                <key>english</key>
+                <string>nyu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>83</integer>
+                <key>hiragana</key>
+                <string>にょ</string>
+                <key>katakana</key>
+                <string>ニョ</string>
+                <key>russian</key>
+                <string>нё</string>
+                <key>english</key>
+                <string>nyo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>84</integer>
+                <key>hiragana</key>
+                <string>ひゃ</string>
+                <key>katakana</key>
+                <string>ヒャ</string>
+                <key>russian</key>
+                <string>хя</string>
+                <key>english</key>
+                <string>hya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>85</integer>
+                <key>hiragana</key>
+                <string>ひゅ</string>
+                <key>katakana</key>
+                <string>ヒュ</string>
+                <key>russian</key>
+                <string>хю</string>
+                <key>english</key>
+                <string>hyu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>86</integer>
+                <key>hiragana</key>
+                <string>ひょ</string>
+                <key>katakana</key>
+                <string>ヒョ</string>
+                <key>russian</key>
+                <string>хё</string>
+                <key>english</key>
+                <string>hyo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>87</integer>
+                <key>hiragana</key>
+                <string>みゃ</string>
+                <key>katakana</key>
+                <string>ミャ</string>
+                <key>russian</key>
+                <string>мя</string>
+                <key>english</key>
+                <string>mya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>88</integer>
+                <key>hiragana</key>
+                <string>みゅ</string>
+                <key>katakana</key>
+                <string>ミュ</string>
+                <key>russian</key>
+                <string>мю</string>
+                <key>english</key>
+                <string>myu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>89</integer>
+                <key>hiragana</key>
+                <string>みょ</string>
+                <key>katakana</key>
+                <string>ミョ</string>
+                <key>russian</key>
+                <string>мё</string>
+                <key>english</key>
+                <string>myo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>90</integer>
+                <key>hiragana</key>
+                <string>りゃ</string>
+                <key>katakana</key>
+                <string>リャ</string>
+                <key>russian</key>
+                <string>ря</string>
+                <key>english</key>
+                <string>rya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>91</integer>
+                <key>hiragana</key>
+                <string>りゅ</string>
+                <key>katakana</key>
+                <string>リュ</string>
+                <key>russian</key>
+                <string>рю</string>
+                <key>english</key>
+                <string>ryu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>92</integer>
+                <key>hiragana</key>
+                <string>りょ</string>
+                <key>katakana</key>
+                <string>リョ</string>
+                <key>russian</key>
+                <string>рё</string>
+                <key>english</key>
+                <string>ryo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>93</integer>
+                <key>hiragana</key>
+                <string>ぎゃ</string>
+                <key>katakana</key>
+                <string>ギャ</string>
+                <key>russian</key>
+                <string>гя</string>
+                <key>english</key>
+                <string>gya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>94</integer>
+                <key>hiragana</key>
+                <string>ぎゅ</string>
+                <key>katakana</key>
+                <string>ギュ</string>
+                <key>russian</key>
+                <string>гю</string>
+                <key>english</key>
+                <string>gyu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>95</integer>
+                <key>hiragana</key>
+                <string>ぎょ</string>
+                <key>katakana</key>
+                <string>ギョ</string>
+                <key>russian</key>
+                <string>гё</string>
+                <key>english</key>
+                <string>gyo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>96</integer>
+                <key>hiragana</key>
+                <string>じゃ</string>
+                <key>katakana</key>
+                <string>ジャ</string>
+                <key>russian</key>
+                <string>дзя</string>
+                <key>english</key>
+                <string>ja</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>97</integer>
+                <key>hiragana</key>
+                <string>じゅ</string>
+                <key>katakana</key>
+                <string>ジュ</string>
+                <key>russian</key>
+                <string>дзю</string>
+                <key>english</key>
+                <string>ju</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>98</integer>
+                <key>hiragana</key>
+                <string>じょ</string>
+                <key>katakana</key>
+                <string>ジョ</string>
+                <key>russian</key>
+                <string>дзё</string>
+                <key>english</key>
+                <string>jo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>99</integer>
+                <key>hiragana</key>
+                <string>ぢゃ</string>
+                <key>katakana</key>
+                <string>ヂャ</string>
+                <key>russian</key>
+                <string>дзя</string>
+                <key>english</key>
+                <string>ja2</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>100</integer>
+                <key>hiragana</key>
+                <string>ぢゅ</string>
+                <key>katakana</key>
+                <string>ヂュ</string>
+                <key>russian</key>
+                <string>дзю</string>
+                <key>english</key>
+                <string>ju2</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>101</integer>
+                <key>hiragana</key>
+                <string>ぢょ</string>
+                <key>katakana</key>
+                <string>ヂョ</string>
+                <key>russian</key>
+                <string>дзё</string>
+                <key>english</key>
+                <string>jo2</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>102</integer>
+                <key>hiragana</key>
+                <string>びゃ</string>
+                <key>katakana</key>
+                <string>ビャ</string>
+                <key>russian</key>
+                <string>бя</string>
+                <key>english</key>
+                <string>bya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>103</integer>
+                <key>hiragana</key>
+                <string>びゅ</string>
+                <key>katakana</key>
+                <string>ビュ</string>
+                <key>russian</key>
+                <string>бю</string>
+                <key>english</key>
+                <string>byu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>104</integer>
+                <key>hiragana</key>
+                <string>びょ</string>
+                <key>katakana</key>
+                <string>ビョ</string>
+                <key>russian</key>
+                <string>бё</string>
+                <key>english</key>
+                <string>byo</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>105</integer>
+                <key>hiragana</key>
+                <string>ぴゃ</string>
+                <key>katakana</key>
+                <string>ピャ</string>
+                <key>russian</key>
+                <string>пя</string>
+                <key>english</key>
+                <string>pya</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>106</integer>
+                <key>hiragana</key>
+                <string>ぴゅ</string>
+                <key>katakana</key>
+                <string>ピュ</string>
+                <key>russian</key>
+                <string>пю</string>
+                <key>english</key>
+                <string>pyu</string>
+            </dict>
+            <dict>
+                <key>id</key>
+                <integer>107</integer>
+                <key>hiragana</key>
+                <string>ぴょ</string>
+                <key>katakana</key>
+                <string>ピョ</string>
+                <key>russian</key>
+                <string>пё</string>
+                <key>english</key>
+                <string>pyo</string>
+            </dict>
         </array>
         <key>Kanji</key>
         <dict/>

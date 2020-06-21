@@ -60,13 +60,16 @@ class AlertViewController: UIViewController {
     //edit with search
     func setMenmonics(id: Int) {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-  
+        
         do {
             let fetchRequest : NSFetchRequest<Kana> = Kana.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %i", id)
             let fetchedResults = try context.fetch(fetchRequest)
-            
-            fetchedResults.first?.mnemonics = textView.text
+            if UserDefaults.standard.bool(forKey: "isHiraganaTheme") {
+                fetchedResults.first?.mnemonicsH = textView.text
+            } else {
+                fetchedResults.first?.mnemonicsK = textView.text
+            }
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
         }
         catch {

@@ -17,6 +17,16 @@
 		1502F50A249BFC9D00DCFCFF /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F509249BFC9D00DCFCFF /* AlertService.swift */; };
 		1502F50C249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1502F50B249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift */; };
 		15191AC92498AE3D0007B547 /* ExercisesCountGradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */; };
+		15415473249F252B000438B7 /* Hiragana.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15415472249F252B000438B7 /* Hiragana.xcassets */; };
+		15415475249F2AB9000438B7 /* UIImage+Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15415474249F2AB9000438B7 /* UIImage+Alpha.swift */; };
+		15415477249F2F1C000438B7 /* Katakana.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15415476249F2F1C000438B7 /* Katakana.xcassets */; };
+		15415479249F2F3C000438B7 /* SoundKana.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15415478249F2F3C000438B7 /* SoundKana.xcassets */; };
+		1541547B249F5FB9000438B7 /* SelectKanaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541547A249F5FB9000438B7 /* SelectKanaViewController.swift */; };
+		1541547E249F6EF8000438B7 /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541547D249F6EF8000438B7 /* PostTableViewController.swift */; };
+		15415480249F6F1F000438B7 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541547F249F6F1F000438B7 /* PostTableViewCell.swift */; };
+		15415482249F6FC2000438B7 /* LocalText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15415481249F6FC2000438B7 /* LocalText.swift */; };
+		15415484249F6FD0000438B7 /* LocalMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15415483249F6FD0000438B7 /* LocalMedia.xcassets */; };
+		15415486249F7322000438B7 /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15415485249F7322000438B7 /* PostStruct.swift */; };
 		1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */; };
 		1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */; };
 		1572DCF1248ED6BE00C9218A /* HandwritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1572DCF0248ED6BE00C9218A /* HandwritingView.swift */; };
@@ -34,7 +44,6 @@
 		15BBCBBD248CBD07005AF0DA /* SelectLessonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCBBC248CBD07005AF0DA /* SelectLessonTableViewCell.swift */; };
 		15BBCBBF248CCEBE005AF0DA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15BBCBBE248CCEBE005AF0DA /* Media.xcassets */; };
 		15BBCBC1248D158B005AF0DA /* LessonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCBC0248D158B005AF0DA /* LessonTableViewController.swift */; };
-		15BBCBC3248D184C005AF0DA /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCBC2248D184C005AF0DA /* RootTabBarController.swift */; };
 		15BBCBC6248DA5FC005AF0DA /* PreloadedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15BBCBC5248DA5FC005AF0DA /* PreloadedData.plist */; };
 		15BBCBCA248DA8AF005AF0DA /* ExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCBC9248DA8AF005AF0DA /* ExercisesViewController.swift */; };
 		15BBCBCC248DA8E4005AF0DA /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BBCBCB248DA8E4005AF0DA /* TestTableViewController.swift */; };
@@ -55,6 +64,16 @@
 		1502F509249BFC9D00DCFCFF /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		1502F50B249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardWhenTappedAround.swift; sourceTree = "<group>"; };
 		15191AC82498AE3D0007B547 /* ExercisesCountGradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesCountGradation.swift; sourceTree = "<group>"; };
+		15415472249F252B000438B7 /* Hiragana.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Hiragana.xcassets; sourceTree = "<group>"; };
+		15415474249F2AB9000438B7 /* UIImage+Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Alpha.swift"; sourceTree = "<group>"; };
+		15415476249F2F1C000438B7 /* Katakana.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Katakana.xcassets; sourceTree = "<group>"; };
+		15415478249F2F3C000438B7 /* SoundKana.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SoundKana.xcassets; sourceTree = "<group>"; };
+		1541547A249F5FB9000438B7 /* SelectKanaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectKanaViewController.swift; sourceTree = "<group>"; };
+		1541547D249F6EF8000438B7 /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
+		1541547F249F6F1F000438B7 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		15415481249F6FC2000438B7 /* LocalText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalText.swift; sourceTree = "<group>"; };
+		15415483249F6FD0000438B7 /* LocalMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LocalMedia.xcassets; sourceTree = "<group>"; };
+		15415485249F7322000438B7 /* PostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStruct.swift; sourceTree = "<group>"; };
 		1572DCEC248E801700C9218A /* ViewControllerBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBarHeight.swift; sourceTree = "<group>"; };
 		1572DCEE248E9E0D00C9218A /* СomparisonTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СomparisonTask.swift"; sourceTree = "<group>"; };
 		1572DCF0248ED6BE00C9218A /* HandwritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandwritingView.swift; sourceTree = "<group>"; };
@@ -74,7 +93,6 @@
 		15BBCBBC248CBD07005AF0DA /* SelectLessonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLessonTableViewCell.swift; sourceTree = "<group>"; };
 		15BBCBBE248CCEBE005AF0DA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		15BBCBC0248D158B005AF0DA /* LessonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTableViewController.swift; sourceTree = "<group>"; };
-		15BBCBC2248D184C005AF0DA /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
 		15BBCBC5248DA5FC005AF0DA /* PreloadedData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PreloadedData.plist; sourceTree = "<group>"; };
 		15BBCBC9248DA8AF005AF0DA /* ExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesViewController.swift; sourceTree = "<group>"; };
 		15BBCBCB248DA8E4005AF0DA /* TestTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +123,18 @@
 			path = CustomAlert;
 			sourceTree = "<group>";
 		};
+		1541547C249F6ED2000438B7 /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				1541547D249F6EF8000438B7 /* PostTableViewController.swift */,
+				1541547F249F6F1F000438B7 /* PostTableViewCell.swift */,
+				15415481249F6FC2000438B7 /* LocalText.swift */,
+				15415483249F6FD0000438B7 /* LocalMedia.xcassets */,
+				15415485249F7322000438B7 /* PostStruct.swift */,
+			);
+			path = Posts;
+			sourceTree = "<group>";
+		};
 		1572DCF3248ED79300C9218A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +162,7 @@
 		15BBCB8F248C9969005AF0DA /* jXnet */ = {
 			isa = PBXGroup;
 			children = (
+				1541547C249F6ED2000438B7 /* Posts */,
 				1502F506249BF68B00DCFCFF /* CustomAlert */,
 				15BBCBC4248DA5D7005AF0DA /* Data */,
 				15BBCBB6248C9F2A005AF0DA /* SupprotingFiles */,
@@ -149,6 +180,7 @@
 		15BBCBA7248C9E01005AF0DA /* KanaBranch */ = {
 			isa = PBXGroup;
 			children = (
+				1541547A249F5FB9000438B7 /* SelectKanaViewController.swift */,
 				15BBCBA8248C9E34005AF0DA /* SelectLessonTableViewController.swift */,
 				15BBCBBC248CBD07005AF0DA /* SelectLessonTableViewCell.swift */,
 				15BBCBC0248D158B005AF0DA /* LessonTableViewController.swift */,
@@ -164,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				15BBCBAD248C9E96005AF0DA /* MainViewController.swift */,
-				15BBCBC2248D184C005AF0DA /* RootTabBarController.swift */,
 				1502F4FA249B8E1000DCFCFF /* SearchTableViewController.swift */,
 			);
 			path = RootControllers;
@@ -209,6 +240,7 @@
 				1502F4D62499C27300DCFCFF /* ResultsComments.swift */,
 				1502F501249BD57C00DCFCFF /* CornerRadius.swift */,
 				1502F50B249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift */,
+				15415474249F2AB9000438B7 /* UIImage+Alpha.swift */,
 			);
 			path = SupprotingFiles;
 			sourceTree = "<group>";
@@ -219,6 +251,9 @@
 				15BBCBBE248CCEBE005AF0DA /* Media.xcassets */,
 				15BBCB99248C9969005AF0DA /* jXnet.xcdatamodeld */,
 				15BBCBC5248DA5FC005AF0DA /* PreloadedData.plist */,
+				15415472249F252B000438B7 /* Hiragana.xcassets */,
+				15415476249F2F1C000438B7 /* Katakana.xcassets */,
+				15415478249F2F3C000438B7 /* SoundKana.xcassets */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -292,10 +327,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15415484249F6FD0000438B7 /* LocalMedia.xcassets in Resources */,
+				15415477249F2F1C000438B7 /* Katakana.xcassets in Resources */,
 				15BBCBA0248C996A005AF0DA /* LaunchScreen.storyboard in Resources */,
+				15415479249F2F3C000438B7 /* SoundKana.xcassets in Resources */,
 				15BBCBBF248CCEBE005AF0DA /* Media.xcassets in Resources */,
 				15BBCB98248C9969005AF0DA /* Main.storyboard in Resources */,
 				15BBCBC6248DA5FC005AF0DA /* PreloadedData.plist in Resources */,
+				15415473249F252B000438B7 /* Hiragana.xcassets in Resources */,
 				1502F505249BF66900DCFCFF /* AlertStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,11 +351,15 @@
 				1572DCF5248ED7A200C9218A /* DrawableView.swift in Sources */,
 				15BBCBBD248CBD07005AF0DA /* SelectLessonTableViewCell.swift in Sources */,
 				1502F50A249BFC9D00DCFCFF /* AlertService.swift in Sources */,
+				1541547E249F6EF8000438B7 /* PostTableViewController.swift in Sources */,
 				1502F50C249C18C400DCFCFF /* HideKeyboardWhenTappedAround.swift in Sources */,
 				15BBCBC1248D158B005AF0DA /* LessonTableViewController.swift in Sources */,
 				1572DCED248E801700C9218A /* ViewControllerBarHeight.swift in Sources */,
 				15BBCBCA248DA8AF005AF0DA /* ExercisesViewController.swift in Sources */,
 				15191AC92498AE3D0007B547 /* ExercisesCountGradation.swift in Sources */,
+				15415480249F6F1F000438B7 /* PostTableViewCell.swift in Sources */,
+				15415482249F6FC2000438B7 /* LocalText.swift in Sources */,
+				15415475249F2AB9000438B7 /* UIImage+Alpha.swift in Sources */,
 				15BBCBD3248DD645005AF0DA /* Gradation.swift in Sources */,
 				1502F4D72499C27300DCFCFF /* ResultsComments.swift in Sources */,
 				15BBCBBA248C9F5A005AF0DA /* RoundButton.swift in Sources */,
@@ -326,6 +369,8 @@
 				15BBCBB5248C9F12005AF0DA /* BigShadowButton.swift in Sources */,
 				1502F508249BF6A900DCFCFF /* AlertViewController.swift in Sources */,
 				15BBCB91248C9969005AF0DA /* AppDelegate.swift in Sources */,
+				1541547B249F5FB9000438B7 /* SelectKanaViewController.swift in Sources */,
+				15415486249F7322000438B7 /* PostStruct.swift in Sources */,
 				15BBCBCF248DC8B7005AF0DA /* ChooseCorrectAnswer.swift in Sources */,
 				15BBCBB3248C9EDD005AF0DA /* BigLabel.swift in Sources */,
 				15BBCBCC248DA8E4005AF0DA /* TestTableViewController.swift in Sources */,
@@ -335,7 +380,6 @@
 				15BBCBA9248C9E34005AF0DA /* SelectLessonTableViewController.swift in Sources */,
 				15BBCBAE248C9E96005AF0DA /* MainViewController.swift in Sources */,
 				1572DCEF248E9E0D00C9218A /* СomparisonTask.swift in Sources */,
-				15BBCBC3248D184C005AF0DA /* RootTabBarController.swift in Sources */,
 				15BBCBE0248E0DEB005AF0DA /* ShowKana.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

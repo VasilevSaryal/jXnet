@@ -42,12 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 kanaObject.id = Int16((kana as! NSDictionary).value(forKey: "id") as! Int)
                                 kanaObject.hiragana = (kana as! NSDictionary).value(forKey: "hiragana") as? String
                                 kanaObject.katakana = (kana as! NSDictionary).value(forKey: "katakana") as? String
-                                kanaObject.transcription = (kana as! NSDictionary).value(forKey: "transcription") as? String
+                                kanaObject.russian = (kana as! NSDictionary).value(forKey: "russian") as? String
+                                kanaObject.english = (kana as! NSDictionary).value(forKey: "english") as? String
                                 kanaObject.deepLearnedH = 0
                                 kanaObject.deepLearnedK = 0
                                 kanaObject.shortLearnedH = 0
                                 kanaObject.shortLearnedK = 0
-                                kanaObject.mnemonics = ""
+                                kanaObject.mnemonicsH = ""
+                                kanaObject.mnemonicsK = ""
                             }
                             try backgroundContext.save()
                             userDefaults.set(true, forKey: preloadedDataKey)
