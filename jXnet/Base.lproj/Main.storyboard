@@ -58,11 +58,54 @@
                         <outlet property="levelProgress" destination="nCz-18-0Pj" id="Imj-NX-ElA"/>
                         <outlet property="showLevel" destination="GD8-DS-r2r" id="pFx-v9-LSl"/>
                         <segue destination="wa8-h2-bpd" kind="show" identifier="SelectKana" id="hPf-l1-m2n"/>
+                        <segue destination="RhJ-s9-dAa" kind="show" id="CiH-1I-DfR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8IS-RI-fhf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-497" y="586"/>
+        </scene>
+        <!--Кандзи-->
+        <scene sceneID="Ml2-Ua-Vtb">
+            <objects>
+                <tableViewController id="RhJ-s9-dAa" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="DaA-hz-NGB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="N5" id="tnm-bI-2it">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="K8h-oH-WRJ">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K8h-oH-WRJ" id="2XZ-Q2-bz7">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOP-2x-Sl3">
+                                                    <rect key="frame" x="20" y="6" width="46" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Урок 1"/>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="RhJ-s9-dAa" id="vzK-uh-EUi"/>
+                            <outlet property="delegate" destination="RhJ-s9-dAa" id="I16-9Y-2GX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Кандзи" id="vhR-Tj-QbY">
+                        <barButtonItem key="rightBarButtonItem" image="info" id="7MO-X8-ee8"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j77-zL-CMN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1546" y="1363"/>
         </scene>
         <!--Азбука Кана-->
         <scene sceneID="cmI-ij-TKG">
@@ -87,7 +130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQf-0d-R6V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-497.10144927536237" y="1388.8392857142856"/>
+            <point key="canvasLocation" x="-497" y="1389"/>
         </scene>
         <!--Post Table View Controller-->
         <scene sceneID="Nb7-gs-6J7">
@@ -170,7 +213,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OPo-Jf-DT4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="532" y="1446"/>
+            <point key="canvasLocation" x="-2704" y="454"/>
         </scene>
         <!--Select Lesson Table View Controller-->
         <scene sceneID="KY0-E8-Vc3">
@@ -570,28 +613,6 @@
             </objects>
             <point key="canvasLocation" x="296" y="2810"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="Bwv-fL-GiJ">
-            <objects>
-                <viewController id="Swv-eF-MBw" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fj1-Xl-P1t">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="j_filled" translatesAutoresizingMaskIntoConstraints="NO" id="eEh-CB-t2U">
-                                <rect key="frame" x="189" y="380" width="36" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.94901960780000005" green="0.75686274509999996" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="VN7-8z-Fgf"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V8O-nF-XRP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1967" y="2755"/>
-        </scene>
         <!--Test Table View Controller-->
         <scene sceneID="2Tp-RH-czA">
             <objects>
@@ -631,7 +652,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KN4-bE-aNa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2893" y="1852"/>
+            <point key="canvasLocation" x="675" y="2067"/>
         </scene>
         <!--辞書-->
         <scene sceneID="rve-Tq-9QN">
@@ -646,6 +667,11 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="oiy-gC-0Kk">
+                            <rect key="frame" x="0.0" y="851.66666793823242" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="CmJ-Py-dPU" customClass="StatisticsTableViewCell" customModule="jXnet" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="414" height="43.666667938232422"/>
@@ -697,6 +723,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aU9-Kj-bV9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="628" y="-862"/>
+        </scene>
+        <!--Test Table View Controller-->
+        <scene sceneID="7ha-dw-ujg">
+            <objects>
+                <viewController id="0Um-d1-93x" customClass="TestTableViewController" customModule="jXnet" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AaZ-mK-aGZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="76u-Ai-S8Y">
+                                <rect key="frame" x="20" y="194" width="374" height="346"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="bFp-La-vyu"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="21q-1x-qDo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1948" y="2096"/>
         </scene>
         <!--jXnet-->
         <scene sceneID="jf3-cR-aOm">

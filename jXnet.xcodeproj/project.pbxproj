@@ -143,6 +143,27 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		1585A49224A039E300E0D7A0 /* KanjiBranch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = KanjiBranch;
+			sourceTree = "<group>";
+		};
+		1585A49524A0987D00E0D7A0 /* WordBranch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WordBranch;
+			sourceTree = "<group>";
+		};
+		1585A49624A0989900E0D7A0 /* PhraseBranch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PhraseBranch;
+			sourceTree = "<group>";
+		};
 		15BBCB84248C9969005AF0DA = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +190,9 @@
 				15BBCBAF248C9EA0005AF0DA /* UIElementsCustom */,
 				15BBCBAC248C9E7E005AF0DA /* RootControllers */,
 				15BBCBA7248C9E01005AF0DA /* KanaBranch */,
+				1585A49224A039E300E0D7A0 /* KanjiBranch */,
+				1585A49524A0987D00E0D7A0 /* WordBranch */,
+				1585A49624A0989900E0D7A0 /* PhraseBranch */,
 				15BBCB90248C9969005AF0DA /* AppDelegate.swift */,
 				15BBCB96248C9969005AF0DA /* Main.storyboard */,
 				15BBCB9E248C996A005AF0DA /* LaunchScreen.storyboard */,

@@ -24,6 +24,7 @@ class MainViewController: UIViewController {
         self.initButtons()
         self.initTags()
         self.initDate()
+        print("CoreWidth ",UIScreen.main.bounds.width)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

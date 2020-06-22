@@ -15,7 +15,36 @@
         <attribute name="shortLearnedH" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="shortLearnedK" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Kanji" representedClassName="Kanji" syncable="YES" codeGenerationType="class">
+        <attribute name="deepLearned" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="graduation" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isKey" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="kanji" optional="YES" attributeType="String"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="kun_yomi" optional="YES" attributeType="String"/>
+        <attribute name="lastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mnemonics" optional="YES" attributeType="String"/>
+        <attribute name="on_yomi" optional="YES" attributeType="String"/>
+        <attribute name="russian" optional="YES" attributeType="String"/>
+        <attribute name="shortLearned" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Word" representedClassName="Word" syncable="YES" codeGenerationType="class">
+        <attribute name="deepLearned" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="group" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="kana" optional="YES" attributeType="String"/>
+        <attribute name="kanji" optional="YES" attributeType="String"/>
+        <attribute name="lastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="russian" optional="YES" attributeType="String"/>
+        <attribute name="shortLearned" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stress" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="Kana" positionX="-63" positionY="-18" width="128" height="238"/>
+        <element name="Kanji" positionX="-63" positionY="81" width="128" height="238"/>
+        <element name="Word" positionX="-54" positionY="135" width="128" height="193"/>
     </elements>
 </model>

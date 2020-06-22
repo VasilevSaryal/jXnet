@@ -125,7 +125,7 @@ class ExercisesViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
         if courseNumber == 0 && typeTask != 1{
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Help", style: .plain, target: self, action: #selector(clickHelp(_:)))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "help"), style: .plain, target: self, action: #selector(clickHelp(_:)))
         }
         initDB()
         // Do any additional setup after loading the view.

@@ -51,6 +51,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 kanaObject.mnemonicsH = ""
                                 kanaObject.mnemonicsK = ""
                             }
+                            for kanji in arrayContents.value(forKey: "Kanji") as! NSArray {
+                                let kanjiObject = Kanji(context: backgroundContext)
+                                kanjiObject.id = Int16((kanji as! NSDictionary).value(forKey: "id") as! Int)
+                                kanjiObject.kanji = (kanji as! NSDictionary).value(forKey: "kanji") as? String
+                                kanjiObject.kun_yomi = (kanji as! NSDictionary).value(forKey: "kun-yomi") as? String
+                                kanjiObject.on_yomi = (kanji as! NSDictionary).value(forKey: "on-yomi") as? String
+                                kanjiObject.russian = (kanji as! NSDictionary).value(forKey: "russian") as? String
+                                kanjiObject.level = Int16(((kanji as! NSDictionary).value(forKey: "level") as! Int))
+                                kanjiObject.key = (kanji as! NSDictionary).value(forKey: "key") as? String
+                                kanjiObject.graduation = (kanji as! NSDictionary).value(forKey: "graduation") as? String
+                                kanjiObject.isKey = ((kanji as! NSDictionary).value(forKey: "isKey") as? String) == "к"
+                                
+                                kanjiObject.shortLearned = 0
+                                kanjiObject.deepLearned = 0
+                                kanjiObject.mnemonics = ""
+                            }
+                            for word in arrayContents.value(forKey: "Word") as! NSArray {
+                                let wordObject = Word(context: backgroundContext)
+                                wordObject.id = Int16((word as! NSDictionary).value(forKey: "id") as! Int)
+                                wordObject.kanji = (word as! NSDictionary).value(forKey: "kanji") as? String
+                                wordObject.kana = (word as! NSDictionary).value(forKey: "kana") as? String
+                                wordObject.russian = (word as! NSDictionary).value(forKey: "russian") as? String
+                                wordObject.level = Int16(((word as! NSDictionary).value(forKey: "level") as! Int))
+                                wordObject.group = (word as! NSDictionary).value(forKey: "group") as? String
+                                wordObject.stress = (word as! NSDictionary).value(forKey: "stress") as? String
+                                
+                                wordObject.shortLearned = 0
+                                wordObject.deepLearned = 0
+                            }
                             try backgroundContext.save()
                             userDefaults.set(true, forKey: preloadedDataKey)
                             userDefaults.set(false, forKey: "isHiraganaCompleted")
