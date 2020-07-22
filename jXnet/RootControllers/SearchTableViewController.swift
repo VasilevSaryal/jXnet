@@ -32,7 +32,7 @@ class SearchTableViewController: UITableViewController {
 }
 extension SearchTableViewController: UISearchBarDelegate{
     //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    //        searchKana = Kana.filter({($0.lowercased().contains(searchText.lowercased()))})
+    //        searchKana = Kana.filter({($0.lowercased().уууууууууcontains(searchText.lowercased()))})
     //        filter = true
     //        tableView.reloadData()
     //        if searchText == "" {
