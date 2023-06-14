@@ -15,8 +15,7 @@ class SelectKanaViewController: UIViewController {
         setNavigationController()
         setTheme()
         self.view.backgroundColor = UIColor(white: 0.93, alpha: 1)
-        
-        // Do any additional setup after loading the view.
+
     }
     @IBAction func info(_ sender: Any) {
     }
